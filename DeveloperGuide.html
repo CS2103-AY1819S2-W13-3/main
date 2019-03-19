@@ -29,12 +29,13 @@
 </li>
 <li><a href="#implementation">3. Implementation</a>
 <ul class="sectlevel2">
-<li><a href="#undo-redo-feature">3.1. Undo/Redo feature</a></li>
-<li><a href="#search-feature">3.2. Search feature</a></li>
-<li><a href="#list-feature">3.3. List feature</a></li>
-<li><a href="#proposed-data-encryption">3.4. [Proposed] Data Encryption</a></li>
-<li><a href="#logging">3.5. Logging</a></li>
-<li><a href="#Implementation-Configuration">3.6. Configuration</a></li>
+<li><a href="#command-alias-feature">3.1. Command Alias feature</a></li>
+<li><a href="#undo-redo-feature">3.2. Undo/Redo feature</a></li>
+<li><a href="#search-feature">3.3. Search feature</a></li>
+<li><a href="#list-feature">3.4. List feature</a></li>
+<li><a href="#proposed-data-encryption">3.5. [Proposed] Data Encryption</a></li>
+<li><a href="#logging">3.6. Logging</a></li>
+<li><a href="#Implementation-Configuration">3.7. Configuration</a></li>
 </ul>
 </li>
 <li><a href="#documentation">4. Documentation</a>
@@ -569,9 +570,49 @@ As a more OOP model, we can store a <code>Tag</code> list in <code>Address Book<
 <p>This section describes some noteworthy details on how certain features are implemented.</p>
 </div>
 <div class="sect2">
-<h3 id="undo-redo-feature"><a class="link" href="#undo-redo-feature">3.1. Undo/Redo feature</a></h3>
+<h3 id="command-alias-feature"><a class="link" href="#command-alias-feature">3.1. Command Alias feature</a></h3>
+<div class="paragraph">
+<p>The command alias feature allows users to use shorthand commands to rapidly "get things done", for instance using <code>a</code> instead of <code>add</code>.</p>
+</div>
+<div class="paragraph">
+<p>Users may do one of the following:
+1) Add a new alias
+2) Remove an existing alias
+3) List all aliases
+4) Delete all aliases</p>
+</div>
+<div class="paragraph">
+<p>This feature is backed by an in-memory database implemented as a Java <code>HashMap&lt;String, Command&gt;</code>.
+A HashMap is chosen for several reasons:
+* Adding and removing an alias is simple
+* Checking whether an alias exists is fast (<code>O(1)</code> performance, as opposed to <code>O(N)</code> in an unsorted list)
+* HashMaps naturally facilitate the process of looking up an associated value with a given key
+* HashMaps has built-in operations to facilitate the listing of all aliases, or the deletion of all aliases</p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative</strong>: An alternative implementation could use a Java <code>ArrayList</code>. However, that adds additional code complexity,
+as there needs to be a way of associating a <code>String</code>-type alias with a <code>Command</code> object.
+For instance, we could create an <code>ArrayList&lt;AliasWrapper&gt;</code>, where <code>AliasWrapper</code> is a wrapper class to associate an alias with a Command.
+That is, however, inelegant and contrived, as opposed to a <code>HashMap</code> solution.
+Furthermore, checking for membership in an <code>ArrayList</code> is an O(N) operation.</p>
+</div>
+<div class="paragraph">
+<p><strong>Operation</strong>: User input is parsed in such a way that the "command" word is extracted and checked to ascertain if it is an
+"original command", or a "command alias". This is implemented simply by augmenting the existing logic (which checks for
+original commands) with an additional <code>default</code> block, such that if the command word is not an original command, we check if
+it is a registered alias of a command.</p>
+</div>
+<div class="paragraph">
+<p>If so, we run the command by looking up the <code>Command</code> object in our <code>HashMap</code>.</p>
+</div>
+<div class="paragraph">
+<p>Otherwise, it is a situation of invalid user input.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="undo-redo-feature"><a class="link" href="#undo-redo-feature">3.2. Undo/Redo feature</a></h3>
 <div class="sect3">
-<h4 id="current-implementation"><a class="link" href="#current-implementation">3.1.1. Current Implementation</a></h4>
+<h4 id="current-implementation"><a class="link" href="#current-implementation">3.2.1. Current Implementation</a></h4>
 <div class="paragraph">
 <p>The undo/redo mechanism is facilitated by <code>VersionedAddressBook</code>.
 It extends <code>AddressBook</code> with an undo/redo history, stored internally as an <code>addressBookStateList</code> and <code>currentStatePointer</code>.
@@ -701,7 +742,7 @@ If the <code>currentStatePointer</code> is at index <code>addressBookStateList.s
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations"><a class="link" href="#design-considerations">3.1.2. Design Considerations</a></h4>
+<h4 id="design-considerations"><a class="link" href="#design-considerations">3.2.2. Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-how-undo-redo-executes"><a class="link" href="#aspect-how-undo-redo-executes">Aspect: How undo &amp; redo executes</a></h5>
 <div class="ulist">
@@ -771,9 +812,9 @@ If the <code>currentStatePointer</code> is at index <code>addressBookStateList.s
 </div>
 </div>
 <div class="sect2">
-<h3 id="search-feature"><a class="link" href="#search-feature">3.2. Search feature</a></h3>
+<h3 id="search-feature"><a class="link" href="#search-feature">3.3. Search feature</a></h3>
 <div class="sect3">
-<h4 id="current-implementation-2"><a class="link" href="#current-implementation-2">3.2.1. Current Implementation</a></h4>
+<h4 id="current-implementation-2"><a class="link" href="#current-implementation-2">3.3.1. Current Implementation</a></h4>
 <div class="paragraph">
 <p>The search feature is facilitated by <code>Infinity Machine</code>.
 It extends <code>Infinity Machine</code> with an find feature, allowing user to search through source entries by the title(s).
@@ -814,7 +855,7 @@ in an indexed fashion, with all details and in order of their addition.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">3.2.2. Design Considerations</a></h4>
+<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">3.3.2. Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-how-undo-redo-executes-2"><a class="link" href="#aspect-how-undo-redo-executes-2">Aspect: How undo &amp; redo executes</a></h5>
 <div class="ulist">
@@ -858,9 +899,9 @@ in an indexed fashion, with all details and in order of their addition.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="list-feature"><a class="link" href="#list-feature">3.3. List feature</a></h3>
+<h3 id="list-feature"><a class="link" href="#list-feature">3.4. List feature</a></h3>
 <div class="sect3">
-<h4 id="current-implementation-3"><a class="link" href="#current-implementation-3">3.3.1. Current Implementation</a></h4>
+<h4 id="current-implementation-3"><a class="link" href="#current-implementation-3">3.4.1. Current Implementation</a></h4>
 <div class="paragraph">
 <p>The list command is facilitated by <code>Infinity Machine</code>.
 It extends <code>Infinity Machine</code> with a list functionality, enumerating all entries in the source database and their details,
@@ -909,7 +950,7 @@ in the order of their addition.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">3.3.2. Design Considerations</a></h4>
+<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">3.4.2. Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-how-undo-redo-executes-3"><a class="link" href="#aspect-how-undo-redo-executes-3">Aspect: How undo &amp; redo executes</a></h5>
 <div class="ulist">
@@ -953,20 +994,20 @@ in the order of their addition.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">3.4. [Proposed] Data Encryption</a></h3>
+<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">3.5. [Proposed] Data Encryption</a></h3>
 <div class="paragraph">
 <p><em>{Explain here how the data encryption feature will be implemented}</em></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">3.5. Logging</a></h3>
+<h3 id="logging"><a class="link" href="#logging">3.6. Logging</a></h3>
 <div class="paragraph">
 <p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.6, &#8220;Configuration&#8221;</a>)</p>
+<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.7, &#8220;Configuration&#8221;</a>)</p>
 </li>
 <li>
 <p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level</p>
@@ -997,7 +1038,7 @@ in the order of their addition.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.6. Configuration</a></h3>
+<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.7. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g user prefs file location, logging level) through the configuration file (default: <code>config.json</code>).</p>
 </div>
@@ -2452,4 +2493,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-03-19 15:52:13 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-03-19 16:02:51 UTC</div></div></div></body></html>
