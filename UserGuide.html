@@ -247,8 +247,11 @@ Edits the 5th source and clears all its existing tags.</p>
 <div class="sect2">
 <h3 id="searching-a-source-code-search-code"><a class="link" href="#searching-a-source-code-search-code">3.5. Searching a source: <code>search</code></a></h3>
 <div class="paragraph">
-<p>Searches for entries amongst the list of sources based on the tag entered by the user.<br>
-Format: <code>search t/TAG [t/TAG]&#8230;&#8203;</code></p>
+<p>Searches for entries amongst the list of sources by title.<br>
+Finds all entries with an (exact, case insensitive) matching title as entered by the user.<br>
+It is case insensitive (eg. <code>RSAalgorithm</code> is same as <code>rsaalgorithm</code>)<br>
+Matching is exact (eg. <code>Algorithm</code> will not match with <code>Algorithms</code>)<br>
+Format: <code>search title</code></p>
 </div>
 <div class="sidebarblock">
 <div class="content">
@@ -258,10 +261,10 @@ Format: <code>search t/TAG [t/TAG]&#8230;&#8203;</code></p>
 <p>The search is case insensitive. e.g <code>hans</code> will match <code>Hans</code></p>
 </li>
 <li>
-<p>There can have any number of tags but minimally 1.</p>
+<p>There can have any number of tags but minimally 1 (just <code>search</code> results in error. To enumerate all entries, check out <code>list</code> command instead)</p>
 </li>
 <li>
-<p>Only full words will be matched e.g. <code>Han</code> will not match <code>Hans</code></p>
+<p>Only full words will be matched e.g. <code>Han</code> will not match <code>Hans</code>, <code>FooTitle</code> will not match <code>FooTitle1</code></p>
 </li>
 </ul>
 </div>
@@ -273,12 +276,12 @@ Format: <code>search t/TAG [t/TAG]&#8230;&#8203;</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>search t/Algorithms</code><br>
-Returns the source with the tag <code>algorithms</code></p>
+<p><code>search Algorithms</code><br>
+Returns the source with the title <code>algorithms</code></p>
 </li>
 <li>
-<p><code>search t/Artificial Intelligence t/Science Journal t/AI</code><br>
-Returns any source having tags <code>Artificial Intelligence</code>, <code>Science Journal</code>, or <code>AI</code></p>
+<p><code>search ArtificialIntelligence MachineLearning</code><br>
+Returns any source having tags <code>ArtificialIntelligence</code> or <code>MachineLearning</code></p>
 </li>
 </ul>
 </div>
@@ -286,8 +289,22 @@ Returns any source having tags <code>Artificial Intelligence</code>, <code>Scien
 <div class="sect2">
 <h3 id="listing-all-sources-code-list-code"><a class="link" href="#listing-all-sources-code-list-code">3.6. Listing all sources : <code>list</code></a></h3>
 <div class="paragraph">
-<p>Displays a list of all sources currently in the database. Also allows listing of all tags and types of records.<br>
-Format: <code>list</code> <code>list tags</code> <code>list types</code></p>
+<p>Displays a list of all sources currently in the database, with no filtering.<br>
+Format: <code>list</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Lists all sources present in the database in the order of their addition</p>
+</li>
+<li>
+<p>Tags, Details, Type are also displayed along with the sources</p>
+</li>
+</ul>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -537,4 +554,4 @@ e.g. <code>definecommand c/edit a/e</code></p>
 </ul>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-03-19 08:17:20 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-03-19 15:37:03 UTC</div></div></div></body></html>
