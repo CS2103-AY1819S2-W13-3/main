@@ -1,5 +1,14 @@
 package seedu.address.testutil;
 
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DETAIL_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DETAIL_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FOO;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_BAR;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -44,6 +53,12 @@ public class TypicalSources {
     public static final Source IDA = new SourceBuilder().withTitle("Ida Mueller")
             .withType("ida_type")
             .withDetail("ida_detail").build();
+
+    // Manually added - Person's details found in {@code CommandTestUtil}
+    public static final Source AMY = new SourceBuilder().withTitle(VALID_TITLE_AMY)
+            .withType(VALID_TYPE_AMY).withDetail(VALID_DETAIL_AMY).withTags(VALID_TAG_FOO).build();
+    public static final Source BOB = new SourceBuilder().withTitle(VALID_TITLE_BOB)
+            .withType(VALID_TYPE_BOB).withDetail(VALID_DETAIL_BOB).withTags(VALID_TAG_BAR, VALID_TAG_FOO).build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 
