@@ -27,8 +27,8 @@ public class CommandTestUtil {
 
     public static final String VALID_TITLE_AMY = "Amy Bee";
     public static final String VALID_TITLE_BOB = "Bob Choo";
-    public static final String VALID_TYPE_AMY = "amy_type";
-    public static final String VALID_TYPE_BOB = "bob_type";
+    public static final String VALID_TYPE_AMY = "amy type";
+    public static final String VALID_TYPE_BOB = "bob type";
     public static final String VALID_DETAIL_AMY = "amy_detail";
     public static final String VALID_DETAIL_BOB = "bob_detail";
     public static final String VALID_TAG_FOO = "foo";
