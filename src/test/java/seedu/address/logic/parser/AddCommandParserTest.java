@@ -22,8 +22,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_BOB;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.testutil.TypicalSources.ALICE;
-import static seedu.address.testutil.TypicalSources.BENSON;
+import static seedu.address.testutil.TypicalSources.*;
 
 import org.junit.Test;
 
@@ -40,7 +39,7 @@ public class AddCommandParserTest {
 
     @Test
     public void parse_allFieldsPresent_success() {
-        Source expectedSource = new SourceBuilder(BENSON).withTags(VALID_TAG_FOO).build();
+        Source expectedSource = new SourceBuilder(BOB).withTags(VALID_TAG_FOO).build();
 
         // whitespace only preamble
         assertParseSuccess(parser, PREAMBLE_WHITESPACE + TITLE_DESC_BOB + TYPE_DESC_BOB
@@ -59,7 +58,7 @@ public class AddCommandParserTest {
                 + DETAIL_DESC_BOB + TAG_DESC_FOO, new AddCommand(expectedSource));
 
         // multiple tags - all accepted
-        Source expectedSourceMultipleTags = new SourceBuilder(BENSON).withTags(VALID_TAG_FOO, VALID_TAG_BAR)
+        Source expectedSourceMultipleTags = new SourceBuilder(BOB).withTags(VALID_TAG_FOO, VALID_TAG_BAR)
                 .build();
         assertParseSuccess(parser, TITLE_DESC_BOB + TYPE_DESC_BOB + DETAIL_DESC_BOB
                 + TAG_DESC_BAR + TAG_DESC_FOO, new AddCommand(expectedSourceMultipleTags));
@@ -68,7 +67,7 @@ public class AddCommandParserTest {
     @Test
     public void parse_optionalFieldsMissing_success() {
         // zero tags
-        Source expectedSource = new SourceBuilder(ALICE).withTags().build();
+        Source expectedSource = new SourceBuilder(AMY).withTags().build();
         assertParseSuccess(parser, TITLE_DESC_AMY + TYPE_DESC_AMY + DETAIL_DESC_AMY,
                 new AddCommand(expectedSource));
     }
