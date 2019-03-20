@@ -7,6 +7,7 @@ import static seedu.address.logic.commands.CommandTestUtil.DETAIL_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.TYPE_DESC_AMY;
 import static seedu.address.testutil.TypicalSources.ALICE;
+import static seedu.address.testutil.TypicalSources.AMY;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -88,8 +89,7 @@ public class LogicManagerTest {
         // Execute add command
         String addCommand = AddCommand.COMMAND_WORD + TITLE_DESC_AMY + TYPE_DESC_AMY
                 + DETAIL_DESC_AMY;
-        // TODO: This test will fail because TypicalSources does not have AMY - fix!
-        Source expectedSource = new SourceBuilder(ALICE).withTags().build();
+        Source expectedSource = new SourceBuilder(AMY).withTags().build();
         ModelManager expectedModel = new ModelManager();
         expectedModel.addSource(expectedSource);
         expectedModel.commitSourceManager();
