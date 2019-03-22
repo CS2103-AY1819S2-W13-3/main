@@ -4,8 +4,8 @@
     "type": "9482424",
     "detail": "hans@example.com"
   }, {
-    "title": "Source With Valid Type Field",
-    "type": "948asdf2424",
-    "detail": "hans@example.com"
+    "title": "Source With Invalid Detail Field",
+    "type": "9482424",
+    "detail": " hans@example.com"
   } ]
 }
