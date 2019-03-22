@@ -2,38 +2,38 @@
   "_comment": "SourceManager save file which contains the same Source values as in TypicalSources#getTypicalSourceManager()",
   "sources" : [ {
     "title" : "Alice Pauline",
-    "type" : "94351253",
-    "detail" : "alice@example.com",
+    "type" : "alice type",
+    "detail" : "alice_detail",
     "tagged" : [ "friends" ]
   }, {
     "title" : "Benson Meier",
-    "type" : "98765432",
-    "detail" : "johnd@example.com",
+    "type" : "benson type",
+    "detail" : "benson_detail",
     "tagged" : [ "owesMoney", "friends" ]
   }, {
     "title" : "Carl Kurz",
-    "type" : "95352563",
-    "detail" : "heinz@example.com",
+    "type" : "carl type",
+    "detail" : "carl_detail",
     "tagged" : [ ]
   }, {
     "title" : "Daniel Meier",
-    "type" : "87652533",
-    "detail" : "cornelia@example.com",
+    "type" : "daniel type",
+    "detail" : "daniel_detail",
     "tagged" : [ "friends" ]
   }, {
     "title" : "Elle Meyer",
-    "type" : "9482224",
-    "detail" : "werner@example.com",
+    "type" : "elle type",
+    "detail" : "elle_detail",
     "tagged" : [ ]
   }, {
     "title" : "Fiona Kunz",
-    "type" : "9482427",
-    "detail" : "lydia@example.com",
+    "type" : "fiona type",
+    "detail" : "fiona_detail",
     "tagged" : [ ]
   }, {
     "title" : "George Best",
-    "type" : "9482442",
-    "detail" : "anna@example.com",
+    "type" : "george type",
+    "detail" : "george_detail",
     "tagged" : [ ]
   } ]
 }
