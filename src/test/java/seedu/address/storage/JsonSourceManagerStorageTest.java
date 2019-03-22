@@ -65,13 +65,13 @@ public class JsonSourceManagerStorageTest {
     @Test
     public void readSourceManager_invalidPersonSourceManager_throwDataConversionException() throws Exception {
         thrown.expect(DataConversionException.class);
-        readSourceManager("invalidPersonSourceManager.json");
+        readSourceManager("invalidSourceSourceManager.json");
     }
 
     @Test
     public void readSourceManager_invalidAndValidPersonSourceManager_throwDataConversionException() throws Exception {
         thrown.expect(DataConversionException.class);
-        readSourceManager("invalidAndValidPersonSourceManager.json");
+        readSourceManager("invalidAndValidSourceSourceManager.json");
     }
 
     @Test
