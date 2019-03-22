@@ -19,7 +19,7 @@ import seedu.address.testutil.Assert;
 public class JsonAdaptedSourceTest {
     private static final String INVALID_TITLE = "R@chel";
     private static final String INVALID_TYPE = "+651234";
-    private static final String INVALID_DETAIL = "example.com";
+    private static final String INVALID_DETAIL = " example"; // Leading white space is illegal
     private static final String INVALID_TAG = "#friend";
 
     private static final String VALID_TITLE = BENSON.getTitle().toString();
