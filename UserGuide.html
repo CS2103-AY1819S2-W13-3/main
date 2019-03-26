@@ -22,7 +22,7 @@
 <li><a href="#generate-bibliography-entry-code-biblio-code">3.7. Generate bibliography entry : <code>biblio</code></a></li>
 <li><a href="#listing-entered-commands-code-history-code">3.8. Listing entered commands : <code>history</code></a></li>
 <li><a href="#listing-history-of-searches-made-code-searchhistory-code">3.9. Listing history of searches made : <code>searchhistory</code></a></li>
-<li><a href="#define-custom-commands-code-definecommand-code">3.10. Define custom commands : <code>definecommand</code></a></li>
+<li><a href="#command-aliases">3.10. Command aliases</a></li>
 <li><a href="#counting-total-number-of-sources-code-count-code">3.11. Counting total number of sources: <code>count</code></a></li>
 <li><a href="#undoing-previous-command-code-undo-code">3.12. Undoing previous command : <code>undo</code></a></li>
 <li><a href="#redoing-the-previously-undone-command-code-redo-code">3.13. Redoing the previously undone command : <code>redo</code></a></li>
@@ -341,14 +341,93 @@ Format: <code>searchhistory</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="define-custom-commands-code-definecommand-code"><a class="link" href="#define-custom-commands-code-definecommand-code">3.10. Define custom commands : <code>definecommand</code></a></h3>
+<h3 id="command-aliases"><a class="link" href="#command-aliases">3.10. Command aliases</a></h3>
+<div class="sect3">
+<h4 id="creating-an-alias-code-alias-code"><a class="link" href="#creating-an-alias-code-alias-code">3.10.1. Creating an alias: <code>alias</code></a></h4>
 <div class="paragraph">
-<p>Allows the user to give aliases to frequently used verbose commands.<br>
-Format: <code>definecommand c/COMMAND a/ALIAS</code></p>
+<p>Allows the user to create aliases create aliases for commands.<br>
+Format: <code>alias COMMAND ALIAS</code></p>
 </div>
 <div class="paragraph">
-<p>Examples:
-* <code>definecommand c/biblio a/b</code></p>
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>alias count c</code> (<code>c</code> is now a valid pseudo-command that works exactly like <code>count</code>)</p>
+</li>
+<li>
+<p><code>alias invalid i</code> (<code>i</code> is now an invalid pseudo-command that works exactly like <code>invalid</code>)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The user is responsible for ensuring that he is creating aliases for valid commands.
+The successful creation of an alias does not provide any guarantee of the validity of the associated command.</p>
+</div>
+<div class="paragraph">
+<p>If the user attempts to add an alias that has already been added, the old one will be overwritten. For example:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>alias count c</code></p>
+</li>
+<li>
+<p><code>alias invalid c</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><code>c</code> is now an alias for the invalid command <code>invalid</code>.</p>
+</div>
+<div class="paragraph">
+<p>The command may not be another alias. The alias may not be a command.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>alias count ct</code> (<code>ct</code> is now an alias for <code>count</code>)</p>
+</li>
+<li>
+<p><code>alias ct c</code> (this is invalid because <code>ct</code> is another alias)</p>
+</li>
+<li>
+<p><code>alias count list</code> (this is invalid because <code>list</code> is a command)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="removing-an-alias-code-alias-rm-code"><a class="link" href="#removing-an-alias-code-alias-rm-code">3.10.2. Removing an alias: <code>alias-rm</code></a></h4>
+<div class="paragraph">
+<p>Allows the user to remove previously-defined aliases.<br>
+Format: <code>alias-rm ALIAS</code></p>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>alias count c</code> (<code>c</code> is now an alias for <code>count</code>)</p>
+</li>
+<li>
+<p><code>alias-rm c</code> (<code>c</code> is no longer an alias for <code>count</code>)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If the user attempts to remove a non-existent alias, nothing happens.
+<code>alias-rm</code> only guarantees that after it is performed, the alias argument does not exist.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="listing-all-aliases-code-alias-ls-code"><a class="link" href="#listing-all-aliases-code-alias-ls-code">3.10.3. Listing all aliases: <code>alias-ls</code></a></h4>
+<div class="paragraph">
+<p>Lists all defined aliases and their associated commands.<br>
+Format: <code>alias-ls</code></p>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -574,4 +653,4 @@ e.g. <code>definecommand c/edit a/e</code></p>
 </ul>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-03-26 10:49:46 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-03-26 11:06:58 UTC</div></div></div></body></html>
