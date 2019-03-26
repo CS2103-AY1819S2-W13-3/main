@@ -825,17 +825,35 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|`* * *` |user |be able to add a new source |store my research materials
 
-|`* * *` |user |add a new person |
+|`* * *` |user |be able to remove sources I do not want |have a clean and updated database
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |user |edit an existing source |change a source without deleting it
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |user |be able to tag my sources |easily determine what this source is about
 
-|`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
+|`* * *` |user |be able to search for sources by type, name and tags |easily navigate through my sources
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |user |see all the sources that I have stored |have an overview of what I have at the moment
+
+|`* * *` |new user |have access to all the commands available |have a guide in case I forget how to use the application
+
+|`* *` |user |be able to hide sensitive data |maintain the privacy of my research materials
+
+|`* *` |user |my incorrect searches to show me the closest search terms |still find what I want even if I do not know what it is
+
+|`* *` |user |be able to customise the application commands to my own linking |have easy to use aliases for my commands
+
+|`* *` |user |be able to view past commands |easily trace back what I added, removed or modified
+
+|`* *` |user who is prone to making mistakes |be able to undo previous commands |retrieve lost sources if I accidentally deleted them
+
+|`* *` |user |be able to order the sources in the application however I like |put important sources on top or group them together
+
+|`*` |very picky user |be able to customise the word colour in the application |make the application personalized to me
+
+|`*` |user |see some ASCII art representations in the application |have nicer things to look at other than just text
 |=======================================================================
 
 _{More to be added}_
