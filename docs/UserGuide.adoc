@@ -129,6 +129,23 @@ Returns any source having tags `Artificial Intelligence`, `Science Journal`, or 
 Displays a list of all sources currently in the database. Also allows listing of all tags and types of records. +
 Format: `list` `list tags` `list types`
 
+=== Reordering sources to your liking : `order`
+
+Moves the specified source from one position to another as defined by the user. +
+Format: `delete ORIGINAL_INDEX NEW_INDEX`
+
+****
+* Obtains the source at the specified `ORIGINAL_INDEX` and moves it to the `NEW_INDEX`.
+* The index refers to the index number shown in the displayed source list.
+* The index *must be a positive integer* 1, 2, 3, ...
+* All sources after the location moved to will be shifted downwards.
+****
+
+Examples:
+
+* `order 1 4` +
+Moves the source located at index 1 to index 4.
+
 === Generate bibliography entry : `biblio`
 
 Allows user to generate bibliography using the links user entered as their sources. +

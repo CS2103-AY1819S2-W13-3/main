@@ -80,6 +80,15 @@ public class SourceManager implements ReadOnlySourceManager {
     }
 
     /**
+     * Adds a source to the source manager.
+     * The source must not already exist in the source manager.
+     */
+    public void addSourceAtIndex(Source s, int index) {
+        sources.addAtIndex(s, index);
+        indicateModified();
+    }
+
+    /**
      * Replaces the given source {@code target} in the list with {@code editedSource}.
      * {@code target} must exist in the source manager.
      * The source identity of {@code editedSource} must not be the

@@ -49,6 +49,18 @@ public class UniqueSourceList implements Iterable<Source> {
     }
 
     /**
+     * Adds a source to the list at a specified index.
+     * The source must not already exist in the list.
+     */
+    public void addAtIndex(Source toAdd, int index) {
+        requireNonNull(toAdd);
+        if (contains(toAdd)) {
+            throw new DuplicateSourceException();
+        }
+        internalList.add(index, toAdd);
+    }
+
+    /**
      * Replaces the source {@code target} in the list with {@code editedSource}.
      * {@code target} must exist in the list.
      * The source identity of {@code editedSource} must not be the same as another existing source in the list.

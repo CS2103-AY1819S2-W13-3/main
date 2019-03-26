@@ -157,6 +157,12 @@ public class ModelManager implements Model, PanicMode {
     }
 
     @Override
+    public void addSourceAtIndex(Source source, int index) {
+        versionedSourceManager.addSourceAtIndex(source, index);
+        updateFilteredSourceList(PREDICATE_SHOW_ALL_SOURCES);
+    }
+
+    @Override
     public void setSource(Source target, Source editedSource) {
         requireAllNonNull(target, editedSource);
 

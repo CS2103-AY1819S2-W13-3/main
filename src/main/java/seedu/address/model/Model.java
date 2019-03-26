@@ -72,6 +72,12 @@ public interface Model extends PanicMode {
     void addSource(Source source);
 
     /**
+     * Adds the given source to an index.
+     * {@code source} must not already exist in the source manager.
+     */
+    void addSourceAtIndex(Source source, int index);
+
+    /**
      * Replaces the given source {@code target} with {@code editedSource}.
      * {@code target} must exist in the source manager.
      * The source identity of {@code editedSource} must not be the same
