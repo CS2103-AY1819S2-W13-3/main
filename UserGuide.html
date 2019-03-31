@@ -21,8 +21,23 @@
 <li><a href="#listing-all-sources-code-list-code">3.6. Listing all sources : <code>list</code></a></li>
 <li><a href="#reordering-sources-to-your-liking-code-order-code">3.7. Reordering sources to your liking : <code>order</code></a></li>
 <li><a href="#generate-bibliography-entry-code-biblio-code">3.8. Generate bibliography entry : <code>biblio</code></a></li>
+<li><a href="#listing-entered-commands-code-history-code">3.9. Listing entered commands : <code>history</code></a></li>
+<li><a href="#listing-history-of-searches-made-code-searchhistory-code">3.10. Listing history of searches made : <code>searchhistory</code></a></li>
+<li><a href="#command-aliases">3.11. Command aliases</a></li>
+<li><a href="#counting-total-number-of-sources-code-count-code">3.12. Counting total number of sources: <code>count</code></a></li>
+<li><a href="#undoing-previous-command-code-undo-code">3.13. Undoing previous command : <code>undo</code></a></li>
+<li><a href="#redoing-the-previously-undone-command-code-redo-code">3.14. Redoing the previously undone command : <code>redo</code></a></li>
+<li><a href="#enabling-panic-mode-code-panic-code">3.15. Enabling panic mode : <code>panic</code></a></li>
+<li><a href="#enabling-panic-mode-code-unpanic-code">3.16. Enabling panic mode : <code>unpanic</code></a></li>
+<li><a href="#clearing-all-entries-code-clear-code">3.17. Clearing all entries : <code>clear</code></a></li>
+<li><a href="#exiting-the-program-code-exit-code">3.18. Exiting the program : <code>exit</code></a></li>
+<li><a href="#autocorrect-did-you-mean-no-command">3.19. Autocorrect ('Did you mean') : &lt;no command&gt;</a></li>
+<li><a href="#saving-the-data">3.20. Saving the data</a></li>
+<li><a href="#encrypting-data-files-code-coming-in-v2-0-code">3.21. Encrypting data files <code>[coming in v2.0]</code></a></li>
 </ul>
 </li>
+<li><a href="#faq">4. FAQ</a></li>
+<li><a href="#command-summary">5. Command Summary</a></li>
 </ul>
 </div>
 </div>
@@ -30,7 +45,16 @@
 <h2 id="introduction"><a class="link" href="#introduction">1. Introduction</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>An application for efficient storing and retrieving of textual information on research material by allowing users to apply to it custom made tags and type for easy search and retrieval. Intended for tech-savvy university students who are able to use CLI and wish to organize and tag research information or any other data that they may wish to store.</p>
+<p>"To understand matters rightly we should understand their details; and as that knowledge is almost infinite, our knowledge is always superficial and imperfect." - Francois de La Rochefoucauld</p>
+</div>
+<div class="paragraph">
+<p>The knowledge in the universe is infinite and there exists many things that are still beyond our comprehension. However, that does not mean that the process of learning what we have discovered should be a difficult one.</p>
+</div>
+<div class="paragraph">
+<p>Introducing the Infinity Machine, an application for efficient storing and retrieving of textual information on research material by allowing users to apply to it custom made tags and type for easy search and retrieval. Intended for tech-savvy university students who are able to use CLI and wish to organize and tag research information or any other data that they may wish to store.</p>
+</div>
+<div class="paragraph">
+<p>No longer will you miss out on important sources or developments in your field of interest.  No longer will you forget where you read something and struggle to find it again.</p>
 </div>
 </div>
 </div>
@@ -43,10 +67,10 @@
 <p>Ensure you have Java version <code>9</code> or later installed in your Computer.</p>
 </li>
 <li>
-<p>Download the latest <code>addressbook.jar</code> <a href="https://github.com/se-edu/addressbook-level4/releases">here</a>.</p>
+<p>Download the latest <code>infinitymachine.jar</code> <a href="https://github.com/CS2103-AY1819S2-W13-3/main/releases">here</a>.</p>
 </li>
 <li>
-<p>Copy the file to the folder you want to use as the home folder for your Address Book.</p>
+<p>Copy the file to the folder you want to use as the home folder for your Infinity Machine.</p>
 </li>
 <li>
 <p>Double-click the file to start the app. The GUI should appear in a few seconds.</p>
@@ -60,16 +84,16 @@ e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> wil
 <div class="ulist">
 <ul>
 <li>
-<p><strong><code>list</code></strong> : lists all contacts</p>
+<p><strong><code>list</code></strong> : lists all sources currently in the Infinity Machine</p>
 </li>
 <li>
-<p><strong><code>add</code></strong><code>n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01</code> : adds a contact named <code>John Doe</code> to the Address Book.</p>
+<p><strong><code>add</code></strong><code>i/Algorithms Wikipedia y/Website d/Basic definitions and history of algorithms t/Algorithms t/Computer Science</code> : adds a source named <code>Wikipedia Algorithms</code> to the Infinity Machine.</p>
 </li>
 <li>
-<p><strong><code>delete</code></strong><code>3</code> : deletes the 3rd contact shown in the current list</p>
+<p><strong><code>delete</code></strong><code>3</code> : deletes the 3rd source shown in the current list</p>
 </li>
 <li>
-<p><strong><code>exit</code></strong> : exits the app</p>
+<p><strong><code>exit</code></strong> : exits the the Infinity Machine</p>
 </li>
 </ul>
 </div>
@@ -92,16 +116,16 @@ e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> wil
 <div class="ulist">
 <ul>
 <li>
-<p>Words in <code>UPPER_CASE</code> are the parameters to be supplied by the user e.g. in <code>add n/NAME</code>, <code>NAME</code> is a parameter which can be used as <code>add n/John Doe</code>.</p>
+<p>Words in <code>UPPER_CASE</code> are the parameters to be supplied by the user e.g. in <code>add n/TITLE</code>, <code>TITLE</code> is a parameter which can be used as <code>add n/Wikipedia Algorithms</code>.</p>
 </li>
 <li>
-<p>Items in square brackets are optional e.g <code>n/NAME [t/TAG]</code> can be used as <code>n/John Doe t/friend</code> or as <code>n/John Doe</code>.</p>
+<p>Items in square brackets are optional e.g <code>n/TITLE [t/TAG]</code> can be used as <code>n/Wikipedia Algorithms t/Wikipedia</code> or as <code>n/Wikipedia Algorithms</code>.</p>
 </li>
 <li>
-<p>Items with <code>…</code>​ after them can be used multiple times including zero times e.g. <code>[t/TAG]&#8230;&#8203;</code> can be used as <code>&#160;</code> (i.e. 0 times), <code>t/friend</code>, <code>t/friend t/family</code> etc.</p>
+<p>Items with <code>…</code>​ after them can be used multiple times including zero times e.g <code>[t/TAG]&#8230;&#8203;</code> can be used as <code>&#160;</code> (i.e. 0 times), <code>t/Computer Science</code>, <code>t/Computer Science t/Algorithms</code> etc.</p>
 </li>
 <li>
-<p>Parameters can be in any order e.g. if the command specifies <code>n/NAME p/PHONE_NUMBER</code>, <code>p/PHONE_NUMBER n/NAME</code> is also acceptable.</p>
+<p>Parameters can be in any order e.g. if the command specifies <code>n/TITLE p/TYPE</code>, <code>p/TYPE n/TITLE</code> is also acceptable.</p>
 </li>
 </ul>
 </div>
@@ -117,7 +141,7 @@ e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> wil
 <h3 id="adding-a-person-code-add-code"><a class="link" href="#adding-a-person-code-add-code">3.2. Adding a person: <code>add</code></a></h3>
 <div class="paragraph">
 <p>Adds a new source to the list of sources<br>
-Format: <code>add n/NAME p/TYPE s/SOURCE [t/TAG]&#8230;&#8203;</code></p>
+Format: <code>add n/TITLE y/TYPE d/DETAILS [t/TAG]&#8230;&#8203;</code></p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -137,10 +161,10 @@ A source can have any number of tags (including 0)
 <div class="ulist">
 <ul>
 <li>
-<p><code>add n/Algorithms Wikipedia y/Website s/https://en.wikipedia.org/wiki/Algorithm t/Algorithm t/Wikipedia</code></p>
+<p><code>add i/Algorithms Wikipedia y/Website d/Basic definitions and history of algorithms t/Algorithm t/Wikipedia</code></p>
 </li>
 <li>
-<p><code>add n/Artificial Intelligence IEEE y/Journal Article s/IEEE t/Science Journal t/AI</code></p>
+<p><code>add i/Artificial Intelligence IEEE y/Journal Article d/introductory facts on artificial intelligence t/Science Journal t/AI</code></p>
 </li>
 </ul>
 </div>
@@ -190,7 +214,7 @@ Deletes the 1st source in the results of the <code>find</code> command.</p>
 <h3 id="editing-a-source-code-edit-code"><a class="link" href="#editing-a-source-code-edit-code">3.4. Editing a source : <code>edit</code></a></h3>
 <div class="paragraph">
 <p>Edits an existing source in the database.<br>
-Format: <code>edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]&#8230;&#8203;</code></p>
+Format: <code>edit INDEX [i/TITLE] [y/PHONE] [d/EMAIL] [t/TAG]&#8230;&#8203;</code></p>
 </div>
 <div class="sidebarblock">
 <div class="content">
@@ -353,24 +377,29 @@ Format: <code>biblio INDEX</code></p>
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>=== Listing entered commands : <code>history</code></p>
 </div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="listing-entered-commands-code-history-code"><a class="link" href="#listing-entered-commands-code-history-code">3.9. Listing entered commands : <code>history</code></a></h3>
 <div class="paragraph">
 <p>Lists all the commands that you have entered in reverse chronological order.<br>
 Format: <code>history</code></p>
 </div>
-<div class="paragraph">
-<p>=== Listing history of searches made : <code>searchhistory</code></p>
 </div>
+<div class="sect2">
+<h3 id="listing-history-of-searches-made-code-searchhistory-code"><a class="link" href="#listing-history-of-searches-made-code-searchhistory-code">3.10. Listing history of searches made : <code>searchhistory</code></a></h3>
 <div class="paragraph">
 <p>Lists the results of all searches made using the <code>search</code> command recently.<br>
 Format: <code>searchhistory</code></p>
 </div>
+</div>
+<div class="sect2">
+<h3 id="command-aliases"><a class="link" href="#command-aliases">3.11. Command aliases</a></h3>
+<div class="sect3">
+<h4 id="creating-an-alias-code-alias-code"><a class="link" href="#creating-an-alias-code-alias-code">3.11.1. Creating an alias: <code>alias</code></a></h4>
 <div class="paragraph">
-<p>=== Command aliases
-==== Creating an alias: <code>alias</code>
-Allows the user to create aliases create aliases for commands.<br>
+<p>Allows the user to create aliases create aliases for commands.<br>
 Format: <code>alias COMMAND ALIAS</code></p>
 </div>
 <div class="paragraph">
@@ -422,9 +451,11 @@ The successful creation of an alias does not provide any guarantee of the validi
 </li>
 </ul>
 </div>
+</div>
+<div class="sect3">
+<h4 id="removing-an-alias-code-alias-rm-code"><a class="link" href="#removing-an-alias-code-alias-rm-code">3.11.2. Removing an alias: <code>alias-rm</code></a></h4>
 <div class="paragraph">
-<p>==== Removing an alias: <code>alias-rm</code>
-Allows the user to remove previously-defined aliases.<br>
+<p>Allows the user to remove previously-defined aliases.<br>
 Format: <code>alias-rm ALIAS</code></p>
 </div>
 <div class="paragraph">
@@ -444,14 +475,17 @@ Format: <code>alias-rm ALIAS</code></p>
 <p>If the user attempts to remove a non-existent alias, nothing happens.
 <code>alias-rm</code> only guarantees that after it is performed, the alias argument does not exist.</p>
 </div>
+</div>
+<div class="sect3">
+<h4 id="listing-all-aliases-code-alias-ls-code"><a class="link" href="#listing-all-aliases-code-alias-ls-code">3.11.3. Listing all aliases: <code>alias-ls</code></a></h4>
 <div class="paragraph">
-<p>==== Listing all aliases: <code>alias-ls</code>
-Lists all defined aliases and their associated commands.<br>
+<p>Lists all defined aliases and their associated commands.<br>
 Format: <code>alias-ls</code></p>
 </div>
-<div class="paragraph">
-<p>=== Counting total number of sources: <code>count</code></p>
 </div>
+</div>
+<div class="sect2">
+<h3 id="counting-total-number-of-sources-code-count-code"><a class="link" href="#counting-total-number-of-sources-code-count-code">3.12. Counting total number of sources: <code>count</code></a></h3>
 <div class="paragraph">
 <p>Counts and returns the total number of source entries retrieved.<br>
 Format: <code>count</code></p>
@@ -468,9 +502,9 @@ Counts the total number of sources retrieved from the database.</p>
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>=== Undoing previous command : <code>undo</code></p>
 </div>
+<div class="sect2">
+<h3 id="undoing-previous-command-code-undo-code"><a class="link" href="#undoing-previous-command-code-undo-code">3.13. Undoing previous command : <code>undo</code></a></h3>
 <div class="paragraph">
 <p>Allows the user to reverse the last performed undoable action.<br>
 Format: <code>undo</code></p>
@@ -513,9 +547,9 @@ The <code>undo</code> command fails as there are no undoable commands executed p
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>=== Redoing the previously undone command : <code>redo</code></p>
 </div>
+<div class="sect2">
+<h3 id="redoing-the-previously-undone-command-code-redo-code"><a class="link" href="#redoing-the-previously-undone-command-code-redo-code">3.14. Redoing the previously undone command : <code>redo</code></a></h3>
 <div class="paragraph">
 <p>Allows user to redo the last performed action.<br>
 Format: <code>redo</code></p>
@@ -545,37 +579,37 @@ The <code>redo</code> command fails as there are no <code>undo</code> commands e
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>=== Enabling panic mode : <code>panic</code></p>
 </div>
+<div class="sect2">
+<h3 id="enabling-panic-mode-code-panic-code"><a class="link" href="#enabling-panic-mode-code-panic-code">3.15. Enabling panic mode : <code>panic</code></a></h3>
 <div class="paragraph">
 <p>Allows user to temporarily hide data.<br>
 Format: <code>panic</code></p>
 </div>
-<div class="paragraph">
-<p>=== Enabling panic mode : <code>unpanic</code></p>
 </div>
+<div class="sect2">
+<h3 id="enabling-panic-mode-code-unpanic-code"><a class="link" href="#enabling-panic-mode-code-unpanic-code">3.16. Enabling panic mode : <code>unpanic</code></a></h3>
 <div class="paragraph">
 <p>Restores user data.<br>
 Format: <code>unpanic</code></p>
 </div>
-<div class="paragraph">
-<p>=== Clearing all entries : <code>clear</code></p>
 </div>
+<div class="sect2">
+<h3 id="clearing-all-entries-code-clear-code"><a class="link" href="#clearing-all-entries-code-clear-code">3.17. Clearing all entries : <code>clear</code></a></h3>
 <div class="paragraph">
 <p>Clears all entries from the address book.<br>
 Format: <code>clear</code></p>
 </div>
-<div class="paragraph">
-<p>=== Exiting the program : <code>exit</code></p>
 </div>
+<div class="sect2">
+<h3 id="exiting-the-program-code-exit-code"><a class="link" href="#exiting-the-program-code-exit-code">3.18. Exiting the program : <code>exit</code></a></h3>
 <div class="paragraph">
 <p>Exits the program.<br>
 Format: <code>exit</code></p>
 </div>
-<div class="paragraph">
-<p>=== Autocorrect ('Did you mean') : &lt;no command&gt;</p>
 </div>
+<div class="sect2">
+<h3 id="autocorrect-did-you-mean-no-command"><a class="link" href="#autocorrect-did-you-mean-no-command">3.19. Autocorrect ('Did you mean') : &lt;no command&gt;</a></h3>
 <div class="paragraph">
 <p>Suggests commands to the users when they get the spelling wrong.<br></p>
 </div>
@@ -590,34 +624,44 @@ Format: <code>exit</code></p>
 </li>
 </ul>
 </div>
+</div>
+<div class="sect2">
+<h3 id="saving-the-data"><a class="link" href="#saving-the-data">3.20. Saving the data</a></h3>
 <div class="paragraph">
-<p>=== Saving the data</p>
+<p>Address book data are saved in the hard disk automatically after any command that changes the data.<br></p>
 </div>
 <div class="paragraph">
-<p>Address book data are saved in the hard disk automatically after any command that changes the data.<br>
-There is no need to save manually.</p>
+<p>There is no need to save manually.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="encrypting-data-files-code-coming-in-v2-0-code"><a class="link" href="#encrypting-data-files-code-coming-in-v2-0-code">3.21. Encrypting data files <code>[coming in v2.0]</code></a></h3>
+<div class="paragraph">
+<p>Research materials can be very sensitive and private especially for high profile researchers. The Infinity Machine hopes to be able to help researchers by encrypting their data for only authorised viewers to access.</p>
 </div>
 <div class="paragraph">
-<p>=== Encrypting data files <code>[coming in v2.0]</code></p>
+<p>Will allow users to generate simple encryption keys which will help keep their research materials secure.</p>
 </div>
-<div class="paragraph">
-<p><em>{explain how the user can enable/disable data encryption}</em></p>
 </div>
-<div class="paragraph">
-<p>== FAQ</p>
 </div>
+</div>
+<div class="sect1">
+<h2 id="faq"><a class="link" href="#faq">4. FAQ</a></h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p><strong>Q</strong>: How do I transfer my data to another Computer?<br>
-<strong>A</strong>: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.</p>
+<strong>A</strong>: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Infinity Machine folder.</p>
 </div>
-<div class="paragraph">
-<p>== Command Summary</p>
 </div>
+</div>
+<div class="sect1">
+<h2 id="command-summary"><a class="link" href="#command-summary">5. Command Summary</a></h2>
+<div class="sectionbody">
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Add</strong> <code>add n/NAME y/TYPE s/SOURCE [t/TAG]&#8230;&#8203;</code><br>
-e.g. <code>add n/Artificial Intelligence IEEE y/Journal Article s/IEEE t/Science Journal t/AI</code></p>
+<p><strong>Add</strong> <code>add i/TITLE y/TYPE d/DETAILS [t/TAG]&#8230;&#8203;</code><br>
+e.g. <code>add i/Artificial Intelligence IEEE y/Journal Article d/Landmark paper on perils of artificial intelligence t/Science Journal t/AI</code></p>
 </li>
 <li>
 <p><strong>Clear</strong> : <code>clear</code></p>
@@ -627,8 +671,8 @@ e.g. <code>add n/Artificial Intelligence IEEE y/Journal Article s/IEEE t/Science
 e.g. <code>delete 3</code></p>
 </li>
 <li>
-<p><strong>Edit</strong> : <code>edit INDEX n/NAME y/TYPE s/SOURCE [t/TAG]&#8230;&#8203;</code><br>
-e.g. <code>edit 2 n/Photosynthesis Wikipedia t/Photosynthesis t/Biology</code></p>
+<p><strong>Edit</strong> : <code>edit INDEX i/TITLE y/TYPE d/DETAILS [t/TAG]&#8230;&#8203;</code><br>
+e.g. <code>edit 2 i/Photosynthesis Wikipedia t/Photosynthesis t/Biology</code></p>
 </li>
 <li>
 <p><strong>Search</strong> : <code>search [KEYWORD] [KEYWORD]&#8230;&#8203;</code><br>
@@ -668,7 +712,4 @@ e.g. <code>definecommand c/edit a/e</code></p>
 </ul>
 </div>
 </div>
-</div>
-</div>
-</div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-03-29 12:20:35 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-03-31 09:47:00 UTC</div></div></div></body></html>
