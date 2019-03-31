@@ -2359,25 +2359,68 @@ for <code>RemarkCommandParser</code>.</p>
 <h2 id="use-cases"><a class="link" href="#use-cases">Appendix D: Use Cases</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>(For all use cases below, the <strong>System</strong> is the <code>AddressBook</code> and the <strong>Actor</strong> is the <code>user</code>, unless specified otherwise)</p>
+<p>(For all use cases below, the <strong>System</strong> is the <code>Infinity Machine</code> and the <strong>Actor</strong> is the <code>User</code>, unless specified otherwise)</p>
 </div>
-<h3 id="use-case-delete-person" class="discrete">Use case: Delete person</h3>
+<h3 id="use-case-add-a-source" class="discrete">Use case: Add a source</h3>
 <div class="paragraph">
 <p><strong>MSS</strong></p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>User requests to list persons</p>
+<p>User requests to add a specified source to the database</p>
 </li>
 <li>
-<p>AddressBook shows a list of persons</p>
+<p>The Infinity Machine adds the source to the database</p>
 </li>
 <li>
-<p>User requests to delete a specific person in the list</p>
+<p>User requests to list all sources in the database</p>
 </li>
 <li>
-<p>AddressBook deletes the person</p>
+<p>The Infinity Machine displays all sources in the database including the newly added one</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>1b. The command entered is invalid. Either it is misspelled or does not have the correct arguments and parameters.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1b1. The Infinity Machine shows an error message together with a help text to guide the user along.</p>
+<div class="paragraph">
+<p>Use case resumes at step 0.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<h3 id="use-case-delete-a-source" class="discrete">Use case: Delete a source</h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to list all sources</p>
+</li>
+<li>
+<p>The Infinity Machine shows a list of the sources currently in the database</p>
+</li>
+<li>
+<p>User requests to delete a specific source in the list</p>
+</li>
+<li>
+<p>The Infinity Machine deletes that source as per the user&#8217;s request</p>
 <div class="paragraph">
 <p>Use case ends.</p>
 </div>
@@ -2390,17 +2433,30 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="ulist none">
 <ul class="none">
 <li>
-<p>2a. The list is empty.</p>
+<p>2a. There are no sources in the list. The database is empty.</p>
 <div class="paragraph">
 <p>Use case ends.</p>
 </div>
 </li>
 <li>
-<p>3a. The given index is invalid.</p>
+<p>3a. The given index is invalid. Either it is a negative number or exceeds the current list total.</p>
 <div class="ulist none">
 <ul class="none">
 <li>
-<p>3a1. AddressBook shows an error message.</p>
+<p>3a1. The Infinity Machine shows an error message.</p>
+<div class="paragraph">
+<p>Use case resumes at step 2.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>3b. The command entered is invalid. Either it is misspelled or does not have the correct arguments and parameters.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3b1. The Infinity Machine shows an error message together with a help text to guide the user along.</p>
 <div class="paragraph">
 <p>Use case resumes at step 2.</p>
 </div>
@@ -2410,8 +2466,1022 @@ for <code>RemarkCommandParser</code>.</p>
 </li>
 </ul>
 </div>
+<h3 id="use-case-edit-a-source" class="discrete">Use case: Edit a source</h3>
 <div class="paragraph">
-<p><em>{More to be added}</em></p>
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to list all sources</p>
+</li>
+<li>
+<p>The Infinity Machine shows a list of the sources currently in the database</p>
+</li>
+<li>
+<p>User requests to edit a specific source in the list with some parameters</p>
+</li>
+<li>
+<p>The Infinity Machine modifies that source as per the user&#8217;s request</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2a. There are no sources in the list. The database is empty.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+<li>
+<p>3a. The given index is invalid. Either it is a negative number or exceeds the current list total.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3a1. The Infinity Machine shows an error message.</p>
+<div class="paragraph">
+<p>Use case resumes at step 2.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>3b. The command entered is invalid. Either it is misspelled or does not have the correct arguments and parameters.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3b1. The Infinity Machine shows an error message together with a help text to guide the user along.</p>
+<div class="paragraph">
+<p>Use case resumes at step 2.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<h3 id="use-case-search-for-a-source" class="discrete">Use case: Search for a source</h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to search for a source with specific keywords</p>
+</li>
+<li>
+<p>The Infinity Machine shows a list of the sources currently in the database that match the user&#8217;s keywords</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>1a. The command entered is invalid. Either it is misspelled or does not have any keywords.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1a1. The Infinity Machine shows an error message together with a help text to guide the user along.</p>
+<div class="paragraph">
+<p>Use case resumes at step 0.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2a. There are no sources in the list. The database is empty.</p>
+<div class="paragraph">
+<p>Use case ends with nothing being displayed.</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2b. There are no sources in the list that match the user&#8217;s keywords.</p>
+<div class="paragraph">
+<p>Use case ends with nothing being displayed.</p>
+</div>
+</li>
+</ul>
+</div>
+<h3 id="use-case-list-the-sources-in-the-database" class="discrete">Use case: List the sources in the database</h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to list all sources</p>
+</li>
+<li>
+<p>The Infinity Machine shows a list of the sources currently in the database</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>1a. The command entered is invalid. The command was misspelled.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1a1. The Infinity Machine shows an error message together with a help text to guide the user along.</p>
+<div class="paragraph">
+<p>Use case resumes at step 0.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2a. There are no sources in the list. The database is empty.</p>
+<div class="paragraph">
+<p>Use case ends with nothing being displayed.</p>
+</div>
+</li>
+</ul>
+</div>
+<h3 id="use-case-reorder-sources-in-the-database" class="discrete">Use case: Reorder sources in the database</h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to list all sources</p>
+</li>
+<li>
+<p>The Infinity Machine shows a list of the sources currently in the database</p>
+</li>
+<li>
+<p>User requests to move a specific source in the list to another position either further up or below</p>
+</li>
+<li>
+<p>The Infinity Machine moves that source to the targeted location as per the user&#8217;s request</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2a. There are no sources in the list. The database is empty.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+<li>
+<p>3a. The given source index is invalid. Either it is a negative number or exceeds the current list total.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3a1. The Infinity Machine shows an error message.</p>
+<div class="paragraph">
+<p>Use case resumes at step 2.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>3b. The given location index is invalid. Either it is a negative number or exceeds the current list total.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3b1. The Infinity Machine shows an error message.</p>
+<div class="paragraph">
+<p>Use case resumes at step 2.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>3c. The command entered is invalid. Either it is misspelled or does not have the correct arguments and parameters.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3c1. The Infinity Machine shows an error message together with a help text to guide the user along.</p>
+<div class="paragraph">
+<p>Use case resumes at step 2.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>3d. The source index and the location index are the same.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3d1. The Infinity Machine performs the move but nothing changes.</p>
+<div class="paragraph">
+<p>Use case ends with no change to the database.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<h3 id="use-case-generate-bibliography-entry-of-a-source" class="discrete">Use case: Generate bibliography entry of a source</h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to list all sources</p>
+</li>
+<li>
+<p>The Infinity Machine shows a list of the sources currently in the database</p>
+</li>
+<li>
+<p>User requests to generate a bibliography entry of a specific source in the list</p>
+</li>
+<li>
+<p>The Infinity Machine generates a bibliography entry of that source as per the user&#8217;s request in a predefined citation standard</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2a. There are no sources in the list. The database is empty.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+<li>
+<p>3a. The given index is invalid. Either it is a negative number or exceeds the current list total.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3a1. The Infinity Machine shows an error message.</p>
+<div class="paragraph">
+<p>Use case resumes at step 2.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>3b. The command entered is invalid. Either it is misspelled or does not have the correct arguments and parameters.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3b1. The Infinity Machine shows an error message together with a help text to guide the user along.</p>
+<div class="paragraph">
+<p>Use case resumes at step 2.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<h3 id="use-case-list-the-history-of-entered-commands" class="discrete">Use case: List the history of entered commands</h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to list all previously entered commands</p>
+</li>
+<li>
+<p>The Infinity Machine shows a list of the commands entered previously</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>1a. The command entered is invalid. The command was misspelled.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1a1. The Infinity Machine shows an error message together with a help text to guide the user along.</p>
+<div class="paragraph">
+<p>Use case resumes at step 0.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2a. There are no previous commands.</p>
+<div class="paragraph">
+<p>Use case ends with nothing being displayed.</p>
+</div>
+</li>
+</ul>
+</div>
+<h3 id="use-case-list-the-search-history-of-database" class="discrete">Use case: List the search history of database</h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to list all previously searched entities</p>
+</li>
+<li>
+<p>The Infinity Machine shows the search history of the application</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>1a. The command entered is invalid. The command was misspelled.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1a1. The Infinity Machine shows an error message together with a help text to guide the user along.</p>
+<div class="paragraph">
+<p>Use case resumes at step 0.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2a. There are no previous search commands.</p>
+<div class="paragraph">
+<p>Use case ends with nothing being displayed.</p>
+</div>
+</li>
+</ul>
+</div>
+<h3 id="use-case-creating-an-alias-of-a-command" class="discrete">Use case: Creating an alias of a command</h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to create an alias of a command</p>
+</li>
+<li>
+<p>The Infinity Machine creates and assigns the user defined alias to the command</p>
+</li>
+<li>
+<p>User executes that command with the alias</p>
+</li>
+<li>
+<p>The Infinity Machine executes the user requested command as though the original command was entered</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>1a. The command entered is invalid. Either the command was misspelled or the parameters entered were incorrect.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1a1. The Infinity Machine shows an error message together with a help text to guide the user along.</p>
+<div class="paragraph">
+<p>Use case resumes at step 0.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>1b. The alias the user is assigning already exists.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1b1. The Infinity Machine will override the original aliased command with the new command entered.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>1b. The command the user is attempting to alias is already an alias.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1b1. The Infinity Machine shows an error message.</p>
+<div class="paragraph">
+<p>Use case resumes at step 0.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3a. The alias creation was not successful.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3a1. The Infinity Machine shows an error message since the command is invalid.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<h3 id="use-case-removing-an-alias-of-a-command" class="discrete">Use case: Removing an alias of a command</h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to remove an alias of a command</p>
+</li>
+<li>
+<p>The Infinity Machine removes the alias to the command</p>
+</li>
+<li>
+<p>User executes that command with the now removed alias</p>
+</li>
+<li>
+<p>The Infinity Machine will not execute the command since it is no longer an alias and instead displays an error</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>1a. The command entered is invalid. Either the command was misspelled or the parameters entered were incorrect.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1a1. The Infinity Machine shows an error message together with a help text to guide the user along.</p>
+<div class="paragraph">
+<p>Use case resumes at step 0.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>1b. The alias the user is attempting to remove does not exist.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1b1. The Infinity Machine will not perform any action.</p>
+<div class="paragraph">
+<p>Use case resumes at step 2 with no change.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3a. The alias was not successful removed.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3a1. The Infinity Machine will execute the command when the alias is used.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<h3 id="use-case-list-all-the-aliases-currently-active" class="discrete">Use case: List all the aliases currently active</h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to list all active aliases</p>
+</li>
+<li>
+<p>The Infinity Machine shows a list of the active aliases for the various commands</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>1a. The command entered is invalid. The command was misspelled.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1a1. The Infinity Machine shows an error message together with a help text to guide the user along.</p>
+<div class="paragraph">
+<p>Use case resumes at step 0.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2a. There are no aliases in the application.</p>
+<div class="paragraph">
+<p>Use case ends with nothing being displayed.</p>
+</div>
+</li>
+</ul>
+</div>
+<h3 id="use-case-count-the-total-number-of-sources-in-the-database" class="discrete">Use case: Count the total number of sources in the database</h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to count how many sources there are in the database</p>
+</li>
+<li>
+<p>The Infinity Machine shows the number of sources in the database</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>1a. The command entered is invalid. The command was misspelled.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1a1. The Infinity Machine shows an error message together with a help text to guide the user along.</p>
+<div class="paragraph">
+<p>Use case resumes at step 0.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<h3 id="use-case-undo-a-previous-command" class="discrete">Use case: Undo a previous command</h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to undo a previous command</p>
+</li>
+<li>
+<p>The Infinity Machine undoes the previous command and sets the database to its state before the command</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>1a. The command entered is invalid. The command was misspelled.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1a1. The Infinity Machine shows an error message together with a help text to guide the user along.</p>
+<div class="paragraph">
+<p>Use case resumes at step 0.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1b. There are no previous commands.</p>
+<div class="paragraph">
+<p>Use case ends with no changes to the database.</p>
+</div>
+</li>
+<li>
+<p>1c. All previous commands are not "undoable" (they do not modify the sources or are valid redo commands)</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1c1. The Infinity Machine will not undo anything and the sources will be unchanged.</p>
+<div class="paragraph">
+<p>Use case ends with no changes to the database.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<h3 id="use-case-redo-a-previous-command" class="discrete">Use case: Redo a previous command</h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to redo a previous command</p>
+</li>
+<li>
+<p>The Infinity Machine redoes the previous command and sets the database to its state after the command</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>1a. The command entered is invalid. The command was misspelled.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1a1. The Infinity Machine shows an error message together with a help text to guide the user along.</p>
+<div class="paragraph">
+<p>Use case resumes at step 0.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1b. There are no previous commands.</p>
+<div class="paragraph">
+<p>Use case ends with no changes to the database.</p>
+</div>
+</li>
+<li>
+<p>1c. All previous commands are not "redoable" (they do not modify the sources or are valid undo commands)</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1c1. The Infinity Machine will not undo anything and the sources will be unchanged.</p>
+<div class="paragraph">
+<p>Use case ends with no changes to the database.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<h3 id="use-case-enable-panic-mode" class="discrete">Use case: Enable panic mode</h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to enable panic mode</p>
+</li>
+<li>
+<p>The Infinity Machine goes into panic mode and hides all sources</p>
+</li>
+<li>
+<p>User requests to list all sources</p>
+</li>
+<li>
+<p>The Infinity Machine will display nothing since it is in panic mode</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>1a. The command entered is invalid. The command is misspelled.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1a1. The Infinity Machine shows an error message together with a help text to guide the user along.</p>
+<div class="paragraph">
+<p>Use case resumes at step 0.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>1b. The system is already in panic mode.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1b1. The Infinity Machine does not perform any action since it is already in panic mode.</p>
+<div class="paragraph">
+<p>Use case continues at step 3.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>3a. The earlier enable panic command is invalid.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3a1. The Infinity Machine displays all sources since it did not enter panic mode.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<h3 id="use-case-disable-panic-mode" class="discrete">Use case: Disable panic mode</h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to disable panic mode</p>
+</li>
+<li>
+<p>The Infinity Machine goes into normal mode and reveals all sources</p>
+</li>
+<li>
+<p>User requests to list all sources</p>
+</li>
+<li>
+<p>The Infinity Machine will display all sources since it is no longer in panic mode</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>1a. The command entered is invalid. The command is misspelled.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1a1. The Infinity Machine shows an error message together with a help text to guide the user along.</p>
+<div class="paragraph">
+<p>Use case resumes at step 0.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>1b. The system is already in normal mode.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1b1. The Infinity Machine does not perform any action since it is already in panic mode.</p>
+<div class="paragraph">
+<p>Use case continues at step 3.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>3a. The earlier enable panic command is invalid.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3a1. The Infinity Machine displays nothing since it is still in panic mode.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>3b. There are no sources in the list. The database is empty.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3b1. The Infinity Machine displays nothing since there are no sources.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<h3 id="use-case-clear-all-sources-in-the-database" class="discrete">Use case: Clear all sources in the database</h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to clear all sources in the database</p>
+</li>
+<li>
+<p>The Infinity Machine clears all the sources in the database making it empty</p>
+</li>
+<li>
+<p>User requests to list all sources</p>
+</li>
+<li>
+<p>The Infinity Machine will display nothing since all the sources have been removed</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>1a. The command entered is invalid. The command was misspelled.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1a1. The Infinity Machine shows an error message together with a help text to guide the user along.</p>
+<div class="paragraph">
+<p>Use case resumes at step 0.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>3a. The earlier clear command is invalid.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3a1. The Infinity Machine displays all sources it has since it did not lose any sources.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<h3 id="use-case-exit-application" class="discrete">Use case: Exit application</h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests exit application</p>
+</li>
+<li>
+<p>The infinity machine saves and shuts down</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>1a. The command entered is invalid. The command was misspelled.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1a1. The Infinity Machine shows an error message together with a help text to guide the user along.</p>
+<div class="paragraph">
+<p>Use case resumes at step 0.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
 </div>
 </div>
 </div>
@@ -2599,4 +3669,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-03-31 09:47:00 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-03-31 15:13:25 UTC</div></div></div></body></html>
