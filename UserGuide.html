@@ -348,7 +348,17 @@ Format: <code>delete ORIGINAL_INDEX NEW_INDEX</code></p>
 <p>The index <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
 </li>
 <li>
-<p>All sources after the location moved to will be shifted downwards.</p>
+<p>The specified source will replace the original source at that index.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>If the souce was shifted forward, sources before the <code>NEW_INDEX</code> will be shifted back and the source designated by <code>ORIGINAL_INDEX</code> will take the position of <code>NEW_INDEX</code>.</p>
+</li>
+<li>
+<p>If the souce was shifted backwards, sources after the <code>NEW_INDEX</code> will be shifted forward and the source designated by <code>ORIGINAL_INDEX</code> will take the position of <code>NEW_INDEX</code>.</p>
+</li>
+</ul>
+</div>
 </li>
 </ul>
 </div>
@@ -362,6 +372,10 @@ Format: <code>delete ORIGINAL_INDEX NEW_INDEX</code></p>
 <li>
 <p><code>order 1 4</code><br>
 Moves the source located at index 1 to index 4.</p>
+</li>
+<li>
+<p><code>order 1 6</code><br>
+If there are only 6 sources in the database, the command moves the source located at index 1 to last position in the list.</p>
 </li>
 </ul>
 </div>
@@ -746,4 +760,4 @@ e.g. <code>definecommand c/edit a/e</code></p>
 </ul>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-02 12:48:34 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-02 13:30:10 UTC</div></div></div></body></html>
