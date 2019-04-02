@@ -34,10 +34,11 @@
 <li><a href="#search-feature">3.3. Search feature</a></li>
 <li><a href="#count-feature">3.4. Count feature</a></li>
 <li><a href="#list-feature">3.5. List feature</a></li>
-<li><a href="#biblio-feature">3.6. Biblio feature</a></li>
-<li><a href="#proposed-data-encryption">3.7. [Proposed] Data Encryption</a></li>
-<li><a href="#logging">3.8. Logging</a></li>
-<li><a href="#Implementation-Configuration">3.9. Configuration</a></li>
+<li><a href="#custom-order-command">3.6. Custom Order Command</a></li>
+<li><a href="#biblio-feature">3.7. Biblio feature</a></li>
+<li><a href="#proposed-data-encryption">3.8. [Proposed] Data Encryption</a></li>
+<li><a href="#logging">3.9. Logging</a></li>
+<li><a href="#Implementation-Configuration">3.10. Configuration</a></li>
 </ul>
 </li>
 <li><a href="#documentation">4. Documentation</a>
@@ -1201,9 +1202,99 @@ to enter exactly 1 or no arguments.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="biblio-feature"><a class="link" href="#biblio-feature">3.6. Biblio feature</a></h3>
+<h3 id="custom-order-command"><a class="link" href="#custom-order-command">3.6. Custom Order Command</a></h3>
+<div class="paragraph">
+<p>The function is currently implemented using the functionality of the source model. It allows users to designate a source they want to move and a location they want to move it to.</p>
+</div>
+<div class="paragraph">
+<p>The primary uses of this feature are to facilitate source management and ordering sources by some user defined metric like personal importance.</p>
+</div>
+<div class="paragraph">
+<p>Given the function works purely on the parameters the user enters, a parser file was necessary to filter out invalid inputs like alphabets or special characters.</p>
+</div>
+<div class="paragraph">
+<p>Further consideration was necessary because of nature of the inputs. The inputs are array indexes which are very prone to being out or bounds that can result in system failures. Therefore, in addition to traditional exception handling, the function also implements its own checks for invalid user indexes.</p>
+</div>
+<div class="paragraph">
+<p>These check include the following:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Checking for inputs which are 0 or smaller</p>
+<div class="ulist">
+<ul>
+<li>
+<p>The user entered input follows traditional listing which starts from 1.  However array indexes in Java start from 0.  Therefore, 1 is always subtracted from any input added.</p>
+</li>
+<li>
+<p>This means that any user input less than 1 are automatically invalid since that index cannot possibly exist</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Checking for inputs which are larger than the size of the list of sources</p>
+<div class="ulist">
+<ul>
+<li>
+<p>The classic out of bounds exception occurs when a function attempts to extract an index from a point larger than the list&#8217;s current size.</p>
+</li>
+<li>
+<p>The function therefore checks the user input to ensure that it is always within the size of the list.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Once the inputs are deemed as valid, the actual moving can begin. The model uses a list implementation for its primary storage model. This means that when a source is moved to a location, every source around it will need to be shifted to the front or the back depending on where the original source originated at.</p>
+</div>
+<div class="paragraph">
+<p>Thankfully, the Java List implementation does come with the function to add an item to the lest at a particular index, pushing everything aside automatically. The function called <code>addSourceAtIndex</code> was added to the model which took in the source to add as well as an index which the source should be added at.</p>
+</div>
+<div class="paragraph">
+<p>The function takes the following steps to make the swap:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Step 1&#8201;&#8212;&#8201;The function stores a copy of the source to be moved locally</p>
+<div class="ulist">
+<ul>
+<li>
+<p>The source to be moved is found using the index entered by the user and the <code>List.get</code> function that takes in an index and returns the source to be moved</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Step 2&#8201;&#8212;&#8201;The function then deletes the source to be moved from the list</p>
+<div class="ulist">
+<ul>
+<li>
+<p>The <code>deleteSource</code> function automatically moves sources up to fill up the void left by the deleted source</p>
+</li>
+<li>
+<p>A deletion is necessary in this step because the model does not accept duplicate sources. Therefore, adding the source to be moved first before deleting it would result in the function failing.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Step 3&#8201;&#8212;&#8201;The <code>addSourceAtIndex</code> function is used to place the recently deleted source back into the list at the designated location.</p>
+</li>
+<li>
+<p>Step 4&#8201;&#8212;&#8201;The function then commits the database to save the recent changes.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="biblio-feature"><a class="link" href="#biblio-feature">3.7. Biblio feature</a></h3>
 <div class="sect3">
-<h4 id="current-implementation-5"><a class="link" href="#current-implementation-5">3.6.1. Current Implementation</a></h4>
+<h4 id="current-implementation-5"><a class="link" href="#current-implementation-5">3.7.1. Current Implementation</a></h4>
 <div class="paragraph">
 <p>The list command is facilitated by <code>Infinity Machine</code>.
 It extends <code>Infinity Machine</code> with a bibliography generating functionality, generating a bibliographical entry of the appropriate style based on the requested format and source index.</p>
@@ -1231,20 +1322,20 @@ in an indexed fashion, with all details and in order of their addition.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">3.7. [Proposed] Data Encryption</a></h3>
+<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">3.8. [Proposed] Data Encryption</a></h3>
 <div class="paragraph">
 <p><em>{Explain here how the data encryption feature will be implemented}</em></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">3.8. Logging</a></h3>
+<h3 id="logging"><a class="link" href="#logging">3.9. Logging</a></h3>
 <div class="paragraph">
 <p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.9, &#8220;Configuration&#8221;</a>)</p>
+<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.10, &#8220;Configuration&#8221;</a>)</p>
 </li>
 <li>
 <p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level</p>
@@ -1275,7 +1366,7 @@ in an indexed fashion, with all details and in order of their addition.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.9. Configuration</a></h3>
+<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.10. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g user prefs file location, logging level) through the configuration file (default: <code>config.json</code>).</p>
 </div>
@@ -3854,4 +3945,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-02 15:06:12 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-02 15:44:15 UTC</div></div></div></body></html>
