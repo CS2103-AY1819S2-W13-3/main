@@ -18,7 +18,7 @@
 <li><a href="#deleting-a-source-code-delete-code">3.3. Deleting a source : <code>delete</code></a></li>
 <li><a href="#editing-a-source-code-edit-code">3.4. Editing a source : <code>edit</code></a></li>
 <li><a href="#searching-a-source-code-search-code">3.5. Searching a source: <code>search</code></a></li>
-<li><a href="#listing-all-sources-code-list-code">3.6. Listing all sources : <code>list</code></a></li>
+<li><a href="#listing-all-sources-code-list-n-code">3.6. Listing all sources : <code>list [n]</code></a></li>
 <li><a href="#reordering-sources-to-your-liking-code-order-code">3.7. Reordering sources to your liking : <code>order</code></a></li>
 <li><a href="#generate-bibliography-entry-code-biblio-code">3.8. Generate bibliography entry : <code>biblio</code></a></li>
 <li><a href="#listing-entered-commands-code-history-code">3.9. Listing entered commands : <code>history</code></a></li>
@@ -298,17 +298,27 @@ Returns any source having tags <code>ArtificialIntelligence</code> or <code>Mach
 </div>
 </div>
 <div class="sect2">
-<h3 id="listing-all-sources-code-list-code"><a class="link" href="#listing-all-sources-code-list-code">3.6. Listing all sources : <code>list</code></a></h3>
+<h3 id="listing-all-sources-code-list-n-code"><a class="link" href="#listing-all-sources-code-list-n-code">3.6. Listing all sources : <code>list [n]</code></a></h3>
 <div class="paragraph">
-<p>Displays a list of all sources currently in the database, with no filtering.<br>
-Format: <code>list</code></p>
+<p>Displays a list of all sources currently in the database, without filtering.<br>
+Optional argument N used to list only the top N sources to the user.<br>
+Format: <code>list [N]</code></p>
 </div>
 <div class="sidebarblock">
 <div class="content">
 <div class="ulist">
 <ul>
 <li>
-<p>Lists all sources present in the database in the order of their addition</p>
+<p>Lists all sources present in the database in the order of their addition, if no argument passed</p>
+</li>
+<li>
+<p>Lists top N sources if a single integer N is passed</p>
+</li>
+<li>
+<p>Throws error if more than one arguments are passed</p>
+</li>
+<li>
+<p>The paramter passed, N, must be a positive integer else error is thrown</p>
 </li>
 <li>
 <p>Tags, Details, Type are also displayed along with the sources</p>
@@ -712,4 +722,4 @@ e.g. <code>definecommand c/edit a/e</code></p>
 </ul>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-01 02:11:01 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-02 11:19:44 UTC</div></div></div></body></html>

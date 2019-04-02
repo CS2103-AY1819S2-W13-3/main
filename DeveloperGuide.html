@@ -966,14 +966,29 @@ is not used.</p>
 <h4 id="current-implementation-4"><a class="link" href="#current-implementation-4">3.5.1. Current Implementation</a></h4>
 <div class="paragraph">
 <p>The list command is facilitated by <code>Infinity Machine</code>.
-It extends <code>Infinity Machine</code> with a list functionality, enumerating all entries in the source database and their details,
-in the order of their addition.
-Additionally, it uses:</p>
+It extends <code>Infinity Machine</code> with a list functionality, enumerating all or a specific number of
+entries in the source database and their details, in the order of their addition.
+It has mainly two usages:<br>
+1) Without a parameter, as just <code>list</code> : enumerates all the entries of the source database with their details<br>
+2) With a parameter N : where N is a positive integer, enumerates only the top - N or first - N sources from the source database<br></p>
+</div>
+<div class="paragraph">
+<p>Additionally, it uses:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>PREDICATE_SHOW_ALL_SOURCES</code>&#8201;&#8212;&#8201;</p>
+<p><code>PREDICATE_SHOW_ALL_SOURCES</code>&#8201;&#8212;&#8201;when the user does not pass an argument to the list command, all sources must be displayed displayed.
+This predicate results <code>true</code> for every source tested.</p>
+</li>
+<li>
+<p><code>makePredicateForTopN</code>&#8201;&#8212;&#8201;when the user passes an argument, only first N sources must be listed.
+This method returns a new object of type <code>Predicate&lt;Source&gt;</code> that keeps track of the <code>count</code> of sources,
+displaying <code>true</code> for the first N and <code>false</code> for the rest.</p>
+</li>
+<li>
+<p><code>targetIndex</code>&#8201;&#8212;&#8201;the number N up to which the most recent sources are to be displayed to the user. Maintained internally.
+Set to the current size of the database if the value input is more that this current size.</p>
 </li>
 </ul>
 </div>
@@ -988,20 +1003,8 @@ in an indexed fashion, with all details and in order of their addition.</p>
 <p>Step 2. The user executes an <code>add</code> command to add another source entry to the database.</p>
 </div>
 <div class="paragraph">
-<p>Step 3. The user executes <code>list</code> command. All the entries in the database are listed again, showing all the details and
+<p>Step 3. The user executes <code>list</code> command (with no arguments). All the entries in the database are listed again, showing all the details and
 in the order of their addition.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<code>list</code> does not take any arguments. If given, it will ignore it.
-</td>
-</tr>
-</table>
 </div>
 <div class="paragraph">
 <p>Step 4. The user now executes <code>delete</code> to delete an entry.</p>
@@ -1010,15 +1013,25 @@ in the order of their addition.</p>
 <p>Step 5. The user executes <code>list</code> command again. All the updated entries in the database, leaving out the last deleted one,  are listed again, showing all the details and
 in the order of their addition.</p>
 </div>
+<div class="paragraph">
+<p>Step 6. The user now executes <code>list 2</code> command. The first 2 entries akin to the previous output are displayed.</p>
+</div>
+<div class="paragraph">
+<p>Step 7. The user now executes <code>list 3 5</code> command. An invalid command format exception is thrown, prompting the user
+to enter exactly 1 or no arguments.</p>
+</div>
+<div class="paragraph">
+<p>Step 8. The user now executes <code>list 3</code> command. The first 3 entries of the entire source database are listed with all their details.</p>
+</div>
 </div>
 <div class="sect3">
 <h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">3.5.2. Design Considerations</a></h4>
 <div class="sect4">
-<h5 id="aspect-how-undo-redo-executes-3"><a class="link" href="#aspect-how-undo-redo-executes-3">Aspect: How undo &amp; redo executes</a></h5>
+<h5 id="aspect-how-list-list-n-executes"><a class="link" href="#aspect-how-list-list-n-executes">Aspect: How list &amp; list n executes</a></h5>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Alternative 1 (current choice):</strong> Reads and lists the entire source database.</p>
+<p><strong>List (current choice):</strong> Filters using predicate that returns <code>true</code> for every source.</p>
 <div class="ulist">
 <ul>
 <li>
@@ -1030,15 +1043,28 @@ in the order of their addition.</p>
 </ul>
 </div>
 </li>
+<li>
+<p><strong>List N (current choice):</strong> Filters using predicate that returns <code>true</code> for first N sources.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Easy to implement. Intuitive to understand</p>
+</li>
+<li>
+<p>Cons: Can be made faster and cleaner using List operations or streams.</p>
+</li>
+</ul>
+</div>
+</li>
 </ul>
 </div>
 </div>
 <div class="sect4">
-<h5 id="aspect-data-structure-to-support-the-undo-redo-commands-3"><a class="link" href="#aspect-data-structure-to-support-the-undo-redo-commands-3">Aspect: Data structure to support the undo/redo commands</a></h5>
+<h5 id="aspect-data-structure-to-support-the-list-list-n-commands"><a class="link" href="#aspect-data-structure-to-support-the-list-list-n-commands">Aspect: Data structure to support the list/list n commands</a></h5>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Alternative 1 (current choice):</strong> Reads and lists all the entries using a predicate.</p>
+<p><strong>Alternative 1 (current choice):</strong> Forms predicates based on the input parameter, maintain targetIndex.</p>
 <div class="ulist">
 <ul>
 <li>
@@ -3679,4 +3705,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-01 02:11:01 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-02 11:19:44 UTC</div></div></div></body></html>
