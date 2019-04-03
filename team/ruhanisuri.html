@@ -114,86 +114,6 @@ for tech-savvy university students who are able to use CLI and wish to organize
 </tr>
 </tbody>
 </table>
-<div class="sect2">
-<h3 id="listing-all-sources-code-list-code"><a class="link" href="#listing-all-sources-code-list-code">Listing all sources : <code>list</code></a></h3>
-<div class="paragraph">
-<p>Displays a list of all sources currently in the database, without filtering.<br>
-Optional argument N used to list only the top N sources to the user.<br>
-Format: <code>list [N]</code></p>
-</div>
-<div class="sidebarblock">
-<div class="content">
-<div class="ulist">
-<ul>
-<li>
-<p>Lists all sources present in the database in the order of their addition, if no argument passed</p>
-</li>
-<li>
-<p>Lists top N sources if a single integer N is passed</p>
-</li>
-<li>
-<p>Throws error if more than one arguments are passed</p>
-</li>
-<li>
-<p>The paramter passed, N, must be a positive integer else error is thrown</p>
-</li>
-<li>
-<p>Tags, Details, Type are also displayed along with the sources</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="searching-a-source-code-search-code"><a class="link" href="#searching-a-source-code-search-code">Searching a source: <code>search</code></a></h3>
-<div class="paragraph">
-<p>Searches for entries amongst the list of sources.<br>
-Able to search by title, type, detail and tags as specified by the CLI prefixes.
-Finds all entries with an (exact, case insensitive) matching field as entered by the user.<br>
-Searches with multiple arguments are taken as conjunction searches, i.e all those sources
-that satisfy all the keyword values are shown.
-It is case insensitive (eg. <code>RSAalgorithm</code> is same as <code>rsaalgorithm</code>)<br>
-Matching is exact (eg. <code>Algorithm</code> will not match with <code>Algorithms</code>)<br>
-Format: <code>search [n/TITLE] [y/TYPE] [d/DETAILS] [t/TAG]</code></p>
-</div>
-<div class="sidebarblock">
-<div class="content">
-<div class="ulist">
-<ul>
-<li>
-<p>The search is case insensitive. e.g <code>hans</code> will match <code>Hans</code></p>
-</li>
-<li>
-<p>There can have any number of tags but minimally 1 (just <code>search</code> results in error. To enumerate all entries, check out <code>list</code> command instead)</p>
-</li>
-<li>
-<p>Only full words will be matched e.g. <code>Han</code> will not match <code>Hans</code>, <code>FooTitle</code> will not match <code>FooTitle1</code></p>
-</li>
-<li>
-<p>Search implemented as a logical AND. eg. <code>search i/algorithm y/website</code> results in all those sources
-that have title <code>algorithm</code> AND type <code>website</code></p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="paragraph">
-<p>Examples:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>search i/Algorithms</code><br>
-Returns the source(s) with the title <code>algorithms</code></p>
-</li>
-<li>
-<p><code>search y/website t/ArtificialIntelligence t/MachineLearning</code><br>
-Returns any source having tags <code>ArtificialIntelligence</code> and <code>MachineLearning</code> and of type <code>website</code></p>
-</li>
-</ul>
-</div>
-</div>
 </div>
 </div>
 <div class="sect1">
@@ -427,4 +347,4 @@ in an indexed fashion, with all details and in order of their addition.</p>
 <p><em>{Optionally, you may include other projects in your portfolio.}</em></p>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-02 19:01:09 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-03 02:18:53 UTC</div></div></div></body></html>
