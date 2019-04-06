@@ -31,9 +31,8 @@
 <li><a href="#enabling-panic-mode-code-unpanic-code">3.16. Enabling panic mode : <code>unpanic</code></a></li>
 <li><a href="#clearing-all-entries-code-clear-code">3.17. Clearing all entries : <code>clear</code></a></li>
 <li><a href="#exiting-the-program-code-exit-code">3.18. Exiting the program : <code>exit</code></a></li>
-<li><a href="#autocorrect-did-you-mean-no-command">3.19. Autocorrect ('Did you mean') : &lt;no command&gt;</a></li>
-<li><a href="#saving-the-data">3.20. Saving the data</a></li>
-<li><a href="#encrypting-data-files-code-coming-in-v2-0-code">3.21. Encrypting data files <code>[coming in v2.0]</code></a></li>
+<li><a href="#saving-the-data">3.19. Saving the data</a></li>
+<li><a href="#encrypting-data-files-code-coming-in-v2-0-code">3.20. Encrypting data files <code>[coming in v2.0]</code></a></li>
 </ul>
 </li>
 <li><a href="#faq">4. FAQ</a></li>
@@ -116,10 +115,10 @@ e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> wil
 <div class="ulist">
 <ul>
 <li>
-<p>Words in <code>UPPER_CASE</code> are the parameters to be supplied by the user e.g. in <code>add n/TITLE</code>, <code>TITLE</code> is a parameter which can be used as <code>add n/Wikipedia Algorithms</code>.</p>
+<p>Words in <code>UPPER_CASE</code> are the parameters to be supplied by the user e.g. in <code>add i/TITLE</code>, <code>TITLE</code> is a parameter which can be used as <code>add i/Wikipedia Algorithms</code>.</p>
 </li>
 <li>
-<p>Items in square brackets are optional e.g <code>n/TITLE [t/TAG]</code> can be used as <code>n/Wikipedia Algorithms t/Wikipedia</code> or as <code>n/Wikipedia Algorithms</code>.</p>
+<p>Items in square brackets are optional e.g <code>i/TITLE [t/TAG]</code> can be used as <code>i/Wikipedia Algorithms t/Wikipedia</code> or as <code>i/Wikipedia Algorithms</code>.</p>
 </li>
 <li>
 <p>Items with <code>…</code>​ after them can be used multiple times including zero times e.g <code>[t/TAG]&#8230;&#8203;</code> can be used as <code>&#160;</code> (i.e. 0 times), <code>t/Computer Science</code>, <code>t/Computer Science t/Algorithms</code> etc.</p>
@@ -136,12 +135,15 @@ e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> wil
 <div class="paragraph">
 <p>Format: <code>help</code></p>
 </div>
+<div class="paragraph">
+<p>Displays the User Guide for a quick reference.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="adding-a-person-code-add-code"><a class="link" href="#adding-a-person-code-add-code">3.2. Adding a person: <code>add</code></a></h3>
 <div class="paragraph">
 <p>Adds a new source to the list of sources<br>
-Format: <code>add n/TITLE y/TYPE d/DETAILS [t/TAG]&#8230;&#8203;</code></p>
+Format: <code>add i/TITLE y/TYPE d/DETAILS [t/TAG]&#8230;&#8203;</code></p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -205,7 +207,7 @@ Deletes the 2nd source in the database.</p>
 <li>
 <p><code>search algorithms</code><br>
 <code>delete 1</code><br>
-Deletes the 1st source in the results of the <code>find</code> command.</p>
+Deletes the 1st source in the results of the <code>search</code> command.</p>
 </li>
 </ul>
 </div>
@@ -285,7 +287,7 @@ Format: <code>edit INDEX [i/TITLE] [y/TYPE] [d/DETAILS] [t/TAG]&#8230;&#8203;</c
 <div class="ulist">
 <ul>
 <li>
-<p><code>edit 2 n/Photosynthesis Wikipedia t/Photosynthesis t/Biology</code><br>
+<p><code>edit 2 i/Photosynthesis Wikipedia t/Photosynthesis t/Biology</code><br>
 Edits the title and tags of the source to be <code>Photosynthesis Wikipedia</code> and <code>Photosynthesis, Biology</code> respectively.</p>
 </li>
 <li>
@@ -303,9 +305,7 @@ Able to search by title, type, detail and tags as specified by the CLI prefixes.
 Finds all entries with an (exact, case insensitive) matching field as entered by the user.<br>
 Searches with multiple arguments are taken as conjunction searches, i.e all those sources
 that satisfy all the keyword values are shown.
-It is case insensitive (eg. <code>RSAalgorithm</code> is same as <code>rsaalgorithm</code>)<br>
-Matching is exact (eg. <code>Algorithm</code> will not match with <code>Algorithms</code>)<br>
-Format: <code>search [n/TITLE] [y/TYPE] [d/DETAILS] [t/TAG]</code></p>
+Format: <code>search [i/TITLE] [y/TYPE] [d/DETAILS] [t/TAG]</code></p>
 </div>
 <div class="sidebarblock">
 <div class="content">
@@ -348,8 +348,10 @@ Returns any source having tags <code>ArtificialIntelligence</code> and <code>Mac
 <h3 id="listing-all-sources-code-list-code"><a class="link" href="#listing-all-sources-code-list-code">3.7. Listing all sources : <code>list</code></a></h3>
 <div class="paragraph">
 <p>Displays a list of all sources currently in the database, without filtering.<br>
-Optional argument N used to list only the top N sources to the user.<br>
-Format: <code>list [N]</code></p>
+Optional argument N used to list only the top N sources to the user, where N is a positive integer
+(any other value throws error).<br>
+Format: <code>list [N]</code>
+where argument N in [ ] is optional.</p>
 </div>
 <div class="sidebarblock">
 <div class="content">
@@ -697,24 +699,7 @@ Format: <code>exit</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="autocorrect-did-you-mean-no-command"><a class="link" href="#autocorrect-did-you-mean-no-command">3.19. Autocorrect ('Did you mean') : &lt;no command&gt;</a></h3>
-<div class="paragraph">
-<p>Suggests commands to the users when they get the spelling wrong.<br></p>
-</div>
-<div class="paragraph">
-<p>Examples:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>delete Algorith</code><br>
-<code>Did you mean: Algorithms</code></p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="saving-the-data"><a class="link" href="#saving-the-data">3.20. Saving the data</a></h3>
+<h3 id="saving-the-data"><a class="link" href="#saving-the-data">3.19. Saving the data</a></h3>
 <div class="paragraph">
 <p>Address book data are saved in the hard disk automatically after any command that changes the data.<br></p>
 </div>
@@ -723,7 +708,7 @@ Format: <code>exit</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="encrypting-data-files-code-coming-in-v2-0-code"><a class="link" href="#encrypting-data-files-code-coming-in-v2-0-code">3.21. Encrypting data files <code>[coming in v2.0]</code></a></h3>
+<h3 id="encrypting-data-files-code-coming-in-v2-0-code"><a class="link" href="#encrypting-data-files-code-coming-in-v2-0-code">3.20. Encrypting data files <code>[coming in v2.0]</code></a></h3>
 <div class="paragraph">
 <p>Research materials can be very sensitive and private especially for high profile researchers. The Infinity Machine hopes to be able to help researchers by encrypting their data for only authorised viewers to access.</p>
 </div>
@@ -767,11 +752,11 @@ e.g. <code>restore 3</code></p>
 e.g. <code>edit 2 i/Photosynthesis Wikipedia t/Photosynthesis t/Biology</code></p>
 </li>
 <li>
-<p><strong>Search</strong> : <code>search [KEYWORD] [KEYWORD]&#8230;&#8203;</code><br>
-e.g. <code>search algorithm journal</code></p>
+<p><strong>Search</strong> : <code>search [i/TITLE] [y/TYPE] [d/DETAILS] [t/TAG]&#8230;&#8203;</code><br>
+e.g. <code>search i/algorithm y/journal</code></p>
 </li>
 <li>
-<p><strong>List</strong> : <code>list</code></p>
+<p><strong>List</strong> : <code>list [N]</code></p>
 </li>
 <li>
 <p><strong>Help</strong> : <code>help</code></p>
@@ -783,11 +768,15 @@ e.g. <code>search algorithm journal</code></p>
 <p><strong>History</strong> : <code>history</code></p>
 </li>
 <li>
-<p><strong>Search History</strong> : <code>searchhistory</code></p>
+<p><strong>Adding an alias</strong> : <code>alias c/COMMAND a/ALIAS</code><br>
+e.g. <code>alias c/edit a/e</code></p>
 </li>
 <li>
-<p><strong>Define Command</strong> : <code>definecommand c/COMMAND a/ALIAS</code><br>
-e.g. <code>definecommand c/edit a/e</code></p>
+<p><strong>Removing an alias</strong> : <code>alias-rm ALIAS</code><br>
+e.g. <code>alias-rm c</code></p>
+</li>
+<li>
+<p><strong>Listing all aliases</strong> : <code>alias-ls</code></p>
 </li>
 <li>
 <p><strong>Undo</strong> : <code>undo</code></p>
@@ -804,4 +793,4 @@ e.g. <code>definecommand c/edit a/e</code></p>
 </ul>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-06 09:56:23 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-06 10:10:05 UTC</div></div></div></body></html>

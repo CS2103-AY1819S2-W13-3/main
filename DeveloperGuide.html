@@ -1025,17 +1025,53 @@ If the <code>currentStatePointer</code> is at index <code>addressBookStateList.s
 <div class="sect3">
 <h4 id="current-implementation-2"><a class="link" href="#current-implementation-2">3.4.1. Current Implementation</a></h4>
 <div class="paragraph">
+<p>Format: <code>search [n/TITLE] [y/TYPE] [d/DETAILS] [t/TAG] [t/TAG]&#8230;&#8203;</code></p>
+</div>
+<div class="paragraph">
 <p>The search feature is facilitated by <code>Infinity Machine</code>.
-It extends <code>Infinity Machine</code> with an find feature, allowing user to search through source entries by the title, type, detail and/or tags.
-Additionally, it uses:</p>
+It extends <code>Infinity Machine</code> with an find feature, allowing user to search through source entries by the title, type, detail and/or tags.</p>
+</div>
+<div class="paragraph">
+<p>This search function now has an added functionality of being able to take in multiple
+arguments of the type of source fields [i.e. title, type, detail and tags], and search for sources based on that.
+It searches in conjunction using multiple fields including title, type, detail and tag(s) input by the user,
+listing only those sources that satisfy all the input constraints of the matching fields, with all there corresponding field values.</p>
+</div>
+<div class="paragraph">
+<p>How it works is, it allows the user to search through all the entries in the database through various fields at a time, and display
+source entries that satisfy all of the entered tags in conjunction.
+It allows compound searches to be made, allowing user to narrow down their search, hence helping in efficient retrieval
+of the sources, and making working on the database more efficient.</p>
+</div>
+<div class="paragraph">
+<p>Additionally, it uses:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
 <p><code>SourceContainsKeywordsPredicate.java</code>&#8201;&#8212;&#8201;Here, the logic of running through all the respective fields of all the sources and matching it with the user inputs
-(trimmed by space, case insensitive) is implemented. It is split by the CLI prefixes and implements conjunction logic.</p>
+(trimmed by space, case insensitive) is implemented. It is split by the CLI prefixes and implements conjunction logic, by only returning <code>true</code>
+for those sources that satsify all the constraints, i.e. have all the fields matching as entered by the user.</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>This feature improves the product significantly because a user can now search an entry with a particular title AND a particular type and so on.
+It helps user greatly narrow down their search should they be looking for a specific source entry with particular values,
+instead of cluttering the screen with all those sources with share the same title as the one the user searches using the command.
+It also allows user to search sources based on other fields and not just title, such as type, tags and details, and even their
+logical combination.</p>
+</div>
+<div class="paragraph">
+<p>Some points to note:
+- This enhancement does not affect existing commands and commands to be added in future.
+- However, it changed the format of the original <code>search</code> command, which now not only takes parameters of different types, but also needs them to be prefixed by their
+CLI delimiters.
+- It required an in-depth analysis of design alternatives, as the format of the original command had to be changed
+- The implementation too was challenging, as the current format of <code>search</code> command had to be changed and be prepared to
+accept and parse multiple fields entered.
+- Its was also tricky to implement the conjunction of the fields as separate methods had to be written for checking for the presence
+of each of the field entered and by logical <code>&amp;&amp;</code> ing their results.</p>
 </div>
 <div class="paragraph">
 <p>Given below is an example usage scenario and how the search mechanism behaves at each step.</p>
@@ -1049,6 +1085,9 @@ in an indexed fashion, with all details and in order of their addition.</p>
 </div>
 <div class="paragraph">
 <p>Step 3. The user executes <code>search i/footitle6 y/website</code> and only those entries are listed that have both their title as <code>footitle1</code> and type as <code>website</code>.</p>
+</div>
+<div class="paragraph">
+<p>Step 4. The user executes <code>search t/CS2103</code> and all those sources that have 'CS2103' as one of their tags are enumerated.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1070,11 +1109,12 @@ in an indexed fashion, with all details and in order of their addition.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Alternative 1 (current choice):</strong> Runs through all entries and matches the arguments, field by field.</p>
+<p><strong>Alternative 1 (current choice):</strong> Runs through all entries and matches the arguments, field by field, and uing <code>&amp;&amp;</code> operation
+to combine the results.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Easy to implement.</p>
+<p>Pros: Easy to implement as exact String matching can be done in Java using streams and <code>StringUtil.containsWordIgnoreCase(str1, str2)</code>.</p>
 </li>
 <li>
 <p>Cons: May have performance issues in terms of time usage.</p>
@@ -1097,7 +1137,7 @@ in an indexed fashion, with all details and in order of their addition.</p>
 <p>Pros: Easy for new Computer Science student undergraduates to understand, who are likely to be the new incoming developers of our project.</p>
 </li>
 <li>
-<p>Cons: Not the most efficient implementation.</p>
+<p>Cons: May not be the most efficient implementation.</p>
 </li>
 </ul>
 </div>
@@ -1171,6 +1211,42 @@ It has mainly two usages:<br>
 2) With a parameter N : where N is a positive integer, enumerates only the top - N or first - N sources from the source database<br></p>
 </div>
 <div class="paragraph">
+<p>Motivation for such an enhancement is that one may feel that such act of populating <strong>all</strong> the sources on the GUI may be cluttering the view unnecessarily.
+Now, what could be the parameters a user may want to limit the list by? Limiting merely by their field values is akin to search,
+which would make the logic redundant. In contrast, the user may want to control the number of sources he wants to view.
+This could be helpful in:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Iteratively examining all the sources by restricting how many are shown at one time.</p>
+</li>
+<li>
+<p>Making more effective use of the GUI display to the user by not unnecessarily enumerating all sources.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Thus, the new modification to the command changes its format optionally, allowing user to be able to pass a parameter
+and list only those many sources from the top, that is from the least-recently added. This may be intuitively useful when say
+you want to perform certain operations in this new list of sources that are displayed by their time of addition.
+Example, a user wants to delete all of the sources that were added yesterday. And if 10 entries were added yesterday,
+the user could just execute <code>list 10</code> to access
+those entries and then perform a <code>delete &lt;INDEX&gt;</code> accordingly.</p>
+</div>
+<div class="paragraph">
+<p>For example, the user may still execute <code>list</code> command to see the updated list of all the source and their fields.</p>
+</div>
+<div class="paragraph">
+<p>But now, one may also enter <code>list 21</code> to list the top 21 sources only, allowing user to streamline their retrieval for more
+efficient operations on the sources.</p>
+</div>
+<div class="paragraph">
+<p>What it does is, it allows the user to now pass an optional argument to <code>list</code> command, a positive integer n, and then displays only the first n source entries.
+The original working of the <code>list</code> command showing all entries is still intact, thus just appending extra functionality without
+changing the original logic.</p>
+</div>
+<div class="paragraph">
 <p>Additionally, it uses:</p>
 </div>
 <div class="ulist">
@@ -1189,6 +1265,27 @@ displaying <code>true</code> for the first N and <code>false</code> for the rest
 Set to the current size of the database if the value input is more that this current size.</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>This feature improves the product significantly because a user can now list only as many item he wants and need not clutter the screen by displaying all.
+It helps him to narrow down his search, say should he want to view the N first added sources. This ensures more effective retrieval and
+operations on the sources, such as following it by index dependent operations such as <code>edit</code> and <code>delete</code> for instance.</p>
+</div>
+<div class="paragraph">
+<p>Some points to note:
+- This enhancement does not affect existing commands and commands to be added in future.
+- It required an in-depth analysis of design alternatives. Especially when it came to adding the ability
+for the command to be able to work both with 1 parameter and no parameters.
+Some design considerations were
+<strong> Using variable arguments: in <code>parser</code> method of <code>ListCommandParser</code> class, but this would require changing the
+Interface <code>Parser&lt;T&gt;</code>. This technique did not work for making <code>ListCommand</code> objects for the same reason.
+</strong> Using method overloading: This did not work for <code>parser</code> method because of the interface restrictions, however
+this was used in the constructor of <code>LogicCommand</code> class, creating two objects depending on whether a <code>targetIndex</code> was passed
+or not.
+** Using args.length(): Ultimately used in <code>parse</code> method for a simple check whether an
+argument is passed or not.
+- The implementation too was challenging, as the current format of <code>list</code> command had to be changed and be prepared to accept and parse an optional argument, ie. overloading
+functionality based on whether an argument was passed by the user or not.</p>
 </div>
 <div class="paragraph">
 <p>Given below is an example usage scenario and how the list mechanism behaves.</p>
@@ -4023,4 +4120,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-06 09:56:23 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-06 10:10:05 UTC</div></div></div></body></html>
