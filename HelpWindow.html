@@ -29,7 +29,7 @@
 <li><a href="#undoing-previous-command-code-undo-code">3.14. Undoing previous command : <code>undo</code></a></li>
 <li><a href="#redoing-the-previously-undone-command-code-redo-code">3.15. Redoing the previously undone command : <code>redo</code></a></li>
 <li><a href="#enabling-panic-mode-code-panic-code">3.16. Enabling panic mode : <code>panic</code></a></li>
-<li><a href="#enabling-panic-mode-code-unpanic-code">3.17. Enabling panic mode : <code>unpanic</code></a></li>
+<li><a href="#disabling-panic-mode-code-unpanic-code">3.17. Disabling panic mode : <code>unpanic</code></a></li>
 <li><a href="#clearing-all-entries-code-clear-code">3.18. Clearing all entries : <code>clear</code></a></li>
 <li><a href="#exiting-the-program-code-exit-code">3.19. Exiting the program : <code>exit</code></a></li>
 <li><a href="#saving-the-data">3.20. Saving the data</a></li>
@@ -707,15 +707,49 @@ The <code>redo</code> command fails as there are no <code>undo</code> commands e
 <div class="sect2">
 <h3 id="enabling-panic-mode-code-panic-code"><a class="link" href="#enabling-panic-mode-code-panic-code">3.16. Enabling panic mode : <code>panic</code></a></h3>
 <div class="paragraph">
-<p>Allows user to temporarily hide data.<br>
+<p>Allows the user to temporarily hide data.<br>
 Format: <code>panic</code></p>
+</div>
+<div class="paragraph">
+<p>Research data may be sensitive.
+Panic mode is a privacy-focused feature that swaps out the user&#8217;s data store with an empty dummy data store.</p>
+</div>
+<div class="paragraph">
+<p>When it is enabled, the application window replaces the original list of sources with an empty list.
+This change is reflected on disk too; the JSON file of sources is replaced by an empty dummy file that tracks the dummy data store.
+The original data store exists only in memory, until panic mode is disabled.</p>
+</div>
+<div class="paragraph">
+<p>In panic mode, the dummy data store behaves exactly like a real one.
+Therefore, all commands (e.g. add, remove, etc.) mutate the dummy data store (and the dummy JSON file), <strong>without affecting the actual data store.</strong></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If the user exits the application in panic mode (using the <code>exit</code> command), the application automatically restores the user&#8217;s original data from memory and saves it to disk before exiting, to prevent permanent data loss.</p>
+</div>
+<div class="paragraph">
+<p>However, if the application is closed directly <strong>while in panic mode</strong>, <strong>permanent data loss</strong> will occur.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
-<h3 id="enabling-panic-mode-code-unpanic-code"><a class="link" href="#enabling-panic-mode-code-unpanic-code">3.17. Enabling panic mode : <code>unpanic</code></a></h3>
+<h3 id="disabling-panic-mode-code-unpanic-code"><a class="link" href="#disabling-panic-mode-code-unpanic-code">3.17. Disabling panic mode : <code>unpanic</code></a></h3>
 <div class="paragraph">
-<p>Restores user data.<br>
+<p>Restores the user&#8217;s original data.<br>
 Format: <code>unpanic</code></p>
+</div>
+<div class="paragraph">
+<p>This reverses the effect of panic mode by restoring the user&#8217;s original data.
+The restorated is reflected on the disk too; the JSON file is reset to its original state and will now track the original data store.</p>
 </div>
 </div>
 <div class="sect2">
@@ -827,4 +861,4 @@ e.g. <code>alias-rm c</code></p>
 </ul>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-07 07:18:40 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-07 09:18:06 UTC</div></div></div></body></html>
