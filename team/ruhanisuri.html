@@ -57,6 +57,14 @@ considered.</p>
 Ideally, we would want to give the user a more powerful search function that allows them to search through the sources
 with more fields and parameters, for example used in conjunction.</p>
 </div>
+<div class="paragraph">
+<p>Another limitation of the AB4 implementation is that it tests for exact (case insensitive) matching between the keywords
+entered by the user and the field values of sources. This is very intuitive because this would expect the user to remember and
+recall the exact tag, title, type or detail they had entered when creating the source (or after editing). This is especially useless
+when the user stores his entire research data in the <code>detail</code>, say 3 paragraphs, now to reproduce the source he must enter those 3 paragraphs
+word to word in their entirety. This defeats the purpose of the user being able to search for a source so he can use it in his
+research.</p>
+</div>
 </div>
 <div class="sect5">
 <h6 id="strong-modification-strong"><a class="link" href="#strong-modification-strong"><strong>Modification</strong>:</a></h6>
@@ -66,27 +74,40 @@ with more fields and parameters, for example used in conjunction.</p>
 <div class="paragraph">
 <p>In the implementation of The Infinity Machine, search function now has an added functionality of being able to take in multiple
 arguments of the type of source fields, and search for sources based on that.
-It searchs in conjunction using multiple fields including title, type, detail and tag(s) input by the user,
+It searches in conjunction using multiple fields including title, type, detail and tag(s) input by the user,
 listing only those sources that satisfy all the input constraints of the matching fields.</p>
+</div>
+<div class="paragraph">
+<p>Another addition to its functionality is that this search feature is enabled with substring matching as against exact field matching.
+This renders this feature more powerful as the user may not always be able to remember exactly the title or tag of the source.
+It&#8217;s major usage is in the fact that the user will store the bulk of their data in the details field, and it is unintuitive to have them
+list the entire contents of the source in order to match and search it. Thus now, the user is only required to <code>search</code> using
+as many consecutive words they are able to recall to narrow the listings. Eg. searching for <code>d/Artificial Intelligence</code> will
+enumerate all source articles that have 'artificial intelligence' in their content.</p>
 </div>
 </div>
 <div class="sect5">
 <h6 id="strong-what-it-does-strong"><a class="link" href="#strong-what-it-does-strong"><strong>What it does</strong>:</a></h6>
 <div class="paragraph">
 <p>It allows the user to search through all the entries in the database through various fields at a time, and display
-source entries that satisfy all of the entered tags in conjunction.
+source entries that satisfy all of the entered tags in conjunction, with substring matching.
 It allows compound searches to be made, allowing user to narrow down their search, hence helping in efficient retrieval
-of the sources, and making working on the database more efficient.</p>
+of the sources, and making working on the database more efficient. It also checks if the source fields contain the keywords entered
+by the user.</p>
 </div>
 </div>
 <div class="sect5">
 <h6 id="strong-justification-strong"><a class="link" href="#strong-justification-strong"><strong>Justification</strong>:</a></h6>
 <div class="paragraph">
 <p>This feature improves the product significantly because a user can now search an entry with a particular title AND a particular type and so on.
-It helps user greatly narrow down their search should they be looking for a specific source entry with particular values,
+Furthermore, it removes the reliance on the user to memorize exact field values, by enabling substring matching so the user can enter as much as
+he remembers and see the results.</p>
+</div>
+<div class="paragraph">
+<p>It helps user greatly narrow down their search should they be looking for a specific source entry with particular values,
 instead of cluttering the screen with all those sources with share the same title as the one the user searches using the command.
 It also allows user to search sources based on other fields and not just title, such as type, tags and details, and even their
-logical combination.</p>
+logical combination, along with allowing the user to not memorize his source fields.</p>
 </div>
 </div>
 <div class="sect5">
@@ -94,7 +115,7 @@ logical combination.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>This enhancement does not affect existing commands and commands to be added in future.</p>
+<p>This enhancement does not affect existing commands and commands to be added in future.<br></p>
 </li>
 <li>
 <p>However, it changed the format of the original <code>search</code> command, which now not only takes parameters of different types, but also needs them to be prefixed by their
@@ -110,6 +131,13 @@ accept and parse multiple fields entered.</p>
 <li>
 <p>Its was also tricky to implement the conjunction of the fields as separate methods had to be written for checking for the presence
 of each of the field entered and by logical <code>&amp;&amp;</code> ing their results.</p>
+</li>
+<li>
+<p>It was relatively simple to change exact matching to substring matching by using <code>String.contains()</code> method.</p>
+</li>
+<li>
+<p>It was trivial to implement case insensitivity by converting both source value and argument value <code>toLowerCase()</code> before carrying
+out the substring comparison.</p>
 </li>
 </ul>
 </div>
@@ -534,7 +562,7 @@ to enter exactly 1 or no arguments.</p>
 </div>
 <div class="paragraph">
 <p>The search feature is facilitated by <code>Infinity Machine</code>.
-It extends <code>Infinity Machine</code> with an find feature, allowing user to search through source entries by the title, type, detail and/or tags.</p>
+It extends <code>Infinity Machine</code> with an find feature, allowing user to search through source entries by the title, type, detail and/or tags, with substring matching.</p>
 </div>
 <div class="paragraph">
 <p>This search function now has an added functionality of being able to take in multiple
@@ -543,8 +571,15 @@ It searches in conjunction using multiple fields including title, type, detail a
 listing only those sources that satisfy all the input constraints of the matching fields, with all there corresponding field values.</p>
 </div>
 <div class="paragraph">
+<p>Another addition to its functionality is that this search feature is enabled with substring matching as against exact field matching.
+This renders this feature more powerful as the user may not always be able to remember exactly the title or tag of the source.
+It&#8217;s major usage is in the fact that the user will store the bulk of their data in the details field, and it is unintuitive to have them
+list the entire contents of the source in order to match and search it. Thus now, the user is only required to <code>search</code> using
+as many consecutive words they are able to recall to narrow the listings.</p>
+</div>
+<div class="paragraph">
 <p>How it works is, it allows the user to search through all the entries in the database through various fields at a time, and display
-source entries that satisfy all of the entered tags in conjunction.
+source entries that satisfy all of the entered tags in conjunction, by checking if the source value contains these parameters.
 It allows compound searches to be made, allowing user to narrow down their search, hence helping in efficient retrieval
 of the sources, and making working on the database more efficient.</p>
 </div>
@@ -555,28 +590,22 @@ of the sources, and making working on the database more efficient.</p>
 <ul>
 <li>
 <p><code>SourceContainsKeywordsPredicate.java</code>&#8201;&#8212;&#8201;Here, the logic of running through all the respective fields of all the sources and matching it with the user inputs
-(trimmed by space, case insensitive) is implemented. It is split by the CLI prefixes and implements conjunction logic, by only returning <code>true</code>
-for those sources that satsify all the constraints, i.e. have all the fields matching as entered by the user.</p>
+(trimmed by space, case insensitive and take as substring) is implemented. It is split by the CLI prefixes and implements conjunction logic, by only returning <code>true</code>
+for those sources that satisfy all the constraints, i.e. have all the fields matching as entered by the user, where matching is checked by if the string
+contains the keywords entered by the user (case insensitive).</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
 <p>This feature improves the product significantly because a user can now search an entry with a particular title AND a particular type and so on.
+Not only that, the user can now just input whatever they are able to recall and the <code>search</code> returns all super strings instead of
+carrying out an exact matching.
 It helps user greatly narrow down their search should they be looking for a specific source entry with particular values,
 instead of cluttering the screen with all those sources with share the same title as the one the user searches using the command.
+It renders the search more powerful by resulting all super-strings should the user have meant something else or to prompt them about other similar
+source entries containing what they are looking for.
 It also allows user to search sources based on other fields and not just title, such as type, tags and details, and even their
 logical combination.</p>
-</div>
-<div class="paragraph">
-<p>Some points to note:
-- This enhancement does not affect existing commands and commands to be added in future.
-- However, it changed the format of the original <code>search</code> command, which now not only takes parameters of different types, but also needs them to be prefixed by their
-CLI delimiters.
-- It required an in-depth analysis of design alternatives, as the format of the original command had to be changed
-- The implementation too was challenging, as the current format of <code>search</code> command had to be changed and be prepared to
-accept and parse multiple fields entered.
-- Its was also tricky to implement the conjunction of the fields as separate methods had to be written for checking for the presence
-of each of the field entered and by logical <code>&amp;&amp;</code> ing their results.</p>
 </div>
 <div class="paragraph">
 <p>Given below is an example usage scenario and how the search mechanism behaves at each step.</p>
@@ -592,7 +621,7 @@ in an indexed fashion, with all details and in order of their addition.</p>
 <p>Step 3. The user executes <code>search i/footitle6 y/website</code> and only those entries are listed that have both their title as <code>footitle1</code> and type as <code>website</code>.</p>
 </div>
 <div class="paragraph">
-<p>Step 4. The user executes <code>search t/CS2103</code> and all those sources that have 'CS2103' as one of their tags are enumerated.</p>
+<p>Step 4. The user executes <code>search t/CS</code> and all those sources that have any of their tags having 'CS' in it listed, including <code>CS2030</code>, <code>CS2040</code> and <code>CS2103</code></p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -654,4 +683,4 @@ to combine the results.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-07 05:57:20 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-07 07:18:40 UTC</div></div></div></body></html>
