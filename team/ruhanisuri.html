@@ -32,12 +32,16 @@ where you read something and struggle to find it again.</p>
 <div class="sect1">
 <h2 id="summary-of-contributions"><a class="link" href="#summary-of-contributions">Summary of contributions</a></h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="strong-major-enhancement-strong-br"><a class="link" href="#strong-major-enhancement-strong-br"><strong>Major enhancement</strong>:<br></a></h3>
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="strong-major-enhancement-strong-br"><a class="link" href="#strong-major-enhancement-strong-br"><strong>Major enhancement</strong>:<br></a></h2>
+<div class="sectionbody">
+<div class="sect3">
+<h4 id="1-modified-strong-the-ability-to-search-strong-through-sources"><a class="link" href="#1-modified-strong-the-ability-to-search-strong-through-sources">1. Modified <strong>the ability to search</strong> through sources:</a></h4>
 <div class="sect4">
-<h5 id="1-modified-strong-the-ability-to-search-strong-through-sources"><a class="link" href="#1-modified-strong-the-ability-to-search-strong-through-sources">1. Modified <strong>the ability to search</strong> through sources:</a></h5>
-<div class="sect5">
-<h6 id="strong-previously-strong"><a class="link" href="#strong-previously-strong"><strong>Previously</strong>:</a></h6>
+<h5 id="strong-previously-strong"><a class="link" href="#strong-previously-strong"><strong>Previously</strong>:</a></h5>
 <div class="paragraph">
 <p>Format: <code>search &lt;title&gt;</code></p>
 </div>
@@ -65,18 +69,33 @@ when the user stores his entire research data in the <code>detail</code>, say 3 
 word to word in their entirety. This defeats the purpose of the user being able to search for a source so he can use it in his
 research.</p>
 </div>
+<div class="paragraph">
+<p>Furthermore, this format of search only (logically) accepted one argument for each prefix tag, that is if given multiple,
+it would jut ignore it. This was implemented by using <code>getValue()</code> on the user enter argument multimap in
+<code>SourceContainsKeywordsPredicate</code>. This method only returned the last entered values and used this for the search command logic, ignore
+other tags.</p>
 </div>
-<div class="sect5">
-<h6 id="strong-modification-strong"><a class="link" href="#strong-modification-strong"><strong>Modification</strong>:</a></h6>
+</div>
+<div class="sect4">
+<h5 id="strong-modification-strong"><a class="link" href="#strong-modification-strong"><strong>Modification</strong>:</a></h5>
 <div class="paragraph">
 <p>Format: <code>search [n/TITLE] [y/TYPE] [d/DETAILS] [t/TAG] [t/TAG]&#8230;&#8203;</code></p>
 </div>
+<div class="paragraph">
+<p>The work I have done on AB4&#8217;s search feature can be divided into 3 major modifications as follows:</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="1-multiple-prefix-tags-of-different-kinds"><a class="link" href="#1-multiple-prefix-tags-of-different-kinds">1. Multiple prefix tags of different kinds:</a></h5>
 <div class="paragraph">
 <p>In the implementation of The Infinity Machine, search function now has an added functionality of being able to take in multiple
 arguments of the type of source fields, and search for sources based on that.
 It searches in conjunction using multiple fields including title, type, detail and tag(s) input by the user,
 listing only those sources that satisfy all the input constraints of the matching fields.</p>
 </div>
+</div>
+<div class="sect4">
+<h5 id="2-substring-matching-with-incomplete-words"><a class="link" href="#2-substring-matching-with-incomplete-words">2. Substring matching with incomplete words:</a></h5>
 <div class="paragraph">
 <p>Another addition to its functionality is that this search feature is enabled with substring matching as against exact field matching.
 This renders this feature more powerful as the user may not always be able to remember exactly the title or tag of the source.
@@ -86,22 +105,32 @@ as many consecutive words they are able to recall to narrow the listings. Eg. se
 enumerate all source articles that have 'artificial intelligence' in their content.</p>
 </div>
 </div>
-<div class="sect5">
-<h6 id="strong-what-it-does-strong"><a class="link" href="#strong-what-it-does-strong"><strong>What it does</strong>:</a></h6>
+<div class="sect4">
+<h5 id="3-multiple-prefix-tags-of-one-type"><a class="link" href="#3-multiple-prefix-tags-of-one-type">3. Multiple prefix tags of one type:</a></h5>
+<div class="paragraph">
+<p>Furthermore, the search command is able to take in multiple arguments of each prefix and search
+in conjunction such as all those fields are matched with the corresponding fields of the resulting sources.
+This renders this feature more power as now the user is able to search by all that he can recall about the source
+entry and be able to narrow down his search more to produce desired results.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="strong-what-it-does-strong"><a class="link" href="#strong-what-it-does-strong"><strong>What it does</strong>:</a></h5>
 <div class="paragraph">
 <p>It allows the user to search through all the entries in the database through various fields at a time, and display
-source entries that satisfy all of the entered tags in conjunction, with substring matching.
+source entries that satisfy all of the entered tags in conjunction, with substring matching, and allowing multiple tags of
+the same kind.
 It allows compound searches to be made, allowing user to narrow down their search, hence helping in efficient retrieval
-of the sources, and making working on the database more efficient. It also checks if the source fields contain the keywords entered
-by the user.</p>
+of the sources, and making working on the database more efficient. It also reduces the onus on the user to remember and recall
+the source entries maintained by allowing them to enter as many consecutive characters for a field value they can enumerate.</p>
 </div>
 </div>
-<div class="sect5">
-<h6 id="strong-justification-strong"><a class="link" href="#strong-justification-strong"><strong>Justification</strong>:</a></h6>
+<div class="sect4">
+<h5 id="strong-justification-strong"><a class="link" href="#strong-justification-strong"><strong>Justification</strong>:</a></h5>
 <div class="paragraph">
 <p>This feature improves the product significantly because a user can now search an entry with a particular title AND a particular type and so on.
-Furthermore, it removes the reliance on the user to memorize exact field values, by enabling substring matching so the user can enter as much as
-he remembers and see the results.</p>
+Furthermore, it removes the reliance on the user to memorize exact field values, by enabling substring matching and multiple tags
+entered so the user can enter as much as he remembers and see the results.</p>
 </div>
 <div class="paragraph">
 <p>It helps user greatly narrow down their search should they be looking for a specific source entry with particular values,
@@ -110,8 +139,8 @@ It also allows user to search sources based on other fields and not just title, 
 logical combination, along with allowing the user to not memorize his source fields.</p>
 </div>
 </div>
-<div class="sect5">
-<h6 id="strong-highlights-strong"><a class="link" href="#strong-highlights-strong"><strong>Highlights</strong>:</a></h6>
+<div class="sect4">
+<h5 id="strong-highlights-strong"><a class="link" href="#strong-highlights-strong"><strong>Highlights</strong>:</a></h5>
 <div class="ulist">
 <ul>
 <li>
@@ -129,8 +158,14 @@ CLI delimiters.</p>
 accept and parse multiple fields entered.</p>
 </li>
 <li>
-<p>Its was also tricky to implement the conjunction of the fields as separate methods had to be written for checking for the presence
+<p>It was also tricky to implement the conjunction of the fields as separate methods had to be written for checking for the presence
 of each of the field entered and by logical <code>&amp;&amp;</code> ing their results.</p>
+</li>
+<li>
+<p>It was also tricky to implement multiple same prefix tags to be accepted as all values collected from argument multimap in <code>SourceContainsKeywordsPredicate</code> had to be changed
+from <code>String</code> from <code>getValue</code> which was used to extract the last value of the specified prefix to <code>List&lt;String&gt;</code> from <code>getAllValues()</code> which
+extracted argument values of all tags entered by the user without ignoring any. Then the checker methods had to be
+modified to implement an <code>AND</code> logic to ensure all these search queries are satisfied.</p>
 </li>
 <li>
 <p>It was relatively simple to change exact matching to substring matching by using <code>String.contains()</code> method.</p>
@@ -142,11 +177,10 @@ out the substring comparison.</p>
 </ul>
 </div>
 </div>
-<div class="sect5">
-<h6 id="strong-credits-strong"><a class="link" href="#strong-credits-strong"><strong>Credits</strong>:</a></h6>
+<div class="sect4">
+<h5 id="strong-credits-strong"><a class="link" href="#strong-credits-strong"><strong>Credits</strong>:</a></h5>
 <div class="paragraph">
 <p>Most of the feature was developed independently, with some design and implementation considerations discussed with fellow team members.</p>
-</div>
 </div>
 </div>
 </div>
@@ -578,6 +612,12 @@ list the entire contents of the source in order to match and search it. Thus now
 as many consecutive words they are able to recall to narrow the listings.</p>
 </div>
 <div class="paragraph">
+<p>Furthermore, the search command is able to take in multiple arguments of each prefix and search
+in conjunction such as all those fields are matched with the corresponding fields of the resulting sources.
+This renders this feature more power as now the user is able to search by all that he can recall about the source
+entry and be able to narrow down his search more to produce desired results.</p>
+</div>
+<div class="paragraph">
 <p>How it works is, it allows the user to search through all the entries in the database through various fields at a time, and display
 source entries that satisfy all of the entered tags in conjunction, by checking if the source value contains these parameters.
 It allows compound searches to be made, allowing user to narrow down their search, hence helping in efficient retrieval
@@ -598,14 +638,16 @@ contains the keywords entered by the user (case insensitive).</p>
 </div>
 <div class="paragraph">
 <p>This feature improves the product significantly because a user can now search an entry with a particular title AND a particular type and so on.
-Not only that, the user can now just input whatever they are able to recall and the <code>search</code> returns all super strings instead of
-carrying out an exact matching.
+Not only that, the user can now just input whatever they are able to recall in the form of multiple prefix arguments
+and the <code>search</code> returns all super strings instead of carrying out an exact matching of just one search tag. This was implemented
+by changing all values collected from argument multimap in <code>SourceContainsKeywordsPredicate</code> to <code>List&lt;String&gt;</code> and <code>getAllValues()</code> instead of just <code>String</code>
+and <code>getValue</code> which used to extract the last value of the specified prefix.
 It helps user greatly narrow down their search should they be looking for a specific source entry with particular values,
 instead of cluttering the screen with all those sources with share the same title as the one the user searches using the command.
 It renders the search more powerful by resulting all super-strings should the user have meant something else or to prompt them about other similar
 source entries containing what they are looking for.
 It also allows user to search sources based on other fields and not just title, such as type, tags and details, and even their
-logical combination.</p>
+logical combination, and multiple of them.</p>
 </div>
 <div class="paragraph">
 <p>Given below is an example usage scenario and how the search mechanism behaves at each step.</p>
@@ -618,10 +660,15 @@ in an indexed fashion, with all details and in order of their addition.</p>
 <p>Step 2. The user executes <code>search i/footitle1</code> command and only those sources that have their title as <code>footitle1</code> are displayed.</p>
 </div>
 <div class="paragraph">
-<p>Step 3. The user executes <code>search i/footitle6 y/website</code> and only those entries are listed that have both their title as <code>footitle1</code> and type as <code>website</code>.</p>
+<p>Step 3. The user executes <code>search i/footitle1 y/website</code> and only those entries are listed that have their title having both <code>foo</code> and <code>6</code> and type as <code>website</code> will
+be enlisted.</p>
 </div>
 <div class="paragraph">
 <p>Step 4. The user executes <code>search t/CS</code> and all those sources that have any of their tags having 'CS' in it listed, including <code>CS2030</code>, <code>CS2040</code> and <code>CS2103</code></p>
+</div>
+<div class="paragraph">
+<p>Step 5. The user executes <code>search i/</code> and 0 sources are listed because this is not a valid check. This is not a bug and is the intended
+feature.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -630,10 +677,22 @@ in an indexed fashion, with all details and in order of their addition.</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-<code>search</code> alone, without any arguments, will result in error. See <code>list</code> command for enumerating all database entries.
+<code>search</code> alone, without any arguments or with empty prefix tags, will result in error and 0 listed sources respectively.
+ See <code>list</code> command for enumerating all database entries.
 </td>
 </tr>
 </table>
+</div>
+<div class="paragraph">
+<p>Step 6. The user executes <code>search i/algo i/wiki</code> and all those sources with both <code>algo</code> and <code>wiki</code> in their titles, such as
+<code>Wikipedia Algorithm</code> or <code>Algos of wikitionary</code> will be listed</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p>Some content here</p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect3">
@@ -643,12 +702,12 @@ in an indexed fashion, with all details and in order of their addition.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Alternative 1 (current choice):</strong> Runs through all entries and matches the arguments, field by field, and uing <code>&amp;&amp;</code> operation
+<p><strong>Alternative 1 (current choice):</strong> Runs through all entries and matches the arguments, field by field, and using <code>&amp;&amp;</code> operation
 to combine the results.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Easy to implement as exact String matching can be done in Java using streams and <code>StringUtil.containsWordIgnoreCase(str1, str2)</code>.</p>
+<p>Pros: Easy to implement as exact String substring matching can be done in Java using <code>str1.contains(str2)</code>.</p>
 </li>
 <li>
 <p>Cons: May have performance issues in terms of time usage.</p>
@@ -683,4 +742,4 @@ to combine the results.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-08 10:39:22 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-08 15:59:13 UTC</div></div></div></body></html>

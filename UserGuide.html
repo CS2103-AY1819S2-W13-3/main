@@ -335,10 +335,12 @@ Able to search by title, type, detail and tags as specified by the CLI prefixes.
 Able to perform substring matching.
 Finds all entries with a (case insensitive) field value that contains the value as specified by the user.<br>
 Searches with multiple arguments are taken as conjunction searches, i.e all those sources
-that satisfy all the keyword values are shown (logical <code>and</code> operation).</p>
+that satisfy all the keyword values are shown (logical <code>and</code> operation).
+Furthermore, the search command is able to take in multiple arguments of each prefix and search
+in conjunction such as all those fields are matched with the corresponding fields of the resulting sources.</p>
 </div>
 <div class="paragraph">
-<p>Format: <code>search [i/TITLE] [y/TYPE] [d/DETAILS] [t/TAG]</code></p>
+<p>Format: <code>search [i/TITLE] [y/TYPE] [d/DETAILS] [t/TAG]&#8230;&#8203;</code></p>
 </div>
 <div class="sidebarblock">
 <div class="content">
@@ -352,6 +354,10 @@ that satisfy all the keyword values are shown (logical <code>and</code> operatio
 </li>
 <li>
 <p>There can have any number of tags but minimally 1 (just <code>search</code> results in error. To enumerate all entries, check out <code>list</code> command instead)</p>
+</li>
+<li>
+<p>There can be multiple tags with same prefix and the result must satisfy all, eg. <code>search i/algo i/data</code> will result in <code>data struc. and algorithms</code>
+because it is a super-string of both the entered field values.</p>
 </li>
 <li>
 <p>Search implemented as a logical AND. eg. <code>search i/algorithm y/website</code> results in all those sources
@@ -371,7 +377,7 @@ that have title <code>algorithm</code> AND type <code>website</code></p>
 Returns the source(s) with the title <code>algorithms</code></p>
 </li>
 <li>
-<p><code>search y/web d/intelligence t/ML</code><br>
+<p><code>search i/wiki i/algo y/web d/intelligence t/ML</code><br>
 Returns any source having tags <code>ML</code> and having the word <code>intelligence</code> somewhere in their content
 (detail) and having a type of <code>website</code> or <code>web series</code>.</p>
 </li>
@@ -865,4 +871,4 @@ e.g. <code>alias-rm c</code></p>
 </ul>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-08 10:39:22 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-08 15:59:13 UTC</div></div></div></body></html>
