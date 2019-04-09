@@ -612,12 +612,6 @@ list the entire contents of the source in order to match and search it. Thus now
 as many consecutive words they are able to recall to narrow the listings.</p>
 </div>
 <div class="paragraph">
-<p>Furthermore, the search command is able to take in multiple arguments of each prefix and search
-in conjunction such as all those fields are matched with the corresponding fields of the resulting sources.
-This renders this feature more power as now the user is able to search by all that he can recall about the source
-entry and be able to narrow down his search more to produce desired results.</p>
-</div>
-<div class="paragraph">
 <p>How it works is, it allows the user to search through all the entries in the database through various fields at a time, and display
 source entries that satisfy all of the entered tags in conjunction, by checking if the source value contains these parameters.
 It allows compound searches to be made, allowing user to narrow down their search, hence helping in efficient retrieval
@@ -638,16 +632,14 @@ contains the keywords entered by the user (case insensitive).</p>
 </div>
 <div class="paragraph">
 <p>This feature improves the product significantly because a user can now search an entry with a particular title AND a particular type and so on.
-Not only that, the user can now just input whatever they are able to recall in the form of multiple prefix arguments
-and the <code>search</code> returns all super strings instead of carrying out an exact matching of just one search tag. This was implemented
-by changing all values collected from argument multimap in <code>SourceContainsKeywordsPredicate</code> to <code>List&lt;String&gt;</code> and <code>getAllValues()</code> instead of just <code>String</code>
-and <code>getValue</code> which used to extract the last value of the specified prefix.
+Not only that, the user can now just input whatever they are able to recall and the <code>search</code> returns all super strings instead of
+carrying out an exact matching.
 It helps user greatly narrow down their search should they be looking for a specific source entry with particular values,
 instead of cluttering the screen with all those sources with share the same title as the one the user searches using the command.
 It renders the search more powerful by resulting all super-strings should the user have meant something else or to prompt them about other similar
 source entries containing what they are looking for.
 It also allows user to search sources based on other fields and not just title, such as type, tags and details, and even their
-logical combination, and multiple of them.</p>
+logical combination.</p>
 </div>
 <div class="paragraph">
 <p>Given below is an example usage scenario and how the search mechanism behaves at each step.</p>
@@ -660,15 +652,10 @@ in an indexed fashion, with all details and in order of their addition.</p>
 <p>Step 2. The user executes <code>search i/footitle1</code> command and only those sources that have their title as <code>footitle1</code> are displayed.</p>
 </div>
 <div class="paragraph">
-<p>Step 3. The user executes <code>search i/footitle1 y/website</code> and only those entries are listed that have their title having both <code>foo</code> and <code>6</code> and type as <code>website</code> will
-be enlisted.</p>
+<p>Step 3. The user executes <code>search i/footitle6 y/website</code> and only those entries are listed that have both their title as <code>footitle1</code> and type as <code>website</code>.</p>
 </div>
 <div class="paragraph">
 <p>Step 4. The user executes <code>search t/CS</code> and all those sources that have any of their tags having 'CS' in it listed, including <code>CS2030</code>, <code>CS2040</code> and <code>CS2103</code></p>
-</div>
-<div class="paragraph">
-<p>Step 5. The user executes <code>search i/</code> and 0 sources are listed because this is not a valid check. This is not a bug and is the intended
-feature.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -677,22 +664,10 @@ feature.</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-<code>search</code> alone, without any arguments or with empty prefix tags, will result in error and 0 listed sources respectively.
- See <code>list</code> command for enumerating all database entries.
+<code>search</code> alone, without any arguments, will result in error. See <code>list</code> command for enumerating all database entries.
 </td>
 </tr>
 </table>
-</div>
-<div class="paragraph">
-<p>Step 6. The user executes <code>search i/algo i/wiki</code> and all those sources with both <code>algo</code> and <code>wiki</code> in their titles, such as
-<code>Wikipedia Algorithm</code> or <code>Algos of wikitionary</code> will be listed</p>
-</div>
-<div class="sidebarblock">
-<div class="content">
-<div class="paragraph">
-<p>Some content here</p>
-</div>
-</div>
 </div>
 </div>
 <div class="sect3">
@@ -702,12 +677,12 @@ feature.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Alternative 1 (current choice):</strong> Runs through all entries and matches the arguments, field by field, and using <code>&amp;&amp;</code> operation
+<p><strong>Alternative 1 (current choice):</strong> Runs through all entries and matches the arguments, field by field, and uing <code>&amp;&amp;</code> operation
 to combine the results.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Easy to implement as exact String substring matching can be done in Java using <code>str1.contains(str2)</code>.</p>
+<p>Pros: Easy to implement as exact String matching can be done in Java using streams and <code>StringUtil.containsWordIgnoreCase(str1, str2)</code>.</p>
 </li>
 <li>
 <p>Cons: May have performance issues in terms of time usage.</p>
@@ -742,4 +717,4 @@ to combine the results.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-09 08:52:33 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-09 11:29:51 UTC</div></div></div></body></html>

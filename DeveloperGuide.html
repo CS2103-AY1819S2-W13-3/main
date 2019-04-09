@@ -700,13 +700,26 @@ This is to guard against the scenario of entering panic mode while already in pa
 <p>The command alias feature allows users to use shorthand commands to rapidly "get things done", for instance using <code>a</code> instead of <code>add</code>, or <code>c</code> instead of <code>count</code>.</p>
 </div>
 <div class="paragraph">
-<p>Users may do one of the following:
-1) Add a new alias
-2) Remove an existing alias
-3) List all aliases</p>
+<p>Users may do one of the following:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Add a new alias</p>
+</li>
+<li>
+<p>Remove an existing alias</p>
+</li>
+<li>
+<p>List all aliases</p>
+</li>
+<li>
+<p>Clear all aliases</p>
+</li>
+</ol>
 </div>
 <div class="sect3">
-<h4 id="overview-2"><a class="link" href="#overview-2">3.3.1. Overview:</a></h4>
+<h4 id="overview-2"><a class="link" href="#overview-2">3.3.1. Overview</a></h4>
 <div class="paragraph">
 <p>This feature is backed by an in-memory database implemented as a Java <code>HashMap&lt;String, String&gt;</code>.
 A HashMap is chosen for several reasons:</p>
@@ -714,13 +727,13 @@ A HashMap is chosen for several reasons:</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Adding and removing an alias is straightforward (using Java HashMap API) and efficient (<code>O(1)</code> time)</p>
+<p>Adding and removing an alias is straightforward (using Java HashMap API) and efficient (in <code>O(1)</code> time)</p>
 </li>
 <li>
-<p>Checking whether an alias exists is fast (<code>O(1)</code> time)</p>
+<p>Checking whether an alias exists is efficient (in <code>O(1)</code> time)</p>
 </li>
 <li>
-<p>HashMaps naturally facilitate the process of looking up an associated value with a given key</p>
+<p>HashMaps naturally facilitate the process of looking up an associated value of a given key</p>
 </li>
 </ul>
 </div>
@@ -741,22 +754,94 @@ Furthermore, checking for membership in an <code>ArrayList</code> is an <code>O(
 </div>
 </div>
 <div class="sect3">
-<h4 id="operation"><a class="link" href="#operation">3.3.2. Operation:</a></h4>
+<h4 id="aliasing-feature-implementation"><a class="link" href="#aliasing-feature-implementation">3.3.2. Aliasing feature: implementation</a></h4>
 <div class="paragraph">
-<p>SourceManagerParser detects when a meta-command is entered.
-A meta-command is one that pertains to AliasManager (and by association SourceManagerParser), e.g. <code>alias</code>, <code>alias-rm</code>, <code>alias-ls</code>, etc.</p>
+<p>Meta-commands are not implemented as regular commands.
+Regular commands inherit <code>Command</code>, and operate on the model (their main method is <code>public CommandResult execute(Model model, CommandHistory history) throws CommandException {}</code>).
+On the other hand, meta-commands operate on AliasManager.
+Therefore, it is desirable to draw a distinction between regular commands and meta-commands throughout the codebase.</p>
 </div>
 <div class="paragraph">
-<p>AliasManager exposes the meta-commands it "uses", which SourceManagerParser relies on for detection.
-However, it is acknowledged that this is not strictly necessary.
-It is safe for SourceManagerParser to redefine these meta-commands.
-The default meta-commands that AliasManager exposes should be thought of as recommended, but not mandatory, meta-commands.
-AliasManager is fundamentally command-agnostic; it does not care what meta-commands are actually used.</p>
+<p>To implement aliasing, we created the AliasManager interface to practice design by contract.
+AliasManager is command-agnostic.
+It operates through its API, and is not concerned with the choice of meta-commands selected (e.g. modifying <code>alias</code> to <code>alias-add</code>).
+We also created a class ConcreteAliasManager to implement the AliasManager interface.</p>
 </div>
+<div class="paragraph">
+<p>As for SourceManagerParser, we created an alternative constructor to accept an AliasManager object for dependency injection.
+Otherwise, the default constructor instantiates ConcreteAliasManager.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+We chose to create the AliasManager interface to decouple SourceManagerParser and ConcreteAliasManager.
+In normal operation, we would always use ConcreteAliasManager.
+However, working through an interface (and implementing an alternative constructor) provides the flexibility to swap out ConcreteAliasManager for an alternative AliasManager implementation, such as a stub, for unit testing. This improves testability and maintainability.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>To implement the meta-commands, we create an abstract superclass <code>AliasMetaCommandParser</code> that implements <code>Parser&lt;DummyCommand&gt;</code>.
+This serves as an alternative class of command parsers (for meta-commands), in contrast to the regular ones which are of the type <code>Parser&lt;? extends Command&gt;</code>.
+The key difference between the two is that an AliasMetaCommandParser has a field storing a reference to the AliasManager object which it requires to interact with (e.g. when adding/removing an alias).</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Parsers are expected to return a Command object which SourceManagerParser returns in its <code>parseCommand(String userInput)</code> method.
+Typically, a Command object operates on the Model (e.g. AddCommand calls <code>model.addSource()</code>).
+However, meta-commands operate on the AliasManager, and not the model.
+Therefore, for this purpose, we created a class <code>DummyCommand</code> which does nothing except return a CommandResult object to display feedback to the user.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Finally, we create a <code>CommandValidator</code> interface.
+AliasManager uses the CommandValidator for two purposes:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Validate a command before registering an alias to it</p>
+</li>
+<li>
+<p>Ensure that a command isn&#8217;t designated as an un-aliasable command</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>We chose this implementation and design pattern for several reasons:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>By designating an object as a CommandValidator, we are able to avoid hardcoding the list of valid and un-aliasable commands into AliasManager.
+This makes for a more reusable component and improves testability as well as maintainability.</p>
+</li>
+<li>
+<p>Typically, the SourceManagerParser (which by definition should know about the various valid commands) is the designated CommandValidator.
+However, the SourceManagerParser also has an association with the AliasManager.
+By creating an interface, we avoid a situation of circular dependency where by both components are tightly coupled to each other.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="aliasing-feature-operation"><a class="link" href="#aliasing-feature-operation">3.3.3. Aliasing feature: operation</a></h4>
 <div class="paragraph">
 <p>When a meta-command is detected to have been entered, SourceManagerParser delegates it to the appropriate AliasMetaCommandParser to handle.
 For instance, <code>alias FOO BAR</code> is delegated to the AliasAddMetaCommandParser (a concrete subclass of AliasMetaCommandParser) with the arguments "FOO BAR".
-The AliasMetaCommandParser concrete subclasses parses the arguments and returns a DummyCommand response object.</p>
+The appropriate AliasMetaCommandParser parses the arguments and returns a DummyCommand response object.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -775,48 +860,54 @@ Secondly, it improves testability by facilitating unit testing of smaller blocks
 </table>
 </div>
 <div class="paragraph">
-<p>In normal operation, when the user uses an alias, SourceManagerParser parses the user input to extract the "command word".
-It checks whether the "command word" is an alias using AliasManager&#8217;s <code>isAlias()</code> method.
-If so, it fetches the original command that the alias is associated to using AliasManager&#8217;s <code>getCommand()</code> method
-(which returns an <code>Optional&lt;String&gt;</code> - this forces the caller to unwrap the optional and avoids null pointer exceptions).</p>
+<p>If user input is valid, the AliasMetaCommandParser, which stores a reference to the AliasManager object, operates on it through the AliasManager API.</p>
 </div>
 <div class="paragraph">
-<p>Finally, SourceManagerParser recursively calls itself using the original command retrieved from AliasManager to execute the original command that the alias is associated with.</p>
+<p>In normal operation, when the user enters an alias, SourceManagerParser parses the user input to extract the "command word".
+It checks whether the "command word" is a pre-existing alias using AliasManager&#8217;s <code>isAlias()</code> method.
+If so, it fetches the original command that the alias is associated to using AliasManager&#8217;s <code>getCommand()</code> method.</p>
 </div>
 <div class="paragraph">
-<p><strong>Alternative:</strong> An alternative implementation could be to modify the <code>HashMap&lt;String, String&gt;</code> in AliasManager into <code>HashMap&lt;String, Class&lt;? extends Command&gt;&gt;</code>. The value is thus a Command class.
-When a valid alias is used, AliasManager would instantiate the associated class and return the instance.
-However, this implementation is disfavored, for the following reasons.</p>
+<p>Finally, SourceManagerParser recursively calls itself once using the original command retrieved from AliasManager to execute the original command that the alias is associated with.</p>
 </div>
-<div class="paragraph">
-<p>Firstly, SourceManagerParser works with both Command classes and Parser classes.
-Some commands, for instance <code>add</code>, have accompanying arguments to be parsed.
-For these "parsable commands", SourceManagerParser instantiates a CommandParser and calls its <code>.parse()</code> method.
-For other "non-parsable commands", for instance <code>clear</code>, SourceManagerParser instantiates and returns the command directly.</p>
-</div>
-<div class="paragraph">
-<p>Therefore, if we were to adopt this implementation, we would require 2 separate HashMaps mapping aliases to <code>Class&lt;? extends Command&gt;</code> and <code>Class&lt;? extends Parser&lt;? extends Command&gt;&gt;</code>.
-This introduces a lot of complexity into AliasManager, and results in some duplication of logic across SourceManagerParser and AliasManager.
-Specifically, the logic that distinguishes between commands/aliases that map to <code>Command</code> and those that map to <code>Parser</code> will be duplicated in both SourceManagerParser and AliasManager.
-This violates the DRY principle.</p>
-</div>
-<div class="paragraph">
-<p>Furthermore, doing so increases coupling across the project, as there are now associations between AliasManager and the various Commands/Parsers. We want to minimize coupling whenever possible.</p>
-</div>
-<div class="paragraph">
-<p>Therefore, by simply mapping aliases to commands, and having a single layer of recursion in SourceManagerParser whereby it calls itself with the actual command, we avoid all the above problems.
-We improve cohesion, reduce coupling, drastically reduce complexity, and improve testability.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+AliasManager doesn&#8217;t allow the aliasing of invalid commands, nor the aliasing of an alias.
+This is to guard against the risk of an infinite loop, e.g. where <code>alias1</code> is the alias of <code>alias2</code>, which is the alias of <code>alias1</code>.
+With the current implementation, we can be assured that the recursion depth is at most 2.
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect3">
-<h4 id="persistence"><a class="link" href="#persistence">3.3.3. Persistence:</a></h4>
+<h4 id="persistence-feature-implementation"><a class="link" href="#persistence-feature-implementation">3.3.4. Persistence feature: implementation</a></h4>
 <div class="paragraph">
 <p>The usefulness of aliases would be significantly diminished if they do not persist between sessions.
-Therefore, we want aliases to be stored on disk and automatically loaded in future sessions.</p>
+Therefore, we want aliases to be stored on disk and automatically loaded in future sessions on application startup.</p>
 </div>
 <div class="paragraph">
 <p>To accomplish this, we create an <code>AliasStorage</code> interface, and an implementing class <code>ConcreteAliasStorage</code>.
-We also modify AliasManager to instantiate ConcreteAliasStorage upon its own instantiation.</p>
+We also modify ConcreteAliasManager to accept an AliasStorage object during its instantiation.
+To facilitate unit testing, we allow a <code>null</code> AliasStorage object which disables data persistence.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The motivations for this design pattern is similar to the discussion above for creating the AliasManager interface.
+Essentially, we want to decouple components as much as possible, support dependency injection, and improve testability and maintainability.
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>ConcreteAliasStorage is responsible for reading/writing from/to disk,
@@ -834,8 +925,6 @@ When AliasManager&#8217;s aliases database is mutated (i.e. create or remove ali
 with the observer observing the aliases HashMap database, and calling <code>saveAliases()</code> when it is mutated.
 However, given the simplicity of AliasManager, we believe that applying the observer pattern will result in unnecessary overhead,
 with minimal (or no) tangible benefits.
-Firstly, the aliases HashMap database is a private field, and only accessible within AliasManager.
-Secondly, there are only 2 methods which would mutate the aliases HashMap database.
 </td>
 </tr>
 </table>
@@ -1089,12 +1178,6 @@ list the entire contents of the source in order to match and search it. Thus now
 as many consecutive words they are able to recall to narrow the listings.</p>
 </div>
 <div class="paragraph">
-<p>Furthermore, the search command is able to take in multiple arguments of each prefix and search
-in conjunction such as all those fields are matched with the corresponding fields of the resulting sources.
-This renders this feature more power as now the user is able to search by all that he can recall about the source
-entry and be able to narrow down his search more to produce desired results.</p>
-</div>
-<div class="paragraph">
 <p>How it works is, it allows the user to search through all the entries in the database through various fields at a time, and display
 source entries that satisfy all of the entered tags in conjunction, by checking if the source value contains these parameters.
 It allows compound searches to be made, allowing user to narrow down their search, hence helping in efficient retrieval
@@ -1115,16 +1198,14 @@ contains the keywords entered by the user (case insensitive).</p>
 </div>
 <div class="paragraph">
 <p>This feature improves the product significantly because a user can now search an entry with a particular title AND a particular type and so on.
-Not only that, the user can now just input whatever they are able to recall in the form of multiple prefix arguments
-and the <code>search</code> returns all super strings instead of carrying out an exact matching of just one search tag. This was implemented
-by changing all values collected from argument multimap in <code>SourceContainsKeywordsPredicate</code> to <code>List&lt;String&gt;</code> and <code>getAllValues()</code> instead of just <code>String</code>
-and <code>getValue</code> which used to extract the last value of the specified prefix.
+Not only that, the user can now just input whatever they are able to recall and the <code>search</code> returns all super strings instead of
+carrying out an exact matching.
 It helps user greatly narrow down their search should they be looking for a specific source entry with particular values,
 instead of cluttering the screen with all those sources with share the same title as the one the user searches using the command.
 It renders the search more powerful by resulting all super-strings should the user have meant something else or to prompt them about other similar
 source entries containing what they are looking for.
 It also allows user to search sources based on other fields and not just title, such as type, tags and details, and even their
-logical combination, and multiple of them.</p>
+logical combination.</p>
 </div>
 <div class="paragraph">
 <p>Given below is an example usage scenario and how the search mechanism behaves at each step.</p>
@@ -1137,15 +1218,10 @@ in an indexed fashion, with all details and in order of their addition.</p>
 <p>Step 2. The user executes <code>search i/footitle1</code> command and only those sources that have their title as <code>footitle1</code> are displayed.</p>
 </div>
 <div class="paragraph">
-<p>Step 3. The user executes <code>search i/footitle1 y/website</code> and only those entries are listed that have their title having both <code>foo</code> and <code>6</code> and type as <code>website</code> will
-be enlisted.</p>
+<p>Step 3. The user executes <code>search i/footitle6 y/website</code> and only those entries are listed that have both their title as <code>footitle1</code> and type as <code>website</code>.</p>
 </div>
 <div class="paragraph">
 <p>Step 4. The user executes <code>search t/CS</code> and all those sources that have any of their tags having 'CS' in it listed, including <code>CS2030</code>, <code>CS2040</code> and <code>CS2103</code></p>
-</div>
-<div class="paragraph">
-<p>Step 5. The user executes <code>search i/</code> and 0 sources are listed because this is not a valid check. This is not a bug and is the intended
-feature.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1154,22 +1230,10 @@ feature.</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-<code>search</code> alone, without any arguments or with empty prefix tags, will result in error and 0 listed sources respectively.
- See <code>list</code> command for enumerating all database entries.
+<code>search</code> alone, without any arguments, will result in error. See <code>list</code> command for enumerating all database entries.
 </td>
 </tr>
 </table>
-</div>
-<div class="paragraph">
-<p>Step 6. The user executes <code>search i/algo i/wiki</code> and all those sources with both <code>algo</code> and <code>wiki</code> in their titles, such as
-<code>Wikipedia Algorithm</code> or <code>Algos of wikitionary</code> will be listed</p>
-</div>
-<div class="sidebarblock">
-<div class="content">
-<div class="paragraph">
-<p>Some content here</p>
-</div>
-</div>
 </div>
 </div>
 <div class="sect3">
@@ -1179,12 +1243,12 @@ feature.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Alternative 1 (current choice):</strong> Runs through all entries and matches the arguments, field by field, and using <code>&amp;&amp;</code> operation
+<p><strong>Alternative 1 (current choice):</strong> Runs through all entries and matches the arguments, field by field, and uing <code>&amp;&amp;</code> operation
 to combine the results.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Easy to implement as exact String substring matching can be done in Java using <code>str1.contains(str2)</code>.</p>
+<p>Pros: Easy to implement as exact String matching can be done in Java using streams and <code>StringUtil.containsWordIgnoreCase(str1, str2)</code>.</p>
 </li>
 <li>
 <p>Cons: May have performance issues in terms of time usage.</p>
@@ -4190,4 +4254,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-09 08:52:33 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-09 11:29:51 UTC</div></div></div></body></html>
