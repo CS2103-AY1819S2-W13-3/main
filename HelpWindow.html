@@ -21,7 +21,7 @@
 <li><a href="#editing-a-source-code-edit-code">3.6. Editing a source : <code>edit</code></a></li>
 <li><a href="#searching-a-source-code-search-code">3.7. Searching a source: <code>search</code></a></li>
 <li><a href="#listing-all-sources-code-list-code">3.8. Listing all sources : <code>list</code></a></li>
-<li><a href="#reordering-sources-to-your-liking-code-order-code">3.9. Reordering sources to your liking : <code>order</code></a></li>
+<li><a href="#organisational-tools-code-order-code-and-code-pin-code">3.9. Organisational Tools : <code>order</code> and <code>pin</code></a></li>
 <li><a href="#generate-bibliography-entry-code-biblio-code">3.10. Generate bibliography entry : <code>biblio</code></a></li>
 <li><a href="#listing-entered-commands-code-history-code">3.11. Listing entered commands : <code>history</code></a></li>
 <li><a href="#command-aliases-code-alias-code">3.12. Command aliases : <code>alias</code></a></li>
@@ -623,7 +623,153 @@ where argument N in [ ] is optional.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="reordering-sources-to-your-liking-code-order-code"><a class="link" href="#reordering-sources-to-your-liking-code-order-code">3.9. Reordering sources to your liking : <code>order</code></a></h3>
+<h3 id="organisational-tools-code-order-code-and-code-pin-code"><a class="link" href="#organisational-tools-code-order-code-and-code-pin-code">3.9. Organisational Tools : <code>order</code> and <code>pin</code></a></h3>
+<div class="paragraph">
+<p>The Infinity Machine offers users functionality that allows them to customise the way their sources are ordered and displayed to their liking.</p>
+</div>
+<div class="paragraph">
+<p>Pinned sources are saved between sessions, allowing users to retain whatever edits they have made.</p>
+</div>
+<div class="sect3">
+<h4 id="pinning-important-sources-code-pin-code"><a class="link" href="#pinning-important-sources-code-pin-code">3.9.1. Pinning important sources : <code>pin</code></a></h4>
+<div class="paragraph">
+<p>Marks a source as pinned and moves it to the top of the list where it will remain.
+Format: <code>pin INDEX</code></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The maximum possible index that will be processed by the system is limited to the largest positive value for a 32-bit signed binary integer.</p>
+</div>
+<div class="paragraph">
+<p>Any number larger than 2,147,483,647 will not be parsed as an integer and will be rejected.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>The <code>INDEX</code> refers to the index number shown in the displayed source list.</p>
+</li>
+<li>
+<p>The <code>INDEX</code> <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
+</li>
+<li>
+<p>The specified source to be pinned will move up and replace the source at the first position, pushing all sources after that down by 1 position.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>You can delete a pinned source with no issue by entering the <code>delete</code> command followed by the index of the pinned source.</p>
+</div>
+<div class="paragraph">
+<p>However, do note that deleting a pinned source will remove the source from the list.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>pin 4</code><br>
+Marks source number 4 as pinned and moves it to the top of the list.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="unpinning-sources-code-unpin-code"><a class="link" href="#unpinning-sources-code-unpin-code">3.9.2. Unpinning sources : <code>unpin</code></a></h4>
+<div class="paragraph">
+<p>Reverts a pinned source back to its unpinned state, moving the source down to the first position of an unpinned source in the event there are pinned sources after the source to be unpinned.
+Format: <code>unpin INDEX</code></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The maximum possible index that will be processed by the system is limited to the largest positive value for a 32-bit signed binary integer.</p>
+</div>
+<div class="paragraph">
+<p>Any number larger than 2,147,483,647 will not be parsed as an integer and will be rejected.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>The <code>INDEX</code> refers to the index number shown in the displayed source list.</p>
+</li>
+<li>
+<p>The <code>INDEX</code> <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
+</li>
+<li>
+<p>The specified source to be unpinned will be moved down to the position of the first unpinned source if there are pinned sources after the source to be unpinned.</p>
+</li>
+<li>
+<p>If the source to be unpinned is the only or the last pinned source, then its position does not change.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Pinning and unpinning a source is not considered an undoable command and therefore will not be undone or redone with the <code>undo</code> or <code>redo</code> commands respectively.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>unpin 4</code><br>
+Reverts source 4, which was originally pinned, to its unpinned state and moves it down to the first unpinned source&#8217;s position.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="reordering-sources-to-your-liking-code-order-code"><a class="link" href="#reordering-sources-to-your-liking-code-order-code">3.9.3. Reordering sources to your liking : <code>order</code></a></h4>
 <div class="paragraph">
 <p>Moves the specified source from one position to another as defined by the user.<br>
 Format: <code>order ORIGINAL_INDEX NEW_INDEX</code></p>
@@ -653,10 +799,10 @@ Format: <code>order ORIGINAL_INDEX NEW_INDEX</code></p>
 <p>Obtains the source at the specified <code>ORIGINAL_INDEX</code> and moves it to the <code>NEW_INDEX</code>.</p>
 </li>
 <li>
-<p>The index refers to the index number shown in the displayed source list.</p>
+<p>The indexes refers to the index numbers shown in the displayed source list.</p>
 </li>
 <li>
-<p>The index <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
+<p>The indexes <strong>must be positive integers</strong> 1, 2, 3, &#8230;&#8203;</p>
 </li>
 <li>
 <p>The specified source will replace the original source at that index.</p>
@@ -675,6 +821,20 @@ Format: <code>order ORIGINAL_INDEX NEW_INDEX</code></p>
 </div>
 </div>
 </div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>You cannot swap a source that is pinned or swap a source to the location of a pinned source.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>Examples:</p>
 </div>
@@ -689,6 +849,7 @@ Moves the source located at index 1 to index 4.</p>
 If there are only 6 sources in the database, the command moves the source located at index 1 to last position in the list.</p>
 </li>
 </ul>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -1097,4 +1258,4 @@ e.g. <code>alias-rm c</code></p>
 </ul>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-13 10:45:06 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-13 10:56:31 UTC</div></div></div></body></html>
