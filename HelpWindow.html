@@ -14,7 +14,7 @@
 <li><a href="#Features">3. Features</a>
 <ul class="sectlevel2">
 <li><a href="#viewing-help-code-help-code">3.1. Viewing help : <code>help</code></a></li>
-<li><a href="#adding-a-person-code-add-code">3.2. Adding a person: <code>add</code></a></li>
+<li><a href="#adding-a-source-code-add-code">3.2. Adding a source: <code>add</code></a></li>
 <li><a href="#deleting-a-source-code-delete-code">3.3. Deleting a source : <code>delete</code></a></li>
 <li><a href="#restoring-a-source-code-restore-code">3.4. Restoring a source : <code>restore</code></a></li>
 <li><a href="#listing-a-deleted-source-code-list-deleted-code">3.5. Listing a deleted source : <code>list-deleted</code></a></li>
@@ -141,19 +141,117 @@ e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> wil
 </div>
 </div>
 <div class="sect2">
-<h3 id="adding-a-person-code-add-code"><a class="link" href="#adding-a-person-code-add-code">3.2. Adding a person: <code>add</code></a></h3>
+<h3 id="adding-a-source-code-add-code"><a class="link" href="#adding-a-source-code-add-code">3.2. Adding a source: <code>add</code></a></h3>
 <div class="paragraph">
 <p>Adds a new source to the list of sources<br>
-Format: <code>add i/TITLE y/TYPE d/DETAILS [t/TAG]&#8230;&#8203;</code></p>
+Format: <code>add i/TITLE y/TYPE a/AUTHOR d/DETAILS [t/TAG]&#8230;&#8203;</code></p>
 </div>
-<div class="admonitionblock tip">
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Multiple of each type of source information can be entered into a single add command.</p>
+</li>
+<li>
+<p>The system will only take the last entered bit of information as the final one</p>
+<div class="ulist">
+<ul>
+<li>
+<p>If there are multiple titles entered like <code>i/Algorithms Wikipedia i/General Algorithms i/Algorithms Basic</code>, only the last one will be taken. In this case it will be <code>Algorithms Basic</code>.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>The above rule is applicable to all information fields except Tag.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="admonitionblock note">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-A source can have any number of tags (including 0)
+<div class="paragraph">
+<p>The entry fields for the various source information have the following limitations:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>TITLE</p>
+<div class="ulist">
+<ul>
+<li>
+<p>A mantatory field.</p>
+</li>
+<li>
+<p>Cannot have special characters but can include numbers and spaces.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>TYPE</p>
+<div class="ulist">
+<ul>
+<li>
+<p>A mantatory field.</p>
+</li>
+<li>
+<p>Cannot have special characters but can include numbers and spaces.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>AUTHOR</p>
+<div class="ulist">
+<ul>
+<li>
+<p>A mantatory field.</p>
+</li>
+<li>
+<p>No limitation on the characters to be entered.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>DETAIL</p>
+<div class="ulist">
+<ul>
+<li>
+<p>A mantatory field.</p>
+</li>
+<li>
+<p>No limitation on the characters to be entered.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>TAG</p>
+<div class="ulist">
+<ul>
+<li>
+<p>An optional field.</p>
+</li>
+<li>
+<p>Cannot have special characters but can include numbers and spaces.</p>
+</li>
+<li>
+<p>Can have any number including 0.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
 </td>
 </tr>
 </table>
@@ -164,10 +262,10 @@ A source can have any number of tags (including 0)
 <div class="ulist">
 <ul>
 <li>
-<p><code>add i/Algorithms Wikipedia y/Website d/Basic definitions and history of algorithms t/Algorithm t/Wikipedia</code></p>
+<p><code>add i/Algorithms Wikipedia y/Website a/Jason Mills d/Basic definitions and history of algorithms t/Algorithm t/Wikipedia</code></p>
 </li>
 <li>
-<p><code>add i/Artificial Intelligence IEEE y/Journal Article d/introductory facts on artificial intelligence t/Science Journal t/AI</code></p>
+<p><code>add i/Artificial Intelligence IEEE y/Journal Article a/Yueyang d/introductory facts on artificial intelligence t/Science Journal t/AI</code></p>
 </li>
 </ul>
 </div>
@@ -286,7 +384,24 @@ Lists all deleted sources in the database.</p>
 <h3 id="editing-a-source-code-edit-code"><a class="link" href="#editing-a-source-code-edit-code">3.6. Editing a source : <code>edit</code></a></h3>
 <div class="paragraph">
 <p>Edits an existing source in the database.<br>
-Format: <code>edit INDEX [i/TITLE] [y/TYPE] [d/DETAILS] [t/TAG]&#8230;&#8203;</code></p>
+Format: <code>edit INDEX [i/TITLE] [y/TYPE] [a/AUTHOR] [d/DETAILS] [t/TAG]&#8230;&#8203;</code></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The maximum possible index that will be processed by the system is limited to the largest positive value for a 32-bit signed binary integer.</p>
+</div>
+<div class="paragraph">
+<p>Any number larger than 2,147,483,647 will not be parsed as an integer and will be rejected.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="sidebarblock">
 <div class="content">
@@ -311,6 +426,92 @@ Format: <code>edit INDEX [i/TITLE] [y/TYPE] [d/DETAILS] [t/TAG]&#8230;&#8203;</c
 </div>
 </div>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The entry fields for the various source information have the following limitations:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>TITLE</p>
+<div class="ulist">
+<ul>
+<li>
+<p>A mantatory field.</p>
+</li>
+<li>
+<p>Cannot have special characters but can include numbers and spaces.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>TYPE</p>
+<div class="ulist">
+<ul>
+<li>
+<p>A mantatory field.</p>
+</li>
+<li>
+<p>Cannot have special characters but can include numbers and spaces.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>AUTHOR</p>
+<div class="ulist">
+<ul>
+<li>
+<p>A mantatory field.</p>
+</li>
+<li>
+<p>No limitation on the characters to be entered.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>DETAIL</p>
+<div class="ulist">
+<ul>
+<li>
+<p>A mantatory field.</p>
+</li>
+<li>
+<p>No limitation on the characters to be entered.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>TAG</p>
+<div class="ulist">
+<ul>
+<li>
+<p>An optional field.</p>
+</li>
+<li>
+<p>Cannot have special characters but can include numbers and spaces.</p>
+</li>
+<li>
+<p>Can have any number including 0.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>Examples:</p>
 </div>
@@ -318,7 +519,11 @@ Format: <code>edit INDEX [i/TITLE] [y/TYPE] [d/DETAILS] [t/TAG]&#8230;&#8203;</c
 <ul>
 <li>
 <p><code>edit 2 i/Photosynthesis Wikipedia t/Photosynthesis t/Biology</code><br>
-Edits the title and tags of the source to be <code>Photosynthesis Wikipedia</code> and <code>Photosynthesis, Biology</code> respectively.</p>
+Edits the 2nd source, changing the title and tags of the source to be <code>Photosynthesis Wikipedia</code> and <code>Photosynthesis, Biology</code> respectively.</p>
+</li>
+<li>
+<p><code>edit 3 y/Journal a/Gerard DuGalle</code><br>
+Edits the 3rd source, changing the type and author of the source to be <code>Journal</code> and <code>Gerard DuGalle</code> respectively.</p>
 </li>
 <li>
 <p><code>edit 5 t/</code><br>
@@ -421,7 +626,24 @@ where argument N in [ ] is optional.</p>
 <h3 id="reordering-sources-to-your-liking-code-order-code"><a class="link" href="#reordering-sources-to-your-liking-code-order-code">3.9. Reordering sources to your liking : <code>order</code></a></h3>
 <div class="paragraph">
 <p>Moves the specified source from one position to another as defined by the user.<br>
-Format: <code>delete ORIGINAL_INDEX NEW_INDEX</code></p>
+Format: <code>order ORIGINAL_INDEX NEW_INDEX</code></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The maximum possible index that will be processed by the system is limited to the largest positive value for a 32-bit signed binary integer.</p>
+</div>
+<div class="paragraph">
+<p>Any number larger than 2,147,483,647 will not be parsed as an integer and will be rejected.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="sidebarblock">
 <div class="content">
@@ -811,7 +1033,7 @@ Format: <code>exit</code></p>
 <ul>
 <li>
 <p><strong>Add</strong> <code>add i/TITLE y/TYPE d/DETAILS [t/TAG]&#8230;&#8203;</code><br>
-e.g. <code>add i/Artificial Intelligence IEEE y/Journal Article d/Landmark paper on perils of artificial intelligence t/Science Journal t/AI</code></p>
+e.g. <code>add i/Artificial Intelligence IEEE y/Journal Article a/Hugh Johnson d/Landmark paper on perils of artificial intelligence t/Science Journal t/AI</code></p>
 </li>
 <li>
 <p><strong>Clear</strong> : <code>clear</code></p>
@@ -834,6 +1056,10 @@ e.g. <code>search i/algorithm y/journal</code></p>
 </li>
 <li>
 <p><strong>List</strong> : <code>list [N]</code></p>
+</li>
+<li>
+<p><strong>Custom Order</strong> : <code>order ORIGINAL_INDEX NEW_INDEX</code><br>
+e.g. <code>order 3 5</code></p>
 </li>
 <li>
 <p><strong>Help</strong> : <code>help</code></p>
@@ -871,4 +1097,4 @@ e.g. <code>alias-rm c</code></p>
 </ul>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-13 07:55:38 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-13 10:45:06 UTC</div></div></div></body></html>
