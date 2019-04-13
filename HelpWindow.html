@@ -633,8 +633,10 @@ where argument N in [ ] is optional.</p>
 <div class="sect3">
 <h4 id="pinning-important-sources-code-pin-code"><a class="link" href="#pinning-important-sources-code-pin-code">3.9.1. Pinning important sources : <code>pin</code></a></h4>
 <div class="paragraph">
-<p>Marks a source as pinned and moves it to the top of the list where it will remain.
-Format: <code>pin INDEX</code></p>
+<p>Marks a source as pinned and moves it to the top of the list where it will remain.</p>
+</div>
+<div class="paragraph">
+<p>Format: <code>pin INDEX</code></p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -702,8 +704,10 @@ Marks source number 4 as pinned and moves it to the top of the list.</p>
 <div class="sect3">
 <h4 id="unpinning-sources-code-unpin-code"><a class="link" href="#unpinning-sources-code-unpin-code">3.9.2. Unpinning sources : <code>unpin</code></a></h4>
 <div class="paragraph">
-<p>Reverts a pinned source back to its unpinned state, moving the source down to the first position of an unpinned source in the event there are pinned sources after the source to be unpinned.
-Format: <code>unpin INDEX</code></p>
+<p>Reverts a pinned source back to its unpinned state, moving the source down to the first position of an unpinned source in the event there are pinned sources after the source to be unpinned.</p>
+</div>
+<div class="paragraph">
+<p>Format: <code>unpin INDEX</code></p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -742,11 +746,11 @@ Format: <code>unpin INDEX</code></p>
 </div>
 </div>
 </div>
-<div class="admonitionblock note">
+<div class="admonitionblock warning">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
 <div class="paragraph">
@@ -771,8 +775,10 @@ Reverts source 4, which was originally pinned, to its unpinned state and moves i
 <div class="sect3">
 <h4 id="reordering-sources-to-your-liking-code-order-code"><a class="link" href="#reordering-sources-to-your-liking-code-order-code">3.9.3. Reordering sources to your liking : <code>order</code></a></h4>
 <div class="paragraph">
-<p>Moves the specified source from one position to another as defined by the user.<br>
-Format: <code>order ORIGINAL_INDEX NEW_INDEX</code></p>
+<p>Moves the specified source from one position to another as defined by the user.</p>
+</div>
+<div class="paragraph">
+<p>Format: <code>order ORIGINAL_INDEX NEW_INDEX</code></p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -821,11 +827,11 @@ Format: <code>order ORIGINAL_INDEX NEW_INDEX</code></p>
 </div>
 </div>
 </div>
-<div class="admonitionblock important">
+<div class="admonitionblock warning">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title="Important"></i>
+<i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
 <div class="paragraph">
@@ -1219,6 +1225,14 @@ e.g. <code>search i/algorithm y/journal</code></p>
 <p><strong>List</strong> : <code>list [N]</code></p>
 </li>
 <li>
+<p><strong>Pin</strong> : <code>pin INDEX</code><br>
+e.g. <code>pin 3</code></p>
+</li>
+<li>
+<p><strong>Unpin</strong> : <code>unpin INDEX</code><br>
+e.g. <code>unpin 3</code></p>
+</li>
+<li>
 <p><strong>Custom Order</strong> : <code>order ORIGINAL_INDEX NEW_INDEX</code><br>
 e.g. <code>order 3 5</code></p>
 </li>
@@ -1258,4 +1272,4 @@ e.g. <code>alias-rm c</code></p>
 </ul>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-13 14:07:52 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-13 14:14:58 UTC</div></div></div></body></html>

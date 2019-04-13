@@ -23,17 +23,33 @@
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Major enhancement</strong>: Added the Custom Order command to the application</p>
+<p><strong>Major Enhancement</strong>: Added the Pin command set to the application</p>
 <div class="ulist">
 <ul>
 <li>
-<p>What it does: This function allows greater flexibility and personalisation for the application by giving users the ability to modify the order in which their sources are displayed.</p>
+<p>What it does: This function allows for greater organisational capability by letting users pin important or frequently viewed sources to the top of the application.</p>
 </li>
 <li>
-<p>Justification: This feature improves the product significantly because it allows users greater customisation options for their own personal sources which enhances the management component of the application. More important and critical sources can be given priority and placed on top while older or outdated sources can be relegated to the bottom of the list.</p>
+<p>Justification: This feature improves the product significantly because it gives users a fast and efficient way to make important sources more visible at the top. Critical sources can be immediately moved to the top while older or outdated sources will be pushed to the bottom of the list.</p>
 </li>
 <li>
-<p>Implementation: This new feature required additional model functionality which needed to be added and tested thoroughly before deployment.</p>
+<p>Implementation: This new feature required additional model functionality which needed to be added and tested thoroughly before deployment. Furthermore, it also required persistent storage of pinned sources so that users will be able to preserve their pinned sources. This required the implementation of additional storage functionality.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Minor Enhancement</strong>: Added the Custom Order command to the application</p>
+<div class="ulist">
+<ul>
+<li>
+<p>What it does: This function allows greater flexibility and personalisation for the application by giving users manual control over the order of which they want their sources to appear.</p>
+</li>
+<li>
+<p>Justification: This feature improves the product significantly because it allows users greater customisation options for their own personal sources which enhances the management and organisation component of the application. Critical sources can be given priority and be moved to the top while older or outdated sources can be relegated to the bottom of the list.</p>
+</li>
+<li>
+<p>Implementation: This new feature utilised the additional model functionality from the pin command but still required thorough testing before deployment.</p>
 </li>
 </ul>
 </div>
@@ -81,7 +97,34 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Refactored a significant amount of code to ensure functionality across the entire model.</p>
+<p>Refactored a significant amount of code to ensure functionality across the entire model</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Feature Enhancements</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Enhanced the Add and Edit functions to include a new Author field which made sources more comprehensive (Pull request <a href="https://github.com/CS2103-AY1819S2-W13-3/main/pull/218">#218</a>)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Allowed for additional functionality like the bibliographical generation</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Enhanced the Tags for sources to be able to include spaces for multi-word tags (<a href="https://github.com/CS2103-AY1819S2-W13-3/main/pull/220">#220</a>, <a href="https://github.com/CS2103-AY1819S2-W13-3/main/pull/221">#221</a>)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Tags initially included special characters as well but was later narrowed down to just letters, numbers and spaces as special characters were deemed unnecessary for tags.</p>
 </li>
 </ul>
 </div>
@@ -127,7 +170,7 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Offered technical assistance to team mates by providing in depth code analysis for pull requests (Pull request <a href="https://github.com/CS2103-AY1819S2-W13-3/main/pull/128">#128</a>, <a href="https://github.com/CS2103-AY1819S2-W13-3/main/pull/203">#203</a>)</p>
+<p>Offered technical assistance to team mates by providing in depth code analysis for pull requests (Pull request <a href="https://github.com/CS2103-AY1819S2-W13-3/main/pull/128">#128</a>, <a href="https://github.com/CS2103-AY1819S2-W13-3/main/pull/203">#203</a>, <a href="https://github.com/CS2103-AY1819S2-W13-3/main/pull/219">#219</a>)</p>
 </li>
 </ul>
 </div>
@@ -258,4 +301,4 @@
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-13 14:07:52 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-13 14:14:58 UTC</div></div></div></body></html>
