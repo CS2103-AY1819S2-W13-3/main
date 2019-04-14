@@ -11,7 +11,9 @@
 <div class="sectionbody">
 <div class="paragraph">
 <p>Infinity Machine is a source manager to be used by tech-savvy university students who are comfortable with the command line interface (CLI).
-The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.</p>
+It is an application for the efficient storage, management, and retrieval of research information (sources).
+It is privacy-focused, powerful, and flexible.
+The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java.</p>
 </div>
 </div>
 </div>
@@ -125,7 +127,21 @@ In other words, this enhancement will work seamlessly with any future command im
 </tbody>
 </table>
 <div class="sect2">
+<h3 id="disabling-panic-mode-code-unpanic-code"><a class="link" href="#disabling-panic-mode-code-unpanic-code">Disabling panic mode : <code>unpanic</code></a></h3>
+<div class="paragraph">
+<p>Restores the user&#8217;s original data.<br>
+Format: <code>unpanic</code></p>
+</div>
+<div class="paragraph">
+<p>This reverses the effect of panic mode by restoring the user&#8217;s original data.
+The restorated is reflected on the disk too; the JSON file is reset to its original state and will now track the original data store.</p>
+</div>
+</div>
+<div class="sect2">
 <h3 id="command-aliases-code-alias-code"><a class="link" href="#command-aliases-code-alias-code">Command aliases : <code>alias</code></a></h3>
+<div class="paragraph">
+<p>Note: Aliases do not work in recycle-bin mode.</p>
+</div>
 <div class="sect3">
 <h4 id="creating-an-alias-code-alias-code"><a class="link" href="#creating-an-alias-code-alias-code">Creating an alias: <code>alias</code></a></h4>
 <div class="paragraph">
@@ -230,14 +246,18 @@ Format: <code>alias-ls</code></p>
 </div>
 </div>
 <div class="sect3">
+<h4 id="clearing-all-aliases-code-alias-clear-code"><a class="link" href="#clearing-all-aliases-code-alias-clear-code">Clearing all aliases: <code>alias-clear</code></a></h4>
+<div class="paragraph">
+<p>Clears all defined aliases and their associaetd commands.<br>
+Format: <code>alias-clear</code></p>
+</div>
+</div>
+<div class="sect3">
 <h4 id="alias-persistence"><a class="link" href="#alias-persistence">Alias persistence</a></h4>
 <div class="paragraph">
 <p>Aliases are persistent across usage sessions.
 When an alias is created or removed, this is recorded to disk.
 No action is required on the user&#8217;s part.</p>
-</div>
-<div class="paragraph">
-<p><a href="https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/docs/UserGuide.adoc#enabling-panic-mode-code-panic-code" class="bare">https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/docs/UserGuide.adoc#enabling-panic-mode-code-panic-code</a></p>
 </div>
 </div>
 </div>
@@ -257,21 +277,83 @@ No action is required on the user&#8217;s part.</p>
 </tbody>
 </table>
 <div class="sect2">
+<h3 id="panic-mode-feature"><a class="link" href="#panic-mode-feature">Panic Mode feature</a></h3>
+<div class="paragraph">
+<p>The panic mode feature allows the user to temporarily hide user data and replace it with dummy data.</p>
+</div>
+<div class="sect3">
+<h4 id="overview-2"><a class="link" href="#overview-2">Overview</a></h4>
+<div class="paragraph">
+<p>The user&#8217;s original data is replaced by dummy data for the duration that panic mode is enabled.
+Enabling panic mode can be thought of as "stashing" the user&#8217;s data temporarily in memory.
+This is reflected both on-screen and on-disk.
+On the screen, the list of sources is replaced by an empty dummy list.
+On disk, the contents of the JSON file storing the user&#8217;s sources is replaced by dummy content that tracks and reflects the dummy data.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation"><a class="link" href="#implementation">Implementation</a></h4>
+<div class="paragraph">
+<p>This is implemented by "swapping" the source manager with an empty dummy source manager.
+This "swap" is carried out by storing the original source manager in a private variable <code>sourceManagerBackup</code>, and then resetting the original source manager with a new empty source manager instance.
+We also set the boolean variable <code>panicMode = true</code>.</p>
+</div>
+<div class="paragraph">
+<p>When the user disables panic mode, we restore the original source manager, and reset <code>panicMode = false</code>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="elaboration"><a class="link" href="#elaboration">Elaboration</a></h4>
+<div class="paragraph">
+<p>We use a boolean variable <code>panicMode</code> to keep track of whether panic mode has been activated.
+This is to guard against the scenario of entering panic mode while already in panic mode, which results in permanent data loss.</p>
+</div>
+<div class="paragraph">
+<p>This is because when panic mode is activated, we store the original source manager in the private variable <code>sourceManagerBackup</code>, and reset the original source manager, as described above.</p>
+</div>
+<div class="paragraph">
+<p>Therefore, should panic mode be activated while already in panic mode, <code>sourceManagerBackup</code> will now store the dummy source manager, and the original source manager will be deallocated and eventually purged from memory by Java&#8217;s garbage collector.</p>
+</div>
+<div class="paragraph">
+<p>Since the JSON file on disk automatically tracks the source manager through the observer pattern, it automatically updates to track and reflect the data in the dummy source manager.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
 <h3 id="command-alias-feature"><a class="link" href="#command-alias-feature">Command Alias feature</a></h3>
 <div class="paragraph">
 <p>The command alias feature allows users to use shorthand commands to rapidly "get things done", for instance using <code>a</code> instead of <code>add</code>, or <code>c</code> instead of <code>count</code>.</p>
 </div>
 <div class="paragraph">
-<p>Users may do one of the following:
-1) Add a new alias
-2) Remove an existing alias
-3) List all aliases</p>
+<p>Users may do one of the following:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Add a new alias</p>
+</li>
+<li>
+<p>Remove an existing alias</p>
+</li>
+<li>
+<p>List all aliases</p>
+</li>
+<li>
+<p>Clear all aliases</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>In designing and implementing this feature, the overarching principle is to maximize transparency and compatibility.
+This means that it should be transparent to future developers/maintainers (they should not need to understand how this feature works, or be subject to any design constraints).
+It should also be backwards-compatible with existing commands (existing code should not be modified).
+This allows for maximum extensibility and maintainability.</p>
 </div>
 <div class="sect3">
-<h4 id="overview-2"><a class="link" href="#overview-2">Overview:</a></h4>
+<h4 id="overview-3"><a class="link" href="#overview-3">Overview</a></h4>
 <div class="paragraph">
 <p>This feature is backed by an in-memory database implemented as a Java <code>HashMap&lt;String, String&gt;</code>.
-A HashMap is chosen for several reasons:</p>
+A HashMap is chosen for the following reasons:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -279,22 +361,19 @@ A HashMap is chosen for several reasons:</p>
 <p>Adding and removing an alias is straightforward (using Java HashMap API) and efficient (<code>O(1)</code> time)</p>
 </li>
 <li>
-<p>Checking whether an alias exists is fast (<code>O(1)</code> time)</p>
+<p>Checking whether an alias exists (membership) is efficient (<code>O(1)</code> time)</p>
 </li>
 <li>
-<p>HashMaps naturally facilitate the process of looking up an associated value with a given key</p>
+<p>HashMaps naturally facilitate the process of associating a key-value pair</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p><strong>Alternative</strong>: An alternative implementation could use a Java <code>ArrayList</code>.
-However, that adds additional code complexity, as there needs to be a way of associating 2 strings.
+<p><strong>Alternative</strong>: No reasonable alternative implementations exist.
+For instance, using a Java <code>ArrayList</code> adds additional code complexity, as there needs to be a way of associating a key with a value.
 For instance, we could create an <code>ArrayList&lt;AliasWrapper&gt;</code>, where <code>AliasWrapper</code> is a wrapper class to associate 2 strings.
 However, that is inelegant and inefficient, as opposed to a <code>HashMap</code> solution.
 Furthermore, checking for membership in an <code>ArrayList</code> is an <code>O(N)</code> operation in an unsorted list, or <code>O(log(N))</code> in a sorted list.</p>
-</div>
-<div class="paragraph">
-<p>Therefore, due to the key-value association inherent in the idea of an alias manager, a <code>HashMap</code> is the most approriate data structure.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -303,22 +382,105 @@ Furthermore, checking for membership in an <code>ArrayList</code> is an <code>O(
 </div>
 </div>
 <div class="sect3">
-<h4 id="operation"><a class="link" href="#operation">Operation:</a></h4>
+<h4 id="aliasing-feature-implementation"><a class="link" href="#aliasing-feature-implementation">Aliasing feature: implementation</a></h4>
 <div class="paragraph">
-<p>SourceManagerParser detects when a meta-command is entered.
-A meta-command is one that pertains to AliasManager (and by association SourceManagerParser), e.g. <code>alias</code>, <code>alias-rm</code>, <code>alias-ls</code>, etc.</p>
+<p>Meta-commands are not implemented as regular commands.
+Regular commands inherit <code>Command</code>, and operate on the model (their main method is <code>public CommandResult execute(Model model, CommandHistory history) throws CommandException {}</code>).
+On the other hand, meta-commands operate on an AliasManager object.
+Therefore, it is desirable to draw a distinction between regular commands and meta-commands throughout the codebase.</p>
 </div>
 <div class="paragraph">
-<p>AliasManager exposes the meta-commands it "uses", which SourceManagerParser relies on for detection.
-However, it is acknowledged that this is not strictly necessary.
-It is safe for SourceManagerParser to redefine these meta-commands.
-The default meta-commands that AliasManager exposes should be thought of as recommended, but not mandatory, meta-commands.
-AliasManager is fundamentally command-agnostic; it does not care what meta-commands are actually used.</p>
+<p>To implement aliasing, we first create an AliasManager interface to practice design by contract.
+AliasManager is command-agnostic.
+It operates through its API (specified in the interface), and is not concerned with the choice of meta-commands (e.g. <code>alias-rm</code> vs <code>alias-remove</code>).
+We also created a class ConcreteAliasManager to implement the AliasManager interface.</p>
 </div>
+<div class="paragraph">
+<p>As for SourceManagerParser, we created an alternative constructor to accept an AliasManager object to support dependency injection.
+Otherwise, the default constructor instantiates ConcreteAliasManager.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+We chose to create the AliasManager interface to decouple SourceManagerParser and ConcreteAliasManager.
+In normal operation, we would always use ConcreteAliasManager.
+However, working through an interface (and implementing an alternative constructor) provides the flexibility to swap out ConcreteAliasManager for an alternative AliasManager implementation, such as a stub, for unit testing. This improves testability, maintainability, and extensibility.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>To implement the meta-commands, we create an abstract superclass <code>AliasMetaCommandParser</code> that implements <code>Parser&lt;DummyCommand&gt;</code>.
+This serves as an alternative class of command parsers (for meta-commands), in contrast to the regular ones which are of the type <code>Parser&lt;? extends Command&gt;</code>.
+(As mentioned above,  meta-commands are fundamentally different from regular commands, and it is desirable to maintain this distinction.)
+The key difference between the two is that an AliasMetaCommandParser has a field storing a reference to the AliasManager object which it requires to interact with (e.g. when adding/removing an alias).</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Parsers are expected to return a Command object which SourceManagerParser returns in its <code>parseCommand(String userInput)</code> method.
+Typically, a Command object operates on the Model (e.g. AddCommand calls <code>model.addSource()</code>).
+However, meta-commands operate on the AliasManager, and not the model.
+Therefore, for this purpose, we created a class <code>DummyCommand</code> which nominally extends <code>Command</code>, but actually does nothing except return a CommandResult object to display feedback to the user. This promotes transparency and compatibility.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Finally, we create a <code>CommandValidator</code> interface.
+AliasManager uses the CommandValidator for two purposes:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Validate a command before registering an alias to it</p>
+</li>
+<li>
+<p>Ensure that a command isn&#8217;t designated as an un-aliasable command</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>We chose this implementation and design pattern for several reasons:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>By designating an object as a CommandValidator, we are able to avoid hardcoding the list of valid and un-aliasable commands into AliasManager.
+This makes for a more reusable component and improves testability and maintainability. It also embodies the Open-Closed Principle.</p>
+</li>
+<li>
+<p>Typically, the SourceManagerParser (which by definition should know about the various valid commands) is the designated CommandValidator.
+However, the SourceManagerParser also has an association with the AliasManager.
+By creating an interface, we avoid a situation of circular dependency whereby both components are tightly coupled to each other.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="aliasing-feature-operation"><a class="link" href="#aliasing-feature-operation">Aliasing feature: operation</a></h4>
+<div class="sect4">
+<h5 id="meta-commands"><a class="link" href="#meta-commands">Meta-commands</a></h5>
 <div class="paragraph">
 <p>When a meta-command is detected to have been entered, SourceManagerParser delegates it to the appropriate AliasMetaCommandParser to handle.
 For instance, <code>alias FOO BAR</code> is delegated to the AliasAddMetaCommandParser (a concrete subclass of AliasMetaCommandParser) with the arguments "FOO BAR".
-The AliasMetaCommandParser concrete subclasses parses the arguments and returns a DummyCommand response object.</p>
+The appropriate AliasMetaCommandParser parses the arguments and returns a DummyCommand response object.</p>
+</div>
+<div class="paragraph">
+<p>The following sequence diagram illustrates the operation of the "add alias" meta-command (assuming that valid user input is provided).</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/AliasManagerMetaCommandSequenceDiagram.png" alt="AliasManagerMetaCommandSequenceDiagram" width="800">
+</div>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -337,48 +499,66 @@ Secondly, it improves testability by facilitating unit testing of smaller blocks
 </table>
 </div>
 <div class="paragraph">
-<p>In normal operation, when the user uses an alias, SourceManagerParser parses the user input to extract the "command word".
-It checks whether the "command word" is an alias using AliasManager&#8217;s <code>isAlias()</code> method.
-If so, it fetches the original command that the alias is associated to using AliasManager&#8217;s <code>getCommand()</code> method
-(which returns an <code>Optional&lt;String&gt;</code> - this forces the caller to unwrap the optional and avoids null pointer exceptions).</p>
+<p>If user input is valid, the AliasMetaCommandParser, which stores a reference to the AliasManager object, operates on it through the AliasManager API.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="aliases"><a class="link" href="#aliases">Aliases</a></h5>
+<div class="paragraph">
+<p>In normal operation, when the user enters an alias, SourceManagerParser parses the user input to extract the "command word".
+It checks whether the "command word" is a pre-existing alias using AliasManager&#8217;s <code>isAlias()</code> method.
+If so, it fetches the original command that the alias is associated to using AliasManager&#8217;s <code>getCommand()</code> method.</p>
 </div>
 <div class="paragraph">
-<p>Finally, SourceManagerParser recursively calls itself using the original command retrieved from AliasManager to execute the original command that the alias is associated with.</p>
+<p>Finally, SourceManagerParser recursively calls itself once using the original command retrieved from AliasManager to execute the original command that the alias is associated with.</p>
 </div>
 <div class="paragraph">
-<p><strong>Alternative:</strong> An alternative implementation could be to modify the <code>HashMap&lt;String, String&gt;</code> in AliasManager into <code>HashMap&lt;String, Class&lt;? extends Command&gt;&gt;</code>. The value is thus a Command class.
-When a valid alias is used, AliasManager would instantiate the associated class and return the instance.
-However, this implementation is disfavored, for the following reasons.</p>
+<p>This sequence diagram provides a high-level overview of this operation. Finer-level details have been omitted.</p>
 </div>
-<div class="paragraph">
-<p>Firstly, SourceManagerParser works with both Command classes and Parser classes.
-Some commands, for instance <code>add</code>, have accompanying arguments to be parsed.
-For these "parsable commands", SourceManagerParser instantiates a CommandParser and calls its <code>.parse()</code> method.
-For other "non-parsable commands", for instance <code>clear</code>, SourceManagerParser instantiates and returns the command directly.</p>
+<div class="imageblock">
+<div class="content">
+<img src="../images/AliasManagerSequenceDiagram.png" alt="AliasManagerSequenceDiagram" width="800">
 </div>
-<div class="paragraph">
-<p>Therefore, if we were to adopt this implementation, we would require 2 separate HashMaps mapping aliases to <code>Class&lt;? extends Command&gt;</code> and <code>Class&lt;? extends Parser&lt;? extends Command&gt;&gt;</code>.
-This introduces a lot of complexity into AliasManager, and results in some duplication of logic across SourceManagerParser and AliasManager.
-Specifically, the logic that distinguishes between commands/aliases that map to <code>Command</code> and those that map to <code>Parser</code> will be duplicated in both SourceManagerParser and AliasManager.
-This violates the DRY principle.</p>
 </div>
-<div class="paragraph">
-<p>Furthermore, doing so increases coupling across the project, as there are now associations between AliasManager and the various Commands/Parsers. We want to minimize coupling whenever possible.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+AliasManager doesn&#8217;t allow the aliasing of invalid commands, nor the aliasing of an alias.
+This is to guard against the risk of an infinite loop, e.g. where <code>alias1</code> is the alias of <code>alias2</code>, which is the alias of <code>alias1</code>.
+With the current implementation, we can be assured that the recursion depth is at most 2.
+</td>
+</tr>
+</table>
 </div>
-<div class="paragraph">
-<p>Therefore, by simply mapping aliases to commands, and having a single layer of recursion in SourceManagerParser whereby it calls itself with the actual command, we avoid all the above problems.
-We improve cohesion, reduce coupling, drastically reduce complexity, and improve testability.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="persistence"><a class="link" href="#persistence">Persistence:</a></h4>
+<h4 id="persistence-feature-implementation"><a class="link" href="#persistence-feature-implementation">Persistence feature: implementation</a></h4>
 <div class="paragraph">
 <p>The usefulness of aliases would be significantly diminished if they do not persist between sessions.
-Therefore, we want aliases to be stored on disk and automatically loaded in future sessions.</p>
+Therefore, we want aliases to be stored on disk and automatically loaded in future sessions on application startup.</p>
 </div>
 <div class="paragraph">
 <p>To accomplish this, we create an <code>AliasStorage</code> interface, and an implementing class <code>ConcreteAliasStorage</code>.
-We also modify AliasManager to instantiate ConcreteAliasStorage upon its own instantiation.</p>
+We also modify ConcreteAliasManager to accept an AliasStorage object during its instantiation.
+To facilitate unit testing, we allow a <code>null</code> AliasStorage object which disables data persistence.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The motivations for this design pattern is similar to the discussion above for creating the AliasManager interface.
+Essentially, we want to decouple components as much as possible, support dependency injection, and improve testability and maintainability.
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>ConcreteAliasStorage is responsible for reading/writing from/to disk,
@@ -396,8 +576,6 @@ When AliasManager&#8217;s aliases database is mutated (i.e. create or remove ali
 with the observer observing the aliases HashMap database, and calling <code>saveAliases()</code> when it is mutated.
 However, given the simplicity of AliasManager, we believe that applying the observer pattern will result in unnecessary overhead,
 with minimal (or no) tangible benefits.
-Firstly, the aliases HashMap database is a private field, and only accessible within AliasManager.
-Secondly, there are only 2 methods which would mutate the aliases HashMap database.
 </td>
 </tr>
 </table>
@@ -430,14 +608,5 @@ Therefore, we thought that a simple semicolon-separated key:value pair encoding 
 <h2 id="projects"><a class="link" href="#projects">PROJECTS</a></h2>
 <div class="sectionbody">
 <hr>
-<div class="paragraph">
-<p><a href="https://github.com/fterh/sneakpeek" class="bare">https://github.com/fterh/sneakpeek</a></p>
 </div>
-<div class="paragraph">
-<p><a href="https://github.com/fterh/kopi-guru" class="bare">https://github.com/fterh/kopi-guru</a></p>
-</div>
-<div class="paragraph">
-<p>:)</p>
-</div>
-</div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-14 13:46:31 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-14 13:53:02 UTC</div></div></div></body></html>
