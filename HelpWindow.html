@@ -894,6 +894,9 @@ Format: <code>history</code></p>
 </div>
 <div class="sect2">
 <h3 id="command-aliases-code-alias-code"><a class="link" href="#command-aliases-code-alias-code">3.12. Command aliases : <code>alias</code></a></h3>
+<div class="paragraph">
+<p>Note: Aliases do not work in recycle-bin mode.</p>
+</div>
 <div class="sect3">
 <h4 id="creating-an-alias-code-alias-code"><a class="link" href="#creating-an-alias-code-alias-code">3.12.1. Creating an alias: <code>alias</code></a></h4>
 <div class="paragraph">
@@ -1115,11 +1118,12 @@ Panic mode is a privacy-focused feature that swaps out the user&#8217;s data sto
 <div class="paragraph">
 <p>When it is enabled, the application window replaces the original list of sources with an empty list.
 This change is reflected on disk too; the JSON file of sources is replaced by an empty dummy file that tracks the dummy data store.
-The original data store exists only in memory, until panic mode is disabled.</p>
+The original data store exists only in memory, until panic mode is disabled.
+This feature protects user data against spying, both from shoulder-surfing and more sophisticated spyware that may be monitoring the user&#8217;s disk.</p>
 </div>
 <div class="paragraph">
 <p>In panic mode, the dummy data store behaves exactly like a real one.
-Therefore, all commands (e.g. add, remove, etc.) mutate the dummy data store (and the dummy JSON file), <strong>without affecting the actual data store.</strong></p>
+Therefore, all commands (e.g. add, remove, etc.) operate on the dummy data store (and the dummy JSON file), <strong>without affecting the actual data store.</strong> After exiting panic mode, all data created while in panic mode will be purged permanently. Therefore, dummy data created in panic mode will not persist between panic mode sessions.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1272,4 +1276,4 @@ e.g. <code>alias-rm c</code></p>
 </ul>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-14 07:05:51 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-14 09:09:37 UTC</div></div></div></body></html>

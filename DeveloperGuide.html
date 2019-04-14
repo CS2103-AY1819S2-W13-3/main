@@ -718,34 +718,37 @@ This is to guard against the scenario of entering panic mode while already in pa
 </li>
 </ol>
 </div>
+<div class="paragraph">
+<p>In designing and implementing this feature, the overarching principle is to maximize transparency and compatibility.
+This means that it should be transparent to future developers/maintainers (they should not need to understand how this feature works, or be subject to any design constraints).
+It should also be backwards-compatible with existing commands (existing code should not be modified).
+This allows for maximum extensibility and maintainability.</p>
+</div>
 <div class="sect3">
 <h4 id="overview-2"><a class="link" href="#overview-2">3.3.1. Overview</a></h4>
 <div class="paragraph">
 <p>This feature is backed by an in-memory database implemented as a Java <code>HashMap&lt;String, String&gt;</code>.
-A HashMap is chosen for several reasons:</p>
+A HashMap is chosen for the following reasons:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Adding and removing an alias is straightforward (using Java HashMap API) and efficient (in <code>O(1)</code> time)</p>
+<p>Adding and removing an alias is straightforward (using Java HashMap API) and efficient (<code>O(1)</code> time)</p>
 </li>
 <li>
-<p>Checking whether an alias exists is efficient (in <code>O(1)</code> time)</p>
+<p>Checking whether an alias exists (membership) is efficient (<code>O(1)</code> time)</p>
 </li>
 <li>
-<p>HashMaps naturally facilitate the process of looking up an associated value of a given key</p>
+<p>HashMaps naturally facilitate the process of associating a key-value pair</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p><strong>Alternative</strong>: An alternative implementation could use a Java <code>ArrayList</code>.
-However, that adds additional code complexity, as there needs to be a way of associating 2 strings.
+<p><strong>Alternative</strong>: No reasonable alternative implementations exist.
+For instance, using a Java <code>ArrayList</code> adds additional code complexity, as there needs to be a way of associating a key with a value.
 For instance, we could create an <code>ArrayList&lt;AliasWrapper&gt;</code>, where <code>AliasWrapper</code> is a wrapper class to associate 2 strings.
 However, that is inelegant and inefficient, as opposed to a <code>HashMap</code> solution.
 Furthermore, checking for membership in an <code>ArrayList</code> is an <code>O(N)</code> operation in an unsorted list, or <code>O(log(N))</code> in a sorted list.</p>
-</div>
-<div class="paragraph">
-<p>Therefore, due to the key-value association inherent in the idea of an alias manager, a <code>HashMap</code> is the most approriate data structure.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -758,17 +761,17 @@ Furthermore, checking for membership in an <code>ArrayList</code> is an <code>O(
 <div class="paragraph">
 <p>Meta-commands are not implemented as regular commands.
 Regular commands inherit <code>Command</code>, and operate on the model (their main method is <code>public CommandResult execute(Model model, CommandHistory history) throws CommandException {}</code>).
-On the other hand, meta-commands operate on AliasManager.
+On the other hand, meta-commands operate on an AliasManager object.
 Therefore, it is desirable to draw a distinction between regular commands and meta-commands throughout the codebase.</p>
 </div>
 <div class="paragraph">
-<p>To implement aliasing, we created the AliasManager interface to practice design by contract.
+<p>To implement aliasing, we first create an AliasManager interface to practice design by contract.
 AliasManager is command-agnostic.
-It operates through its API, and is not concerned with the choice of meta-commands selected (e.g. modifying <code>alias</code> to <code>alias-add</code>).
+It operates through its API (specified in the interface), and is not concerned with the choice of meta-commands (e.g. <code>alias-rm</code> vs <code>alias-remove</code>).
 We also created a class ConcreteAliasManager to implement the AliasManager interface.</p>
 </div>
 <div class="paragraph">
-<p>As for SourceManagerParser, we created an alternative constructor to accept an AliasManager object for dependency injection.
+<p>As for SourceManagerParser, we created an alternative constructor to accept an AliasManager object to support dependency injection.
 Otherwise, the default constructor instantiates ConcreteAliasManager.</p>
 </div>
 <div class="admonitionblock note">
@@ -780,7 +783,7 @@ Otherwise, the default constructor instantiates ConcreteAliasManager.</p>
 <td class="content">
 We chose to create the AliasManager interface to decouple SourceManagerParser and ConcreteAliasManager.
 In normal operation, we would always use ConcreteAliasManager.
-However, working through an interface (and implementing an alternative constructor) provides the flexibility to swap out ConcreteAliasManager for an alternative AliasManager implementation, such as a stub, for unit testing. This improves testability and maintainability.
+However, working through an interface (and implementing an alternative constructor) provides the flexibility to swap out ConcreteAliasManager for an alternative AliasManager implementation, such as a stub, for unit testing. This improves testability, maintainability, and extensibility.
 </td>
 </tr>
 </table>
@@ -788,6 +791,7 @@ However, working through an interface (and implementing an alternative construct
 <div class="paragraph">
 <p>To implement the meta-commands, we create an abstract superclass <code>AliasMetaCommandParser</code> that implements <code>Parser&lt;DummyCommand&gt;</code>.
 This serves as an alternative class of command parsers (for meta-commands), in contrast to the regular ones which are of the type <code>Parser&lt;? extends Command&gt;</code>.
+(As mentioned above,  meta-commands are fundamentally different from regular commands, and it is desirable to maintain this distinction.)
 The key difference between the two is that an AliasMetaCommandParser has a field storing a reference to the AliasManager object which it requires to interact with (e.g. when adding/removing an alias).</p>
 </div>
 <div class="admonitionblock note">
@@ -800,7 +804,7 @@ The key difference between the two is that an AliasMetaCommandParser has a field
 Parsers are expected to return a Command object which SourceManagerParser returns in its <code>parseCommand(String userInput)</code> method.
 Typically, a Command object operates on the Model (e.g. AddCommand calls <code>model.addSource()</code>).
 However, meta-commands operate on the AliasManager, and not the model.
-Therefore, for this purpose, we created a class <code>DummyCommand</code> which does nothing except return a CommandResult object to display feedback to the user.
+Therefore, for this purpose, we created a class <code>DummyCommand</code> which nominally extends <code>Command</code>, but actually does nothing except return a CommandResult object to display feedback to the user. This promotes transparency and compatibility.
 </td>
 </tr>
 </table>
@@ -826,12 +830,12 @@ AliasManager uses the CommandValidator for two purposes:</p>
 <ol class="arabic">
 <li>
 <p>By designating an object as a CommandValidator, we are able to avoid hardcoding the list of valid and un-aliasable commands into AliasManager.
-This makes for a more reusable component and improves testability as well as maintainability.</p>
+This makes for a more reusable component and improves testability and maintainability. It also embodies the Open-Closed Principle.</p>
 </li>
 <li>
 <p>Typically, the SourceManagerParser (which by definition should know about the various valid commands) is the designated CommandValidator.
 However, the SourceManagerParser also has an association with the AliasManager.
-By creating an interface, we avoid a situation of circular dependency where by both components are tightly coupled to each other.</p>
+By creating an interface, we avoid a situation of circular dependency whereby both components are tightly coupled to each other.</p>
 </li>
 </ol>
 </div>
@@ -844,6 +848,14 @@ By creating an interface, we avoid a situation of circular dependency where by b
 <p>When a meta-command is detected to have been entered, SourceManagerParser delegates it to the appropriate AliasMetaCommandParser to handle.
 For instance, <code>alias FOO BAR</code> is delegated to the AliasAddMetaCommandParser (a concrete subclass of AliasMetaCommandParser) with the arguments "FOO BAR".
 The appropriate AliasMetaCommandParser parses the arguments and returns a DummyCommand response object.</p>
+</div>
+<div class="paragraph">
+<p>The following sequence diagram illustrates the operation of the "add alias" meta-command (assuming that valid user input is provided).</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/AliasManagerMetaCommandSequenceDiagram.png" alt="AliasManagerMetaCommandSequenceDiagram" width="800">
+</div>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -4268,4 +4280,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-14 07:05:51 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-14 09:09:37 UTC</div></div></div></body></html>
