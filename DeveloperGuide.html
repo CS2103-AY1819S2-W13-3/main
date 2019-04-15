@@ -1211,6 +1211,40 @@ It allows compound searches to be made, allowing user to narrow down their searc
 of the sources, and making working on the database more efficient.</p>
 </div>
 <div class="paragraph">
+<p>Lastly, the search is able to find string matches with minor typing errors in the spelling. This feature renders the search more
+powerful by accommodating any minor typing error user may make when keying in their search argument. This includes minor flips of two characters
+or a missing character etc. The implementation current accounts for less than 3 character swaps needed to transform between the strings
+(lower bounded by the difference in the string lengths of the two strings).</p>
+</div>
+<div class="paragraph">
+<p>However, it may seem that such an additional renders the search feature a bit too general, thus making the search output space
+broadened by including more sources that would have otherwise been ignored. But, one may see this as an advantage as:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Obviously, this is targeted at accounting for the slightest chance that the user may have made a typo.</p>
+</li>
+<li>
+<p>If not, this feature at the very least shows user <em>'similar'</em> or <em>'other related'</em> entries that may be useful in their
+research project as they search for a particular entry. This can help in giving user more ideas about related sources in the same field.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>This distance is know as the Levenshtein distance or the edit distance,
+after the Russian scientist Vladimir Levenshtein who devised the algorithm in 1965. This algorithm is used to determine how different
+two strings are from each other by outputing the integer number of transformations (insertions, deletions and substitutions) needed to transform
+one string to the other.</p>
+</div>
+<div class="paragraph">
+<p>The algorithm implementation for this section of the code was inspired from <a href="https://www.baeldung.com/java-levenshtein-distance">Baeldung</a>.</p>
+</div>
+<div class="paragraph">
+<p>If any seemingly unwanted results are displayed after a search command is executed, it should not be seen as a bug and this is
+the intended behaviour because of the reasons and rationale explained above. Rest assured, the intended results will never be missed out.</p>
+</div>
+<div class="paragraph">
 <p>Additionally, it uses:</p>
 </div>
 <div class="ulist">
@@ -1242,10 +1276,10 @@ logical combination.</p>
 in an indexed fashion, with all details and in order of their addition.</p>
 </div>
 <div class="paragraph">
-<p>Step 2. The user executes <code>search i/footitle1</code> command and only those sources that have their title as <code>footitle1</code> are displayed.</p>
+<p>Step 2. The user executes <code>search i/algorithms</code> command and only those sources that have their title as <code>algorithms</code> are displayed.</p>
 </div>
 <div class="paragraph">
-<p>Step 3. The user executes <code>search i/footitle6 y/website</code> and only those entries are listed that have both their title as <code>footitle1</code> and type as <code>website</code>.</p>
+<p>Step 3. The user executes <code>search i/homework y/website</code> and only those entries are listed that have both their title as <code>homeowork</code> and type as <code>website</code>.</p>
 </div>
 <div class="paragraph">
 <p>Step 4. The user executes <code>search t/CS</code> and all those sources that have any of their tags having 'CS' in it listed, including <code>CS2030</code>, <code>CS2040</code> and <code>CS2103</code></p>
@@ -1261,6 +1295,15 @@ in an indexed fashion, with all details and in order of their addition.</p>
 </td>
 </tr>
 </table>
+</div>
+<div class="paragraph">
+<p>Step 5. The user executes <code>search i/algorihtm</code> as a typing error, the command still displays all those sources that have their title as
+<code>algorithms</code> and other related words.</p>
+</div>
+<div class="paragraph">
+<p>Step 6. The user executes <code>search d/training an intelligent agent t/CS2039</code>, the search displays all sources with
+having the exact sentence 'training an intelligent agent' or any of its related similar strings in it&#8217;s body, and those with
+tag 'CS2039' or any of the related modules such as 'CS2030', 'CS2040'.</p>
 </div>
 </div>
 <div class="sect3">
@@ -1366,46 +1409,131 @@ is not used.</p>
 <div class="paragraph">
 <p>The list command is facilitated by <code>Infinity Machine</code>.
 It extends <code>Infinity Machine</code> with a list functionality, enumerating all or a specific number of
-entries in the source database and their details, in the order of their addition.
-It has mainly two usages:<br>
-1) Without a parameter, as just <code>list</code> : enumerates all the entries of the source database with their details<br>
-2) With a parameter N : where N is a positive integer, enumerates only the top - N or first - N sources from the source database<br></p>
+entries in the source database and their all their details, in the order of their addition, or custom order
+as may be supported by the application.</p>
 </div>
 <div class="paragraph">
-<p>Motivation for such an enhancement is that one may feel that such act of populating <strong>all</strong> the sources on the GUI may be cluttering the view unnecessarily.
-Now, what could be the parameters a user may want to limit the list by? Limiting merely by their field values is akin to search,
-which would make the logic redundant. In contrast, the user may want to control the number of sources he wants to view.
-This could be helpful in:</p>
+<p>The four main formats and their usages are described below:</p>
+</div>
+<div class="sect4">
+<h5 id="1-list-no-arguments"><a class="link" href="#1-list-no-arguments">1. list: (no arguments)</a></h5>
+<div class="paragraph">
+<p>When no arguments are passed to <code>list</code>, it works same way as in the original AB4 logic, listing <strong>all</strong> the sources in the entire database with all their title, type, author, detail and tag values.
+The sources are unfiltered and listed in entirety, with indexes 1, 2.. so on.</p>
+</div>
+<div class="paragraph">
+<p>Example: <code>list</code><br>
+Lists all the sources indexed from 1 onwards with all their details.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="2-list-n-one-positive-argument"><a class="link" href="#2-list-n-one-positive-argument">2. list N: (one positive argument)</a></h5>
+<div class="paragraph">
+<p>When one positive integer is passed to <code>list</code>, it lists the first N sources from the top, again listing all their title, type, author, detail and tag values.
+Top N sources are listed with respect to the original source database list with indexes 1, 2 &#8230;&#8203; till N.
+The number N must be a positive, non-zero number for the command logic to work. A negative N alludes to the 3rd case below.</p>
+</div>
+<div class="paragraph">
+<p>Example: <code>list 5</code><br>
+Lists top 5 sources from the entire database indexed from 1, 2 .. 5 with all their details.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="3-list-n-one-negative-argument"><a class="link" href="#3-list-n-one-negative-argument">3. list -N: (one negative argument)</a></h5>
+<div class="paragraph">
+<p>When one negative integer is passed to <code>list</code>, it lists the last N resources from the top or first N sources from the bottom, again listing all their title, type, author, detail and tag values.
+Bottom N sources are listed with respect to the original source database list with indexes 1, 2 &#8230;&#8203; till N.
+The number after the negative sign but be a non-zero positive number for the command logic to work.</p>
+</div>
+<div class="paragraph">
+<p>Example: <code>list -5</code><br>
+Lists the last 5 sources from the entire database indexed from 1, 2 .. 5 with all their details.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="4-list-n-m-two-positive-arguments"><a class="link" href="#4-list-n-m-two-positive-arguments">4. list N M: (two positive arguments)</a></h5>
+<div class="paragraph">
+<p>When two positive integers are passed to <code>list</code>, it lists the sources between N and M (included) from the top, again listing all their title, type, author, detail and tag values.
+N to M sources are listed with respect to the original source database list with indexes 1, 2 &#8230;&#8203; till (M-N+1).
+For valid functioning of the command, the two numbers passed must be positive and the first number must not be greater than the second number.
+I.e. both numbers should be non-zero and the second number can only be same or greater than the first number to produce a valid listing of the sources.</p>
+</div>
+<div class="paragraph">
+<p>Example: <code>list 6 9</code><br>
+Lists the 4 sources from index 6 to 9 from the entire database list, indexed from 1, 2 .. till 4 with all their details.</p>
+</div>
+<div class="paragraph">
+<p>Some salient features which affect the command&#8217;s working are discussed below:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Iteratively examining all the sources by restricting how many are shown at one time.</p>
+<p>An argument passed which more than the current number of sources in the list is reduced to the index of the last source [i.e. the maximum number of sources].
+For example, executing <code>list 100</code> when the database has only 50 entries will automatically cap its display to 50 instead of throwing an error.
+Similarly, for other command formats too, the listing is capped by the total number of sources and the success message is too altered appropriately.</p>
 </li>
 <li>
-<p>Making more effective use of the GUI display to the user by not unnecessarily enumerating all sources.</p>
+<p>Any number of arbitrary spaces between the list command word and its argument is accepted. The <code>command parser</code> will look for the valid command word and
+when <code>list command</code> is called, then the numbers will be plucked out in the right order and the appropriate command format will be executed.
+For example, 'list 2 3', ' &lt;n spaces&gt; list &lt;x spaces&gt; 2 &lt;y spaces&gt; 3 &lt;z spaces&gt; ' all commands work in the same, intended fashion for all values of n and z and all
+non-zero values of x and y.</p>
+</li>
+<li>
+<p>More than two arguments are ignored and only the first two arguments are evaluated as per the 4th case above.
+Thus, <code>list 2 3 4</code> and <code>list 2 3 4 &#8230;&#8203;</code> all are executed as <code>list 2 3</code> only.</p>
+</li>
+<li>
+<p>This list feature controls how many sources [based on indices passed] are displayed, <strong>with respect to the original source list</strong> only, and not the one
+currently being displayed to the user.
+Thus, if   <code>list 2 4</code> is carried out after <code>list 7 10</code> then the list index 2, 3 and 4 of the original list will be outputted and not of this currently displaying list.
+Similarly, if a user executes <code>list 3</code> post an operation, say search, then the first three sources of the entire databae are shown and <strong>not</strong> the first three sources of the filtered
+list of the resulting search operation.</p>
+</li>
+<li>
+<p>Having said (4), the new displayed list of sources after the executing of any list operation will update the internally maintained current list displayed, thus any operation [such as <code>edit</code>, <code>delete</code>]
+which are based on the indexes of the current displaying list will <strong>still function as per normal</strong> after a list command is executed.
+For example, after displaying <code>list 3 5</code>, if a user executes <code>delete 1</code>, it is akin to deleting the 3rd source in the entire list database.</p>
 </li>
 </ol>
 </div>
 <div class="paragraph">
-<p>Thus, the new modification to the command changes its format optionally, allowing user to be able to pass a parameter
-and list only those many sources from the top, that is from the least-recently added. This may be intuitively useful when say
-you want to perform certain operations in this new list of sources that are displayed by their time of addition.
-Example, a user wants to delete all of the sources that were added yesterday. And if 10 entries were added yesterday,
-the user could just execute <code>list 10</code> to access
-those entries and then perform a <code>delete &lt;INDEX&gt;</code> accordingly.</p>
+<p>Motivation for such an enhancement is that one may feel that such act of populating <strong>all</strong> the sources on the GUI may be cluttering the view unnecessarily.
+Now, what could be the parameters a user may want to limit the list by? Limiting merely by their field values is akin to search,
+which would make the logic redundant. In contrast, the user may want to control the number of sources he wants to view, or be able to limit by some sense
+of the time at which it was added.</p>
 </div>
 <div class="paragraph">
-<p>For example, the user may still execute <code>list</code> command to see the updated list of all the source and their fields.</p>
+<p>This could be helpful in:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Iteratively examining all the sources by restricting how many are shown at one time. The user may begin with listing <code>list 10</code>, then <code>list 11 20</code> and so on to analyze
+all the source entries 10 at a time.</p>
+</li>
+<li>
+<p>Making more effective use of the GUI display to the user by not unnecessarily enumerating all sources, but rendering it more powerful by allowing the user to control what and how many sources
+he wants to see the details of.</p>
+</li>
+<li>
+<p>Enabling a pseudo-filtering by time-of-addition of the sources, something the application logic does not support currently [e.g. TimeAdded field]. This is possible because the list command alway alludes
+to the original databse list of all the sources, which are by defaul maintained in the order of their addition [with most recent at the end].</p>
+</li>
+</ol>
 </div>
 <div class="paragraph">
-<p>But now, one may also enter <code>list 21</code> to list the top 21 sources only, allowing user to streamline their retrieval for more
-efficient operations on the sources.</p>
+<p>Thus, the new modification to the command changes its format optionally, allowing user to be able to pass either one, two or no parameters
+and list only those sources which have their indices falling in the range entered [as covered by the cases above].
+This may be intuitively useful when say you want to perform certain operations in this new list of sources that are displayed by their time of addition,
+since the sources are by default arranged in descending order of their time of addition.</p>
 </div>
 <div class="paragraph">
-<p>What it does is, it allows the user to now pass an optional argument to <code>list</code> command, a positive integer n, and then displays only the first n source entries.
-The original working of the <code>list</code> command showing all entries is still intact, thus just appending extra functionality without
-changing the original logic.</p>
+<p>Example, a user wants to delete all of the sources that were added yesterday. And if 10 entries were added yesterday,
+the user could just execute <code>list 10</code> to access those entries and then perform a <code>delete &lt;INDEX&gt;</code> accordingly.</p>
+</div>
+<div class="paragraph">
+<p>The original working of the <code>list</code> command showing all entries is still intact, when the command is called without any parameter, thus
+this modification just appends extra functionality which renders the command more useful and powerful than it was before in AB4.</p>
 </div>
 <div class="paragraph">
 <p>Additionally, it uses:</p>
@@ -1413,23 +1541,43 @@ changing the original logic.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>PREDICATE_SHOW_ALL_SOURCES</code>&#8201;&#8212;&#8201;when the user does not pass an argument to the list command, all sources must be displayed displayed.
-This predicate results <code>true</code> for every source tested.</p>
+<p><code>PREDICATE_SHOW_ALL_SOURCES</code>&#8201;&#8212;&#8201;when the user does not pass an argument to the list command, all sources must be displayed.
+This predicate results <code>true</code> for every source tested. Also, this filtering mode is internally called before <strong>any</strong> list operation so the
+command is able to utilize the entire database list in its filtering logic and not just the one currently displayed.</p>
 </li>
 <li>
-<p><code>makePredicateForTopN</code>&#8201;&#8212;&#8201;when the user passes an argument, only first N sources must be listed.
+<p><code>makePredicateForTopN</code>&#8201;&#8212;&#8201;when the user passes a positive argument, only first N sources must be listed.
 This method returns a new object of type <code>Predicate&lt;Source&gt;</code> that keeps track of the <code>count</code> of sources,
-displaying <code>true</code> for the first N and <code>false</code> for the rest.</p>
+evaluating <code>true</code> for the first N sources and <code>false</code> for all the rest.</p>
 </li>
 <li>
-<p><code>targetIndex</code>&#8201;&#8212;&#8201;the number N up to which the most recent sources are to be displayed to the user. Maintained internally.
-Set to the current size of the database if the value input is more that this current size.</p>
+<p><code>makePredicateForLastN</code>&#8201;&#8212;&#8201;when the user passes a negative argument, the last N sources must be listed.
+This method returns a new object of the type <code>Predicate&lt;Source&gt;</code> that keeps track of the <code>count</code> of the sources,
+evaluating <code>true</code> for the las N sources an <code>false</code> for all others.</p>
+</li>
+<li>
+<p><code>makePredicateForXToY</code>&#8201;&#8212;&#8201;when the user passes two positive arguments, the sources between the two indices (included) must be listed.
+This method returns a new object of the type <code>Predicate&lt;Source&gt;</code> that keeps track of the <code>count</code> of the sources,
+evaluating <code>true</code> for all sources between indices N and M included, and <code>false</code> for all others.</p>
+</li>
+<li>
+<p><code>targetIndex</code>&#8201;&#8212;&#8201;the number N up to which the most recent sources are to be displayed to the user, in both the positive N and negative N case (case 2 and 3).
+It is maintained internally. Set to the current size of the database if the value input is more that this current size.</p>
+</li>
+<li>
+<p><code>fromIndex</code>&#8201;&#8212;&#8201;in the case of two arguments, this is the first index, must be non-zero positive number not greater than the <code>toIndex</code> below.</p>
+</li>
+<li>
+<p><code>toIndex</code>&#8201;&#8212;&#8201;in the case of two arguments, this is the second index, must be non-zero positive number not less than the <code>fromIndex</code> above.</p>
+</li>
+<li>
+<p><code>posFlag</code>&#8201;&#8212;&#8201;internally maintained, passed as <code>true</code> for positive single argument N and <code>false</code> for negative single argument N.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
 <p>This feature improves the product significantly because a user can now list only as many item he wants and need not clutter the screen by displaying all.
-It helps him to narrow down his search, say should he want to view the N first added sources. This ensures more effective retrieval and
+It helps him to narrow down his search, say should he want to view the N first or last added sources. This ensures more effective retrieval and
 operations on the sources, such as following it by index dependent operations such as <code>edit</code> and <code>delete</code> for instance.</p>
 </div>
 <div class="paragraph">
@@ -1442,11 +1590,12 @@ Some design considerations were
 Interface <code>Parser&lt;T&gt;</code>. This technique did not work for making <code>ListCommand</code> objects for the same reason.
 </strong> Using method overloading: This did not work for <code>parser</code> method because of the interface restrictions, however
 this was used in the constructor of <code>LogicCommand</code> class, creating two objects depending on whether a <code>targetIndex</code> was passed
-or not.
+or not, and whether two indexes where passed or none.
 ** Using args.length(): Ultimately used in <code>parse</code> method for a simple check whether an
-argument is passed or not.
-- The implementation too was challenging, as the current format of <code>list</code> command had to be changed and be prepared to accept and parse an optional argument, ie. overloading
-functionality based on whether an argument was passed by the user or not.</p>
+argument is passed and how many are passed.
+- The implementation too was challenging, as the current format of <code>list</code> command had to be changed and be prepared to accept and parse optional arguments, with the choice of
+ either one or two parameters, ie. implementing overloading functionality
+for the list command logic based on whether the number of arguments passed by the user if any.</p>
 </div>
 <div class="paragraph">
 <p>Given below is an example usage scenario and how the list mechanism behaves.</p>
@@ -1473,17 +1622,24 @@ in the order of their addition.</p>
 <p>Step 6. The user now executes <code>list 2</code> command. The first 2 entries akin to the previous output are displayed.</p>
 </div>
 <div class="paragraph">
-<p>Step 7. The user now executes <code>list 3 5</code> command. An invalid command format exception is thrown, prompting the user
-to enter exactly 1 or no arguments.</p>
+<p>Step 7. The user now executes <code>list 3 5</code> command. The source entries 3, 4 and 5 are shown, indexed as 1, 2 and 3, with all their details.</p>
 </div>
 <div class="paragraph">
-<p>Step 8. The user now executes <code>list 3</code> command. The first 3 entries of the entire source database are listed with all their details.</p>
+<p>Step 8. The user now executes <code>list 3</code> command. The first 3 entries of the entire source database are listed with all their details, and not the first three of the currently
+showcased list.</p>
+</div>
+<div class="paragraph">
+<p>Step 9. The user now executes <code>list -2</code> and the last two sources from the entire database list (and not the currently displayed list) are shown.</p>
+</div>
+<div class="paragraph">
+<p>Step 10. The user now executes <code>delete 1</code> and the first entry of the current list or the second last entry of the entire database is deleted.</p>
+</div>
 </div>
 </div>
 <div class="sect3">
 <h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">3.7.2. Design Considerations</a></h4>
 <div class="sect4">
-<h5 id="aspect-how-list-list-n-executes"><a class="link" href="#aspect-how-list-list-n-executes">Aspect: How list &amp; list n executes</a></h5>
+<h5 id="aspect-how-list-list-n-and-list-n-m-executes"><a class="link" href="#aspect-how-list-list-n-and-list-n-m-executes">Aspect: How list, list N, and list N M executes</a></h5>
 <div class="ulist">
 <ul>
 <li>
@@ -1500,7 +1656,20 @@ to enter exactly 1 or no arguments.</p>
 </div>
 </li>
 <li>
-<p><strong>List N (current choice):</strong> Filters using predicate that returns <code>true</code> for first N sources.</p>
+<p><strong>List N (current choice):</strong> Filters using predicate that returns <code>true</code> for first/last N sources.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Easy to implement. Intuitive to understand</p>
+</li>
+<li>
+<p>Cons: Can be made faster and cleaner using List operations or streams.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>List N (current choice):</strong> Filters using predicate that returns <code>true</code> for sources between N and M included.</p>
 <div class="ulist">
 <ul>
 <li>
@@ -1516,18 +1685,19 @@ to enter exactly 1 or no arguments.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="aspect-data-structure-to-support-the-list-list-n-commands"><a class="link" href="#aspect-data-structure-to-support-the-list-list-n-commands">Aspect: Data structure to support the list/list n commands</a></h5>
+<h5 id="aspect-data-structure-to-support-the-list-list-n-list-n-m-commands"><a class="link" href="#aspect-data-structure-to-support-the-list-list-n-list-n-m-commands">Aspect: Data structure to support the list/list N/list N M commands</a></h5>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Alternative 1 (current choice):</strong> Forms predicates based on the input parameter, maintain targetIndex.</p>
+<p><strong>Alternative 1 (current choice):</strong> Forms predicates based on the input parameter, maintain targetIndex, fromIndex, toIndex and posFlag.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Easy for new Computer Science student undergraduates to understand, who are likely to be the new incoming developers of our project.</p>
+<p>Pros: Uses simple <code>count</code> parameter initialized to 0 or 1 and incremented each time a source is evaluated returning <code>true/false</code> depending on the format of the list command.
+Easy for new Computer Science student undergraduates to understand, who are likely to be the new incoming developers of our project.</p>
 </li>
 <li>
-<p>Cons: Maybe not the best implementation.</p>
+<p>Cons: Maybe not the best implementation in terms of the number of internal flags and indices maintained.</p>
 </li>
 </ul>
 </div>
@@ -4416,4 +4586,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-14 15:45:39 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-15 03:23:17 UTC</div></div></div></body></html>

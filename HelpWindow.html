@@ -537,12 +537,21 @@ Edits the 5th source and clears all its existing tags.</p>
 <div class="paragraph">
 <p>Searches for entries amongst the list of sources.<br>
 Able to search by title, type, detail and tags as specified by the CLI prefixes.
-Able to perform substring matching.
-Finds all entries with a (case insensitive) field value that contains the value as specified by the user.<br>
+Able to perform substring matching. Able to implement autocorrect by searching for <em>'similar'</em> strings,
+where similarity is defined by a pre-set Levenshtein distance.</p>
+</div>
+<div class="paragraph">
+<p>Finds all entries with a (case insensitive) field value that contains the value as specified by the user.<br>
 Searches with multiple arguments are taken as conjunction searches, i.e all those sources
 that satisfy all the keyword values are shown (logical <code>and</code> operation).
-Furthermore, the search command is able to take in multiple arguments of each prefix and search
-in conjunction such as all those fields are matched with the corresponding fields of the resulting sources.</p>
+Enables substring matching for a more powerful retrieval of sources. Also able
+to take in multiple arguments of each prefix and search
+in conjunction such as all those fields are matched with the corresponding fields of the resulting sources.
+Similar fields are also shown, allowing for room should the user have made a typing mistake, or the user meant something
+else, or the user just wants to see other related sources with similar field values.
+If any seemingly unwanted results are displayed after a search command is executed, it should not be seen as a bug and this is
+the intended behaviour because of the reasons and rationale explained above or in the Developer Guide.
+Rest assured, the intended results will never be missed out.</p>
 </div>
 <div class="paragraph">
 <p>Format: <code>search [i/TITLE] [y/TYPE] [d/DETAILS] [t/TAG]&#8230;&#8203;</code></p>
@@ -565,6 +574,10 @@ in conjunction such as all those fields are matched with the corresponding field
 because it is a super-string of both the entered field values.</p>
 </li>
 <li>
+<p>Closely related strings are matched even if the value is not exactly same, implemented using
+edit distance of the two strings.</p>
+</li>
+<li>
 <p>Search implemented as a logical AND. eg. <code>search i/algorithm y/website</code> results in all those sources
 that have title <code>algorithm</code> AND type <code>website</code></p>
 </li>
@@ -582,9 +595,17 @@ that have title <code>algorithm</code> AND type <code>website</code></p>
 Returns the source(s) with the title <code>algorithms</code></p>
 </li>
 <li>
-<p><code>search i/wiki i/algo y/web d/intelligence t/ML</code><br>
-Returns any source having tags <code>ML</code> and having the word <code>intelligence</code> somewhere in their content
+<p><code>search i/wiki y/web d/intelligence t/ML</code><br>
+Returns any source(s) having tags <code>ML</code> and having the word <code>intelligence</code> somewhere in their content
 (detail) and having a type of <code>website</code> or <code>web series</code>.</p>
+</li>
+<li>
+<p><code>search i/data i/algo</code><br>
+Returns the source(s) with both substrings 'data' and 'algo' included in them.</p>
+</li>
+<li>
+<p><code>search y/wesbite</code>
+Returns the source(s) of type 'website' [and other similar strings, if any]</p>
 </li>
 </ul>
 </div>
@@ -592,32 +613,83 @@ Returns any source having tags <code>ML</code> and having the word <code>intelli
 <div class="sect2">
 <h3 id="listing-all-sources-code-list-code"><a class="link" href="#listing-all-sources-code-list-code">3.8. Listing all sources : <code>list</code></a></h3>
 <div class="paragraph">
-<p>Displays a list of all sources currently in the database, without filtering.<br>
-Optional argument N used to list only the top N sources to the user, where N is a positive integer
-(any other value throws error).<br>
-Format: <code>list [N]</code>
-where argument N in [ ] is optional.</p>
+<p>Displays a list of sources currently in the database, filtering by number and position depending on the [optional] parameters passed.<br>
+Takes 1 or 2 optional argument which are used to list only the top/bottom N sources or the sources between N and M (included) indices respectively.<br>
+With one parameter passed, a positive N lists top N sources from the top, a negative N lists top N sources from the bottom [bottom N sources].<br>
+With two parameters, the range must have both N and M as positive indices and N must not be smaller than M.<br>
+None of the values can ever be 0. The listing feature is always relative to the original list of the entire database.</p>
+</div>
+<div class="paragraph">
+<p>Format: <code>list [N] [M]</code>
+where argument N and M in [ ] are optional [either enter none, N, or (N and M)]</p>
+</div>
+<div class="paragraph">
+<p>The four main formats and their usages are described below:</p>
+</div>
+<div class="sect3">
+<h4 id="list-no-arguments"><a class="link" href="#list-no-arguments">3.8.1. list: (no arguments)</a></h4>
+<div class="paragraph">
+<p>When no arguments are passed to <code>list</code>, it works same way as in the original AB4 logic, listing <strong>all</strong> the sources in the entire database with all their title, type, author, detail and tag values.
+The sources are unfiltered and listed in entirety, with indexes 1, 2.. so on.</p>
+</div>
+<div class="paragraph">
+<p>Example: <code>list</code><br>
+Lists all the sources indexed from 1 onwards with all their details.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="list-n-one-positive-argument"><a class="link" href="#list-n-one-positive-argument">3.8.2. list N: (one positive argument)</a></h4>
+<div class="paragraph">
+<p>When one positive integer is passed to <code>list</code>, it lists the first N sources from the top, again listing all their title, type, author, detail and tag values.
+Top N sources are listed with respect to the original source database list with indexes 1, 2 &#8230;&#8203; till N.</p>
+</div>
+<div class="paragraph">
+<p>Example: <code>list 5</code><br>
+Lists top 5 sources from the entire database indexed from 1, 2 .. 5 with all their details.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="list-n-one-negative-argument"><a class="link" href="#list-n-one-negative-argument">3.8.3. list -N: (one negative argument)</a></h4>
+<div class="paragraph">
+<p>When one negative integer is passed to <code>list</code>, it lists the last N resources from the top or first N sources from the bottom, again listing all their title, type, author, detail and tag values.
+Bottom N sources are listed with respect to the original source database list with indexes 1, 2 &#8230;&#8203; till N.</p>
+</div>
+<div class="paragraph">
+<p>Example: <code>list -5</code><br>
+Lists the last 5 sources from the entire database indexed from 1, 2 .. 5 with all their details.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="list-n-m-two-positive-arguments"><a class="link" href="#list-n-m-two-positive-arguments">3.8.4. list N, M: (two positive arguments)</a></h4>
+<div class="paragraph">
+<p>When two positive integers are passed to <code>list</code>, it lists the sources between N and M (included) from the top, again listing all their title, type, author, detail and tag values.
+N to M sources are listed with respect to the original source database list with indexes 1, 2 &#8230;&#8203; till (M-N+1).</p>
+</div>
+<div class="paragraph">
+<p>Example: <code>list 6, 9</code><br>
+Lists the 4 sources from index 6 to 9 from the entire database list, indexed from 1, 2 .. till 4 with all their details.</p>
 </div>
 <div class="sidebarblock">
 <div class="content">
 <div class="ulist">
 <ul>
 <li>
-<p>Lists all sources present in the database in the order of their addition, if no argument passed</p>
+<p>More than 2 parameters passed will be ignored, and the first two will be tested for the fourth case of range(N,M) listing.</p>
 </li>
 <li>
-<p>Lists top N sources if a single integer N is passed</p>
+<p>In single parameter, the integer can be positive or negative but not 0.</p>
 </li>
 <li>
-<p>Throws error if more than one arguments are passed</p>
+<p>In two parameter, the two integers must both be positive, with second greater than or equal to the first (both non-zero).</p>
 </li>
 <li>
-<p>The paramter passed, N, must be a positive integer else error is thrown</p>
+<p>Any number of spaces in between the number is accepted, they are trimed away and integers are used to determine the list command type.</p>
 </li>
 <li>
 <p>Tags, Details, Type are also displayed along with the sources</p>
 </li>
 </ul>
+</div>
 </div>
 </div>
 </div>
@@ -1282,4 +1354,4 @@ e.g. <code>alias-rm ls</code></p>
 </ul>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-14 15:45:39 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-15 03:23:17 UTC</div></div></div></body></html>

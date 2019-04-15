@@ -1,0 +1,929 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="Asciidoctor 1.5.6.1"><title>Ruhani Suri - Project Portfolio</title><link rel="stylesheet" href="../stylesheets/gh-pages.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../stylesheets/coderay-asciidoctor.css"></head><body class="article"><div id="seedu-header"><nav class="navbar navbar-lg navbar-light bg-lighter"><div class="container"><a class="navbar-brand" href="https://se-edu.github.io/"><img src="../images/SeEduLogo.png" alt="SE-EDU"></a><ul class="navbar-nav"><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/addressbook-level1">AB-1</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/addressbook-level2">AB-2</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/addressbook-level3">AB-3</a></li><li class="nav-item"><a class="nav-link active" href="../index.html">AB-4</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/collate">Collate</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/se-book">Book</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/learningresources">Resources</a></li></ul></div></nav></div><div id="site-header"><nav class="navbar navbar-light bg-light"><div class="container"><a class="navbar-brand" href="../index.html">AddressBook-Level4</a><ul class="navbar-nav"><li class="nav-item"><a class="nav-link" href="../UserGuide.html">User Guide</a></li><li class="nav-item"><a class="nav-link" href="../DeveloperGuide.html">Developer Guide</a></li><li class="nav-item"><a class="nav-link" href="../LearningOutcomes.html">LOs</a></li><li class="nav-item"><a class="nav-link active" href="../AboutUs.html">About Us</a></li><li class="nav-item"><a class="nav-link" href="../ContactUs.html">Contact Us</a></li><li class="navitem"><a class="nav-link" href="https://github.com/se-edu/addressbook-level4"><span class="fa fa-github fa-lg" aria-hidden="true"></span>&nbsp;View on GitHub</a></li></ul></div></nav></div><div id="header"><h1>Ruhani Suri - Project Portfolio</h1></div><div id="content"><div class="sect1">
+<h2 id="project-the-infinity-machine"><a class="link" href="#project-the-infinity-machine">PROJECT: The Infinity Machine</a></h2>
+<div class="sectionbody">
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="overview"><a class="link" href="#overview">Overview</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Our project, the Infinity Machine, is an application useful for efficient management of textual information
+of any kind, say research material. It allows users to store information by the their <strong>title</strong>, <strong>type</strong>, <strong>details</strong> and multiple <strong>tags</strong> and allows
+for easy search, retrieval, edit and delete functions. Intended to be used through the Command Line Interface, and intended
+for tech-savvy, university students looking for an efficient, simple yet powerful way of maintaining their resources.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="summary-of-contributions"><a class="link" href="#summary-of-contributions">Summary of contributions</a></h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="strong-major-enhancement-strong-br"><a class="link" href="#strong-major-enhancement-strong-br"><strong>Major enhancement</strong>:<br></a></h2>
+<div class="sectionbody">
+<div class="sect3">
+<h4 id="1-modified-strong-the-ability-to-search-strong-through-sources"><a class="link" href="#1-modified-strong-the-ability-to-search-strong-through-sources">1. Modified <strong>the ability to search</strong> through sources:</a></h4>
+<div class="sect4">
+<h5 id="strong-modification-strong"><a class="link" href="#strong-modification-strong"><strong>Modification</strong>:</a></h5>
+<div class="paragraph">
+<p>Format: <code>search [n/TITLE] [y/TYPE] [d/DETAILS] [t/TAG] [t/TAG]&#8230;&#8203;</code></p>
+</div>
+<div class="paragraph">
+<p>The work I have done on AB4&#8217;s search feature can be divided into 3 major modifications as follows:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Multiple prefix tags of different (and same) kinds</strong>: The search function now has an added functionality of being able to take in multiple
+arguments of the <strong>same</strong> and <strong>different</strong> type of source fields, and search for sources based on its conjunction.</p>
+</li>
+<li>
+<p><strong>Substring matching with incomplete words</strong>: It is enabled with substring matching as against exact field matching.
+Each argument is checked for its presence inside the source
+fields and a source is found only if all the user entered arguments are present inside the source&#8217;s respective field values.</p>
+</li>
+<li>
+<p><strong>Auto-correction feature for typing mistakes</strong>: It is also able to find string matches with minor typing errors in the spelling,
+implemented using Levenshtein distance or the edit distance. The implementation current accounts for less than 3 character swaps needed to transform between the strings
+(lower bounded by the difference in the string lengths of the two strings).</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4">
+<h5 id="strong-what-it-does-strong"><a class="link" href="#strong-what-it-does-strong"><strong>What it does</strong>:</a></h5>
+<div class="paragraph">
+<p>It allows the user to search through all the entries in the database through various fields at a time, same and different, and display
+source entries that satisfy all of the entered tags in conjunction, with substring matching and typo accommodation.
+It allows compound searches to be made, allowing user to narrow down their search, hence helping in efficient retrieval
+of the sources, and making working on the database more efficient. It also reduces the onus on the user to remember and recall
+the source entries maintained by allowing them to enter as many consecutive characters for a field value they can enumerate.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="strong-justification-strong"><a class="link" href="#strong-justification-strong"><strong>Justification</strong>:</a></h5>
+<div class="paragraph">
+<p>This feature improves the product significantly because a user can now search an entry with a particular title AND a particular type and so on.
+Furthermore, it removes the reliance on the user to memorize exact field values, by enabling substring matching and multiple tags
+entered so the user can enter as much as he remembers and see the results.</p>
+</div>
+<div class="paragraph">
+<p>It helps user greatly narrow down their search should they be looking for a specific source entry with particular values,
+instead of cluttering the screen with all those sources with share the same title as the one the user searches using the command.
+It also allows user to search sources based on other fields and not just title, such as type, tags and details, and even their
+logical combination, along with allowing the user to not memorize his source fields.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="strong-highlights-strong"><a class="link" href="#strong-highlights-strong"><strong>Highlights</strong>:</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p>This enhancement does not affect existing commands and commands to be added in future.<br></p>
+</li>
+<li>
+<p>However, it changed the format of the original <code>search</code> command, which now not only takes parameters of different types, but also needs them to be prefixed by their
+CLI delimiters.</p>
+</li>
+<li>
+<p>If any seemingly unwanted results are displayed after a search command is executed, it should not be seen as a bug as this is
+the intended behaviour because of the two features that render the search result space more broadened than before.</p>
+</li>
+<li>
+<p>Rest assured, the intended results will never be missed out.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="strong-credits-strong"><a class="link" href="#strong-credits-strong"><strong>Credits</strong>:</a></h5>
+<div class="paragraph">
+<p>Most of the feature was developed independently, with some design and implementation considerations discussed with fellow team members.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="strong-minor-enhancement-strong"><a class="link" href="#strong-minor-enhancement-strong"><strong>Minor enhancement</strong>:</a></h3>
+<div class="sect3">
+<h4 id="1-modified-strong-the-ability-to-list-strong-sources"><a class="link" href="#1-modified-strong-the-ability-to-list-strong-sources">1. Modified <strong>the ability to list</strong> sources:</a></h4>
+<div class="sect4">
+<h5 id="strong-modification-strong-2"><a class="link" href="#strong-modification-strong-2"><strong>Modification</strong>:</a></h5>
+<div class="paragraph">
+<p>Format: <code>list [N] [M]</code><br>
+Inside [] means optional.</p>
+</div>
+<div class="paragraph">
+<p>The new modification to the command changes its format optionally, allowing user to be able to pass either one, two or no parameters
+and list only those many sources from the entire source list.</p>
+</div>
+<div class="paragraph">
+<p>The various formats now accepted are:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong><code>list</code> with no arguments</strong>: Works as the original <code>list</code> command and shows all the sources and their details, unfiltered.</p>
+</li>
+<li>
+<p><strong><code>list N</code> with one positive argument</strong>: Shows the top N sources with all their details only.</p>
+</li>
+<li>
+<p><strong><code>list -N</code> with one negative arguments</strong>: Shows the last N sources or the TOp N sources from the bottom with their details.</p>
+</li>
+<li>
+<p><strong><code>list N M</code> with two positive arguments</strong>: With M&gt;=N, shows sources between the indices N and M with all their details only.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>All these resulting sources are appropriately numbered as 1, 2 .. and so on regardless of their index in the original source list.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="strong-what-it-does-strong-2"><a class="link" href="#strong-what-it-does-strong-2"><strong>What it does</strong>:</a></h5>
+<div class="paragraph">
+<p>It allows the user to now pass optional arguments to <code>list</code> command and then displays only those indexed source entries in the original source database as per the cases above.
+The original working of the <code>list</code> command showing all entries is still maintained, with now 3 added functionalities.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="strong-justification-strong-2"><a class="link" href="#strong-justification-strong-2"><strong>Justification</strong>:</a></h5>
+<div class="paragraph">
+<p>This feature improves the product significantly because a user can now list only as many item he wants and need not clutter the screen by displaying all.
+It helps him to narrow down his search by being able t specify what indices of the original sources (say by time of addition) what he like to view. This ensures more effective retrieval and
+operations on the sources, such as following it by index dependent operations such as <code>edit</code> and <code>delete</code> for instance.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="strong-highlights-strong-2"><a class="link" href="#strong-highlights-strong-2"><strong>Highlights</strong>:</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p>This enhancement does not affect existing commands and commands to be added in future.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="strong-credits-strong-2"><a class="link" href="#strong-credits-strong-2"><strong>Credits</strong>:</a></h5>
+<div class="paragraph">
+<p>Most of the feature was developed independently, with some design and implementation considerations discussed with fellow team members.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="strong-code-contributed-strong"><a class="link" href="#strong-code-contributed-strong"><strong>Code contributed</strong>:</a></h3>
+<div class="paragraph">
+<p>[<a href="https://nus-cs2103-ay1819s2.github.io/cs2103-dashboard/#=undefined&amp;search=suriruhani">Reposense contribution</a>]<br>
+[<a href="https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/main/java/seedu/address/logic/commands/SearchCommand.java">search command code</a>]<br>
+[<a href="https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/test/java/seedu/address/logic/commands/SearchCommandTest.java">search command test</a>]<br>
+[<a href="https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/main/java/seedu/address/logic/commands/ListCommand.java">list command code</a>]<br>
+[<a href="https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/test/java/seedu/address/logic/commands/ListCommandTest.java">list command test</a>]<br></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="strong-other-contributions-strong"><a class="link" href="#strong-other-contributions-strong"><strong>Other contributions</strong>:</a></h3>
+<div class="sect3">
+<h4 id="project-management"><a class="link" href="#project-management">Project management:</a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Helped in maintaining issue tracker and milestone progress, along with managing project releases and reviewing and merging
+pull requests.</p>
+</li>
+<li>
+<p>Helped in refactoring Storage AP in migrating the codebase from AB4 to The Infinity Machine for our team, helped in refactoring the entire Storage package
+to be compatible with the functionalities required by our application, mostly changing identifier names and method signatures to model
+our application&#8217;s scope.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="enhancements-to-existing-features"><a class="link" href="#enhancements-to-existing-features">Enhancements to existing features:</a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Fixed failing test cases of AB4 to accommodate the modified command formats, for both <code>search</code> and <code>list</code>.</p>
+</li>
+<li>
+<p>Adding relevant test cases for both <code>search</code> and <code>list</code> to test the various use cases of the commands and specifcally
+some problematic edge cases.</p>
+</li>
+<li>
+<p>Enhanced javadocs for implemented methods to make their functionality and logic more
+relevant to our application&#8217;s scope, changing parameter and return type along with modifying format and functionality explanation.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="documentation"><a class="link" href="#documentation">Documentation:</a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Added to and updated the User Guide</p>
+</li>
+<li>
+<p>Added to and updated the Developer Guide</p>
+</li>
+<li>
+<p>Added to and updated the ContactUs.adoc</p>
+</li>
+<li>
+<p>Added to and updated the AboutUs.adoc</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="community"><a class="link" href="#community">Community:</a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Reviewed and approved PRs of other team mates</p>
+</li>
+<li>
+<p>Helped in tracking issues including assigning severity, status, type, and closing it.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="contributions-to-the-user-guide"><a class="link" href="#contributions-to-the-user-guide">Contributions to the User Guide</a></h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users.</em></p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect2">
+<h3 id="listing-all-sources-code-list-code"><a class="link" href="#listing-all-sources-code-list-code">Listing all sources : <code>list</code></a></h3>
+<div class="paragraph">
+<p>Displays a list of sources currently in the database, filtering by number and position depending on the [optional] parameters passed.<br>
+Takes 1 or 2 optional argument which are used to list only the top/bottom N sources or the sources between N and M (included) indices respectively.<br>
+With one parameter passed, a positive N lists top N sources from the top, a negative N lists top N sources from the bottom [bottom N sources].<br>
+With two parameters, the range must have both N and M as positive indices and N must not be smaller than M.<br>
+None of the values can ever be 0. The listing feature is always relative to the original list of the entire database.</p>
+</div>
+<div class="paragraph">
+<p>Format: <code>list [N] [M]</code>
+where argument N and M in [ ] are optional [either enter none, N, or (N and M)]</p>
+</div>
+<div class="paragraph">
+<p>The four main formats and their usages are described below:</p>
+</div>
+<div class="sect3">
+<h4 id="list-no-arguments"><a class="link" href="#list-no-arguments">list: (no arguments)</a></h4>
+<div class="paragraph">
+<p>When no arguments are passed to <code>list</code>, it works same way as in the original AB4 logic, listing <strong>all</strong> the sources in the entire database with all their title, type, author, detail and tag values.
+The sources are unfiltered and listed in entirety, with indexes 1, 2.. so on.</p>
+</div>
+<div class="paragraph">
+<p>Example: <code>list</code><br>
+Lists all the sources indexed from 1 onwards with all their details.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="list-n-one-positive-argument"><a class="link" href="#list-n-one-positive-argument">list N: (one positive argument)</a></h4>
+<div class="paragraph">
+<p>When one positive integer is passed to <code>list</code>, it lists the first N sources from the top, again listing all their title, type, author, detail and tag values.
+Top N sources are listed with respect to the original source database list with indexes 1, 2 &#8230;&#8203; till N.</p>
+</div>
+<div class="paragraph">
+<p>Example: <code>list 5</code><br>
+Lists top 5 sources from the entire database indexed from 1, 2 .. 5 with all their details.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="list-n-one-negative-argument"><a class="link" href="#list-n-one-negative-argument">list -N: (one negative argument)</a></h4>
+<div class="paragraph">
+<p>When one negative integer is passed to <code>list</code>, it lists the last N resources from the top or first N sources from the bottom, again listing all their title, type, author, detail and tag values.
+Bottom N sources are listed with respect to the original source database list with indexes 1, 2 &#8230;&#8203; till N.</p>
+</div>
+<div class="paragraph">
+<p>Example: <code>list -5</code><br>
+Lists the last 5 sources from the entire database indexed from 1, 2 .. 5 with all their details.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="list-n-m-two-positive-arguments"><a class="link" href="#list-n-m-two-positive-arguments">list N, M: (two positive arguments)</a></h4>
+<div class="paragraph">
+<p>When two positive integers are passed to <code>list</code>, it lists the sources between N and M (included) from the top, again listing all their title, type, author, detail and tag values.
+N to M sources are listed with respect to the original source database list with indexes 1, 2 &#8230;&#8203; till (M-N+1).</p>
+</div>
+<div class="paragraph">
+<p>Example: <code>list 6, 9</code><br>
+Lists the 4 sources from index 6 to 9 from the entire database list, indexed from 1, 2 .. till 4 with all their details.</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>More than 2 parameters passed will be ignored, and the first two will be tested for the fourth case of range(N,M) listing.</p>
+</li>
+<li>
+<p>In single parameter, the integer can be positive or negative but not 0.</p>
+</li>
+<li>
+<p>In two parameter, the two integers must both be positive, with second greater than or equal to the first (both non-zero).</p>
+</li>
+<li>
+<p>Any number of spaces in between the number is accepted, they are trimed away and integers are used to determine the list command type.</p>
+</li>
+<li>
+<p>Tags, Details, Type are also displayed along with the sources</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="searching-a-source-code-search-code"><a class="link" href="#searching-a-source-code-search-code">Searching a source: <code>search</code></a></h3>
+<div class="paragraph">
+<p>Searches for entries amongst the list of sources.<br>
+Able to search by title, type, detail and tags as specified by the CLI prefixes.
+Able to perform substring matching. Able to implement autocorrect by searching for <em>'similar'</em> strings,
+where similarity is defined by a pre-set Levenshtein distance.</p>
+</div>
+<div class="paragraph">
+<p>Finds all entries with a (case insensitive) field value that contains the value as specified by the user.<br>
+Searches with multiple arguments are taken as conjunction searches, i.e all those sources
+that satisfy all the keyword values are shown (logical <code>and</code> operation).
+Enables substring matching for a more powerful retrieval of sources. Also able
+to take in multiple arguments of each prefix and search
+in conjunction such as all those fields are matched with the corresponding fields of the resulting sources.
+Similar fields are also shown, allowing for room should the user have made a typing mistake, or the user meant something
+else, or the user just wants to see other related sources with similar field values.
+If any seemingly unwanted results are displayed after a search command is executed, it should not be seen as a bug and this is
+the intended behaviour because of the reasons and rationale explained above or in the Developer Guide.
+Rest assured, the intended results will never be missed out.</p>
+</div>
+<div class="paragraph">
+<p>Format: <code>search [i/TITLE] [y/TYPE] [d/DETAILS] [t/TAG]&#8230;&#8203;</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>The search is case insensitive. e.g <code>hans</code> will match <code>Hans</code></p>
+</li>
+<li>
+<p>The search implements substring matching. e.g. <code>algo</code> will match algorithm, algorithms, algo trading, etc.</p>
+</li>
+<li>
+<p>There can have any number of tags but minimally 1 (just <code>search</code> results in error. To enumerate all entries, check out <code>list</code> command instead)</p>
+</li>
+<li>
+<p>There can be multiple tags with same prefix and the result must satisfy all, eg. <code>search i/algo i/data</code> will result in <code>data struc. and algorithms</code>
+because it is a super-string of both the entered field values.</p>
+</li>
+<li>
+<p>Closely related strings are matched even if the value is not exactly same, implemented using
+edit distance of the two strings.</p>
+</li>
+<li>
+<p>Search implemented as a logical AND. eg. <code>search i/algorithm y/website</code> results in all those sources
+that have title <code>algorithm</code> AND type <code>website</code></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>search i/Algorithms</code><br>
+Returns the source(s) with the title <code>algorithms</code></p>
+</li>
+<li>
+<p><code>search i/wiki y/web d/intelligence t/ML</code><br>
+Returns any source(s) having tags <code>ML</code> and having the word <code>intelligence</code> somewhere in their content
+(detail) and having a type of <code>website</code> or <code>web series</code>.</p>
+</li>
+<li>
+<p><code>search i/data i/algo</code><br>
+Returns the source(s) with both substrings 'data' and 'algo' included in them.</p>
+</li>
+<li>
+<p><code>search y/wesbite</code>
+Returns the source(s) of type 'website' [and other similar strings, if any]</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="contributions-to-the-developer-guide"><a class="link" href="#contributions-to-the-developer-guide">Contributions to the Developer Guide</a></h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project.</em></p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect2">
+<h3 id="list-feature"><a class="link" href="#list-feature">List feature</a></h3>
+<div class="sect3">
+<h4 id="current-implementation"><a class="link" href="#current-implementation">Current Implementation</a></h4>
+<div class="paragraph">
+<p>The list command is facilitated by <code>Infinity Machine</code>.
+It extends <code>Infinity Machine</code> with a list functionality, enumerating all or a specific number of
+entries in the source database and their all their details, in the order of their addition, or custom order
+as may be supported by the application.</p>
+</div>
+<div class="paragraph">
+<p>The four main formats and their usages are described below:</p>
+</div>
+<div class="sect4">
+<h5 id="1-list-no-arguments"><a class="link" href="#1-list-no-arguments">1. list: (no arguments)</a></h5>
+<div class="paragraph">
+<p>When no arguments are passed to <code>list</code>, it works same way as in the original AB4 logic, listing <strong>all</strong> the sources in the entire database with all their title, type, author, detail and tag values.
+The sources are unfiltered and listed in entirety, with indexes 1, 2.. so on.</p>
+</div>
+<div class="paragraph">
+<p>Example: <code>list</code><br>
+Lists all the sources indexed from 1 onwards with all their details.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="2-list-n-one-positive-argument"><a class="link" href="#2-list-n-one-positive-argument">2. list N: (one positive argument)</a></h5>
+<div class="paragraph">
+<p>When one positive integer is passed to <code>list</code>, it lists the first N sources from the top, again listing all their title, type, author, detail and tag values.
+Top N sources are listed with respect to the original source database list with indexes 1, 2 &#8230;&#8203; till N.
+The number N must be a positive, non-zero number for the command logic to work. A negative N alludes to the 3rd case below.</p>
+</div>
+<div class="paragraph">
+<p>Example: <code>list 5</code><br>
+Lists top 5 sources from the entire database indexed from 1, 2 .. 5 with all their details.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="3-list-n-one-negative-argument"><a class="link" href="#3-list-n-one-negative-argument">3. list -N: (one negative argument)</a></h5>
+<div class="paragraph">
+<p>When one negative integer is passed to <code>list</code>, it lists the last N resources from the top or first N sources from the bottom, again listing all their title, type, author, detail and tag values.
+Bottom N sources are listed with respect to the original source database list with indexes 1, 2 &#8230;&#8203; till N.
+The number after the negative sign but be a non-zero positive number for the command logic to work.</p>
+</div>
+<div class="paragraph">
+<p>Example: <code>list -5</code><br>
+Lists the last 5 sources from the entire database indexed from 1, 2 .. 5 with all their details.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="4-list-n-m-two-positive-arguments"><a class="link" href="#4-list-n-m-two-positive-arguments">4. list N M: (two positive arguments)</a></h5>
+<div class="paragraph">
+<p>When two positive integers are passed to <code>list</code>, it lists the sources between N and M (included) from the top, again listing all their title, type, author, detail and tag values.
+N to M sources are listed with respect to the original source database list with indexes 1, 2 &#8230;&#8203; till (M-N+1).
+For valid functioning of the command, the two numbers passed must be positive and the first number must not be greater than the second number.
+I.e. both numbers should be non-zero and the second number can only be same or greater than the first number to produce a valid listing of the sources.</p>
+</div>
+<div class="paragraph">
+<p>Example: <code>list 6 9</code><br>
+Lists the 4 sources from index 6 to 9 from the entire database list, indexed from 1, 2 .. till 4 with all their details.</p>
+</div>
+<div class="paragraph">
+<p>Some salient features which affect the command&#8217;s working are discussed below:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>An argument passed which more than the current number of sources in the list is reduced to the index of the last source [i.e. the maximum number of sources].
+For example, executing <code>list 100</code> when the database has only 50 entries will automatically cap its display to 50 instead of throwing an error.
+Similarly, for other command formats too, the listing is capped by the total number of sources and the success message is too altered appropriately.</p>
+</li>
+<li>
+<p>Any number of arbitrary spaces between the list command word and its argument is accepted. The <code>command parser</code> will look for the valid command word and
+when <code>list command</code> is called, then the numbers will be plucked out in the right order and the appropriate command format will be executed.
+For example, 'list 2 3', ' &lt;n spaces&gt; list &lt;x spaces&gt; 2 &lt;y spaces&gt; 3 &lt;z spaces&gt; ' all commands work in the same, intended fashion for all values of n and z and all
+non-zero values of x and y.</p>
+</li>
+<li>
+<p>More than two arguments are ignored and only the first two arguments are evaluated as per the 4th case above.
+Thus, <code>list 2 3 4</code> and <code>list 2 3 4 &#8230;&#8203;</code> all are executed as <code>list 2 3</code> only.</p>
+</li>
+<li>
+<p>This list feature controls how many sources [based on indices passed] are displayed, <strong>with respect to the original source list</strong> only, and not the one
+currently being displayed to the user.
+Thus, if   <code>list 2 4</code> is carried out after <code>list 7 10</code> then the list index 2, 3 and 4 of the original list will be outputted and not of this currently displaying list.
+Similarly, if a user executes <code>list 3</code> post an operation, say search, then the first three sources of the entire databae are shown and <strong>not</strong> the first three sources of the filtered
+list of the resulting search operation.</p>
+</li>
+<li>
+<p>Having said (4), the new displayed list of sources after the executing of any list operation will update the internally maintained current list displayed, thus any operation [such as <code>edit</code>, <code>delete</code>]
+which are based on the indexes of the current displaying list will <strong>still function as per normal</strong> after a list command is executed.
+For example, after displaying <code>list 3 5</code>, if a user executes <code>delete 1</code>, it is akin to deleting the 3rd source in the entire list database.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Motivation for such an enhancement is that one may feel that such act of populating <strong>all</strong> the sources on the GUI may be cluttering the view unnecessarily.
+Now, what could be the parameters a user may want to limit the list by? Limiting merely by their field values is akin to search,
+which would make the logic redundant. In contrast, the user may want to control the number of sources he wants to view, or be able to limit by some sense
+of the time at which it was added.</p>
+</div>
+<div class="paragraph">
+<p>This could be helpful in:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Iteratively examining all the sources by restricting how many are shown at one time. The user may begin with listing <code>list 10</code>, then <code>list 11 20</code> and so on to analyze
+all the source entries 10 at a time.</p>
+</li>
+<li>
+<p>Making more effective use of the GUI display to the user by not unnecessarily enumerating all sources, but rendering it more powerful by allowing the user to control what and how many sources
+he wants to see the details of.</p>
+</li>
+<li>
+<p>Enabling a pseudo-filtering by time-of-addition of the sources, something the application logic does not support currently [e.g. TimeAdded field]. This is possible because the list command alway alludes
+to the original databse list of all the sources, which are by defaul maintained in the order of their addition [with most recent at the end].</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Thus, the new modification to the command changes its format optionally, allowing user to be able to pass either one, two or no parameters
+and list only those sources which have their indices falling in the range entered [as covered by the cases above].
+This may be intuitively useful when say you want to perform certain operations in this new list of sources that are displayed by their time of addition,
+since the sources are by default arranged in descending order of their time of addition.</p>
+</div>
+<div class="paragraph">
+<p>Example, a user wants to delete all of the sources that were added yesterday. And if 10 entries were added yesterday,
+the user could just execute <code>list 10</code> to access those entries and then perform a <code>delete &lt;INDEX&gt;</code> accordingly.</p>
+</div>
+<div class="paragraph">
+<p>The original working of the <code>list</code> command showing all entries is still intact, when the command is called without any parameter, thus
+this modification just appends extra functionality which renders the command more useful and powerful than it was before in AB4.</p>
+</div>
+<div class="paragraph">
+<p>Additionally, it uses:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>PREDICATE_SHOW_ALL_SOURCES</code>&#8201;&#8212;&#8201;when the user does not pass an argument to the list command, all sources must be displayed.
+This predicate results <code>true</code> for every source tested. Also, this filtering mode is internally called before <strong>any</strong> list operation so the
+command is able to utilize the entire database list in its filtering logic and not just the one currently displayed.</p>
+</li>
+<li>
+<p><code>makePredicateForTopN</code>&#8201;&#8212;&#8201;when the user passes a positive argument, only first N sources must be listed.
+This method returns a new object of type <code>Predicate&lt;Source&gt;</code> that keeps track of the <code>count</code> of sources,
+evaluating <code>true</code> for the first N sources and <code>false</code> for all the rest.</p>
+</li>
+<li>
+<p><code>makePredicateForLastN</code>&#8201;&#8212;&#8201;when the user passes a negative argument, the last N sources must be listed.
+This method returns a new object of the type <code>Predicate&lt;Source&gt;</code> that keeps track of the <code>count</code> of the sources,
+evaluating <code>true</code> for the las N sources an <code>false</code> for all others.</p>
+</li>
+<li>
+<p><code>makePredicateForXToY</code>&#8201;&#8212;&#8201;when the user passes two positive arguments, the sources between the two indices (included) must be listed.
+This method returns a new object of the type <code>Predicate&lt;Source&gt;</code> that keeps track of the <code>count</code> of the sources,
+evaluating <code>true</code> for all sources between indices N and M included, and <code>false</code> for all others.</p>
+</li>
+<li>
+<p><code>targetIndex</code>&#8201;&#8212;&#8201;the number N up to which the most recent sources are to be displayed to the user, in both the positive N and negative N case (case 2 and 3).
+It is maintained internally. Set to the current size of the database if the value input is more that this current size.</p>
+</li>
+<li>
+<p><code>fromIndex</code>&#8201;&#8212;&#8201;in the case of two arguments, this is the first index, must be non-zero positive number not greater than the <code>toIndex</code> below.</p>
+</li>
+<li>
+<p><code>toIndex</code>&#8201;&#8212;&#8201;in the case of two arguments, this is the second index, must be non-zero positive number not less than the <code>fromIndex</code> above.</p>
+</li>
+<li>
+<p><code>posFlag</code>&#8201;&#8212;&#8201;internally maintained, passed as <code>true</code> for positive single argument N and <code>false</code> for negative single argument N.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This feature improves the product significantly because a user can now list only as many item he wants and need not clutter the screen by displaying all.
+It helps him to narrow down his search, say should he want to view the N first or last added sources. This ensures more effective retrieval and
+operations on the sources, such as following it by index dependent operations such as <code>edit</code> and <code>delete</code> for instance.</p>
+</div>
+<div class="paragraph">
+<p>Some points to note:
+- This enhancement does not affect existing commands and commands to be added in future.
+- It required an in-depth analysis of design alternatives. Especially when it came to adding the ability
+for the command to be able to work both with 1 parameter and no parameters.
+Some design considerations were
+<strong> Using variable arguments: in <code>parser</code> method of <code>ListCommandParser</code> class, but this would require changing the
+Interface <code>Parser&lt;T&gt;</code>. This technique did not work for making <code>ListCommand</code> objects for the same reason.
+</strong> Using method overloading: This did not work for <code>parser</code> method because of the interface restrictions, however
+this was used in the constructor of <code>LogicCommand</code> class, creating two objects depending on whether a <code>targetIndex</code> was passed
+or not, and whether two indexes where passed or none.
+** Using args.length(): Ultimately used in <code>parse</code> method for a simple check whether an
+argument is passed and how many are passed.
+- The implementation too was challenging, as the current format of <code>list</code> command had to be changed and be prepared to accept and parse optional arguments, with the choice of
+ either one or two parameters, ie. implementing overloading functionality
+for the list command logic based on whether the number of arguments passed by the user if any.</p>
+</div>
+<div class="paragraph">
+<p>Given below is an example usage scenario and how the list mechanism behaves.</p>
+</div>
+<div class="paragraph">
+<p>Step 1. The user launches the application for the first time. The <code>Infinity Machine</code> will be initialized with the initial source database state, by default listing all the sources
+in an indexed fashion, with all details and in order of their addition.</p>
+</div>
+<div class="paragraph">
+<p>Step 2. The user executes an <code>add</code> command to add another source entry to the database.</p>
+</div>
+<div class="paragraph">
+<p>Step 3. The user executes <code>list</code> command (with no arguments). All the entries in the database are listed again, showing all the details and
+in the order of their addition.</p>
+</div>
+<div class="paragraph">
+<p>Step 4. The user now executes <code>delete</code> to delete an entry.</p>
+</div>
+<div class="paragraph">
+<p>Step 5. The user executes <code>list</code> command again. All the updated entries in the database, leaving out the last deleted one,  are listed again, showing all the details and
+in the order of their addition.</p>
+</div>
+<div class="paragraph">
+<p>Step 6. The user now executes <code>list 2</code> command. The first 2 entries akin to the previous output are displayed.</p>
+</div>
+<div class="paragraph">
+<p>Step 7. The user now executes <code>list 3 5</code> command. The source entries 3, 4 and 5 are shown, indexed as 1, 2 and 3, with all their details.</p>
+</div>
+<div class="paragraph">
+<p>Step 8. The user now executes <code>list 3</code> command. The first 3 entries of the entire source database are listed with all their details, and not the first three of the currently
+showcased list.</p>
+</div>
+<div class="paragraph">
+<p>Step 9. The user now executes <code>list -2</code> and the last two sources from the entire database list (and not the currently displayed list) are shown.</p>
+</div>
+<div class="paragraph">
+<p>Step 10. The user now executes <code>delete 1</code> and the first entry of the current list or the second last entry of the entire database is deleted.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations"><a class="link" href="#design-considerations">Design Considerations</a></h4>
+<div class="sect4">
+<h5 id="aspect-how-list-list-n-and-list-n-m-executes"><a class="link" href="#aspect-how-list-list-n-and-list-n-m-executes">Aspect: How list, list N, and list N M executes</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>List (current choice):</strong> Filters using predicate that returns <code>true</code> for every source.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Easy to implement.</p>
+</li>
+<li>
+<p>Cons: May have performance issues in terms of time usage.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>List N (current choice):</strong> Filters using predicate that returns <code>true</code> for first/last N sources.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Easy to implement. Intuitive to understand</p>
+</li>
+<li>
+<p>Cons: Can be made faster and cleaner using List operations or streams.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>List N (current choice):</strong> Filters using predicate that returns <code>true</code> for sources between N and M included.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Easy to implement. Intuitive to understand</p>
+</li>
+<li>
+<p>Cons: Can be made faster and cleaner using List operations or streams.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="aspect-data-structure-to-support-the-list-list-n-list-n-m-commands"><a class="link" href="#aspect-data-structure-to-support-the-list-list-n-list-n-m-commands">Aspect: Data structure to support the list/list N/list N M commands</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice):</strong> Forms predicates based on the input parameter, maintain targetIndex, fromIndex, toIndex and posFlag.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Uses simple <code>count</code> parameter initialized to 0 or 1 and incremented each time a source is evaluated returning <code>true/false</code> depending on the format of the list command.
+Easy for new Computer Science student undergraduates to understand, who are likely to be the new incoming developers of our project.</p>
+</li>
+<li>
+<p>Cons: Maybe not the best implementation in terms of the number of internal flags and indices maintained.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="search-feature"><a class="link" href="#search-feature">Search feature</a></h3>
+<div class="sect3">
+<h4 id="current-implementation-2"><a class="link" href="#current-implementation-2">Current Implementation</a></h4>
+<div class="paragraph">
+<p>Format: <code>search [n/TITLE] [y/TYPE] [d/DETAILS] [t/TAG] [t/TAG]&#8230;&#8203;</code></p>
+</div>
+<div class="paragraph">
+<p>The search feature is facilitated by <code>Infinity Machine</code>.
+It extends <code>Infinity Machine</code> with an find feature, allowing user to search through source entries by the title, type, detail and/or tags, with substring matching.</p>
+</div>
+<div class="paragraph">
+<p>This search function now has an added functionality of being able to take in multiple
+arguments of the type of source fields [i.e. title, type, detail and tags], and search for sources based on that.
+It searches in conjunction using multiple fields including title, type, detail and tag(s) input by the user,
+listing only those sources that satisfy all the input constraints of the matching fields, with all there corresponding field values.</p>
+</div>
+<div class="paragraph">
+<p>Another addition to its functionality is that this search feature is enabled with substring matching as against exact field matching.
+This renders this feature more powerful as the user may not always be able to remember exactly the title or tag of the source.
+It&#8217;s major usage is in the fact that the user will store the bulk of their data in the details field, and it is unintuitive to have them
+list the entire contents of the source in order to match and search it. Thus now, the user is only required to <code>search</code> using
+as many consecutive words they are able to recall to narrow the listings.</p>
+</div>
+<div class="paragraph">
+<p>How it works is, it allows the user to search through all the entries in the database through various fields at a time, and display
+source entries that satisfy all of the entered tags in conjunction, by checking if the source value contains these parameters.
+It allows compound searches to be made, allowing user to narrow down their search, hence helping in efficient retrieval
+of the sources, and making working on the database more efficient.</p>
+</div>
+<div class="paragraph">
+<p>Lastly, the search is able to find string matches with minor typing errors in the spelling. This feature renders the search more
+powerful by accommodating any minor typing error user may make when keying in their search argument. This includes minor flips of two characters
+or a missing character etc. The implementation current accounts for less than 3 character swaps needed to transform between the strings
+(lower bounded by the difference in the string lengths of the two strings).</p>
+</div>
+<div class="paragraph">
+<p>However, it may seem that such an additional renders the search feature a bit too general, thus making the search output space
+broadened by including more sources that would have otherwise been ignored. But, one may see this as an advantage as:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Obviously, this is targeted at accounting for the slightest chance that the user may have made a typo.</p>
+</li>
+<li>
+<p>If not, this feature at the very least shows user <em>'similar'</em> or <em>'other related'</em> entries that may be useful in their
+research project as they search for a particular entry. This can help in giving user more ideas about related sources in the same field.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>This distance is know as the Levenshtein distance or the edit distance,
+after the Russian scientist Vladimir Levenshtein who devised the algorithm in 1965. This algorithm is used to determine how different
+two strings are from each other by outputing the integer number of transformations (insertions, deletions and substitutions) needed to transform
+one string to the other.</p>
+</div>
+<div class="paragraph">
+<p>The algorithm implementation for this section of the code was inspired from <a href="https://www.baeldung.com/java-levenshtein-distance">Baeldung</a>.</p>
+</div>
+<div class="paragraph">
+<p>If any seemingly unwanted results are displayed after a search command is executed, it should not be seen as a bug and this is
+the intended behaviour because of the reasons and rationale explained above. Rest assured, the intended results will never be missed out.</p>
+</div>
+<div class="paragraph">
+<p>Additionally, it uses:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>SourceContainsKeywordsPredicate.java</code>&#8201;&#8212;&#8201;Here, the logic of running through all the respective fields of all the sources and matching it with the user inputs
+(trimmed by space, case insensitive and take as substring) is implemented. It is split by the CLI prefixes and implements conjunction logic, by only returning <code>true</code>
+for those sources that satisfy all the constraints, i.e. have all the fields matching as entered by the user, where matching is checked by if the string
+contains the keywords entered by the user (case insensitive).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This feature improves the product significantly because a user can now search an entry with a particular title AND a particular type and so on.
+Not only that, the user can now just input whatever they are able to recall and the <code>search</code> returns all super strings instead of
+carrying out an exact matching.
+It helps user greatly narrow down their search should they be looking for a specific source entry with particular values,
+instead of cluttering the screen with all those sources with share the same title as the one the user searches using the command.
+It renders the search more powerful by resulting all super-strings should the user have meant something else or to prompt them about other similar
+source entries containing what they are looking for.
+It also allows user to search sources based on other fields and not just title, such as type, tags and details, and even their
+logical combination.</p>
+</div>
+<div class="paragraph">
+<p>Given below is an example usage scenario and how the search mechanism behaves at each step.</p>
+</div>
+<div class="paragraph">
+<p>Step 1. The user launches the application for the first time. The <code>Infinity Machine</code> will be initialized with the initial source database state, by default listing all the sources
+in an indexed fashion, with all details and in order of their addition.</p>
+</div>
+<div class="paragraph">
+<p>Step 2. The user executes <code>search i/algorithms</code> command and only those sources that have their title as <code>algorithms</code> are displayed.</p>
+</div>
+<div class="paragraph">
+<p>Step 3. The user executes <code>search i/homework y/website</code> and only those entries are listed that have both their title as <code>homeowork</code> and type as <code>website</code>.</p>
+</div>
+<div class="paragraph">
+<p>Step 4. The user executes <code>search t/CS</code> and all those sources that have any of their tags having 'CS' in it listed, including <code>CS2030</code>, <code>CS2040</code> and <code>CS2103</code></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<code>search</code> alone, without any arguments, will result in error. See <code>list</code> command for enumerating all database entries.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Step 5. The user executes <code>search i/algorihtm</code> as a typing error, the command still displays all those sources that have their title as
+<code>algorithms</code> and other related words.</p>
+</div>
+<div class="paragraph">
+<p>Step 6. The user executes <code>search d/training an intelligent agent t/CS2039</code>, the search displays all sources with
+having the exact sentence 'training an intelligent agent' or any of its related similar strings in it&#8217;s body, and those with
+tag 'CS2039' or any of the related modules such as 'CS2030', 'CS2040'.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">Design Considerations</a></h4>
+<div class="sect4">
+<h5 id="aspect-how-search-executes"><a class="link" href="#aspect-how-search-executes">Aspect: How search executes</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice):</strong> Runs through all entries and matches the arguments, field by field, and uing <code>&amp;&amp;</code> operation
+to combine the results.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Easy to implement as exact String matching can be done in Java using streams and <code>StringUtil.containsWordIgnoreCase(str1, str2)</code>.</p>
+</li>
+<li>
+<p>Cons: May have performance issues in terms of time usage.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="aspect-data-structure-to-support-the-undo-redo-commands"><a class="link" href="#aspect-data-structure-to-support-the-undo-redo-commands">Aspect: Data structure to support the undo/redo commands</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice):</strong> Using streams and StringUtil functions.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Easy for new Computer Science student undergraduates to understand, who are likely to be the new incoming developers of our project.</p>
+</li>
+<li>
+<p>Cons: May not be the most efficient implementation.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<hr>
+</div>
+</div>
+</div>
+</div>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-15 03:23:17 UTC</div></div></div></body></html>
