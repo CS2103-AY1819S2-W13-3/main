@@ -462,7 +462,7 @@ If there are only 6 sources in the database, the command moves the source locate
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project.</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project. Some sections have been rearranged to fit the 10 page limit.</em></p></td>
 </tr>
 </tbody>
 </table>
@@ -493,22 +493,6 @@ Pinned sources can be deleted with the delete command but cannot be swapped.
 <img src="../images/pinUnpinStructure.png" alt="pinUnpinStructure" width="900">
 </div>
 </div>
-<div class="paragraph">
-<p>When a new source is pinned using the <code>pin INDEX</code> command, the coordination center will increment the number of pinned sources by 1 as well as bring the newly pinned source to the top of the list.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="../images/pinSequence.png" alt="pinSequence" width="900">
-</div>
-</div>
-<div class="paragraph">
-<p>When a pinned source is unpinned using the <code>unpin INDEX</code> command, the coordination center will decrement the numer of pinned sources by 1 and move the unpinned source down to the position of the first unpinned source.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="../images/unpinSequence.png" alt="unpinSequence" width="900">
-</div>
-</div>
 </div>
 <div class="sect3">
 <h4 id="operational-process"><a class="link" href="#operational-process">Operational Process</a></h4>
@@ -531,6 +515,17 @@ Pinned sources can be deleted with the delete command but cannot be swapped.
 <img src="../images/unpin2.PNG" alt="unpin2" width="400">
 </div>
 </div>
+<div class="paragraph">
+<p>When a new source is pinned using the <code>pin INDEX</code> command, the coordination center will increment the number of pinned sources by 1 as well as bring the newly pinned source to the top of the list.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/pinSequence.png" alt="pinSequence" width="900">
+</div>
+</div>
+<div class="paragraph">
+<p>When a pinned source is unpinned using the <code>unpin INDEX</code> command, the coordination center will decrement the numer of pinned sources by 1 and move the unpinned source down to the position of the first unpinned source.</p>
+</div>
 </div>
 <div class="sect3">
 <h4 id="source-checks"><a class="link" href="#source-checks">Source Checks</a></h4>
@@ -539,6 +534,11 @@ Pinned sources can be deleted with the delete command but cannot be swapped.
 </div>
 <div class="paragraph">
 <p>These very same source checks will also be called during the <code>delete</code> and <code>order</code> commands.  For the <code>delete</code> command, the coordination center will check if the source to be deleted is a pinned source. If so, then the number of pinned sources will decrement by 1. If not, it just carries on with the deletion as usual. For the <code>order</code> command, the coordination center will check both the source being moved as well as the move location. If either of these indexes are of pinned sources, the <code>order</code> command will fail.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/unpinSequence.png" alt="unpinSequence" width="900">
+</div>
 </div>
 </div>
 <div class="sect3">
@@ -657,11 +657,6 @@ Pinned sources can be deleted with the delete command but cannot be swapped.
 </li>
 </ul>
 </div>
-<div class="imageblock">
-<div class="content">
-<img src="../images/customOrderSequence.png" alt="customOrderSequence" width="900">
-</div>
-</div>
 </div>
 <div class="sect3">
 <h4 id="swapping-process"><a class="link" href="#swapping-process">Swapping process</a></h4>
@@ -727,8 +722,13 @@ Pinned sources can be deleted with the delete command but cannot be swapped.
 <img src="../images/backward3.PNG" alt="backward3" width="400">
 </div>
 </div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/customOrderSequence.png" alt="customOrderSequence" width="900">
 </div>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-15 15:16:15 UTC</div></div></div></body></html>
+</div>
+</div>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-15 15:24:16 UTC</div></div></div></body></html>
