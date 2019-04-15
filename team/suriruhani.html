@@ -21,8 +21,8 @@
 <div class="paragraph">
 <p>Our project, the Infinity Machine, is an application useful for efficient management of textual information
 of any kind, say research material. It allows users to store information by the their <strong>title</strong>, <strong>type</strong>, <strong>details</strong> and multiple <strong>tags</strong> and allows
-for easy search, retrieval, edit and delete functions. Intended to be used through the Command Line Interface, and intended
-for tech-savvy, university students looking for an efficient, simple yet powerful way of maintaining their resources.</p>
+for easy search, retrieval, edit and delete functions. Intended to be used through the Command Line Interface, and targeted at
+tech-savvy, university students looking for an efficient, simple yet powerful way of maintaining their resources.</p>
 </div>
 </div>
 </div>
@@ -49,7 +49,7 @@ for tech-savvy, university students looking for an efficient, simple yet powerfu
 <ol class="arabic">
 <li>
 <p><strong>Multiple prefix tags of different (and same) kinds</strong>: The search function now has an added functionality of being able to take in multiple
-arguments of the <strong>same</strong> and <strong>different</strong> type of source fields, and search for sources based on its conjunction.</p>
+arguments of the <strong>same</strong> and <strong>different</strong> type of source fields [except author], and search for sources based on its conjunction.</p>
 </li>
 <li>
 <p><strong>Substring matching with incomplete words</strong>: It is enabled with substring matching as against exact field matching.
@@ -58,8 +58,8 @@ fields and a source is found only if all the user entered arguments are present 
 </li>
 <li>
 <p><strong>Auto-correction feature for typing mistakes</strong>: It is also able to find string matches with minor typing errors in the spelling,
-implemented using Levenshtein distance or the edit distance. The implementation current accounts for less than 3 character swaps needed to transform between the strings
-(lower bounded by the difference in the string lengths of the two strings).</p>
+implemented using Levenshtein distance or the edit distance. The implementation current accounts for less than 5 character swaps needed to transform between the strings
+entered by the user and the entire field value of sources.</p>
 </li>
 </ol>
 </div>
@@ -101,7 +101,7 @@ CLI delimiters.</p>
 </li>
 <li>
 <p>If any seemingly unwanted results are displayed after a search command is executed, it should not be seen as a bug as this is
-the intended behaviour because of the two features that render the search result space more broadened than before.</p>
+the intended behaviour because of the two features that render the search result space more broadened than before [substring matching and typo accommodation].</p>
 </li>
 <li>
 <p>Rest assured, the intended results will never be missed out.</p>
@@ -142,10 +142,10 @@ and list only those many sources from the entire source list.</p>
 <p><strong><code>list N</code> with one positive argument</strong>: Shows the top N sources with all their details only.</p>
 </li>
 <li>
-<p><strong><code>list -N</code> with one negative arguments</strong>: Shows the last N sources or the TOp N sources from the bottom with their details.</p>
+<p><strong><code>list -N</code> with one negative arguments</strong>: Shows the last N sources or the Top N sources from the bottom with their details.</p>
 </li>
 <li>
-<p><strong><code>list N M</code> with two positive arguments</strong>: With M&gt;=N, shows sources between the indices N and M with all their details only.</p>
+<p><strong><code>list N M</code> with two positive arguments</strong>: With M&gt;=N, shows sources between the indices N and M (included) with all their details only.</p>
 </li>
 </ol>
 </div>
@@ -164,7 +164,7 @@ The original working of the <code>list</code> command showing all entries is sti
 <h5 id="strong-justification-strong-2"><a class="link" href="#strong-justification-strong-2"><strong>Justification</strong>:</a></h5>
 <div class="paragraph">
 <p>This feature improves the product significantly because a user can now list only as many item he wants and need not clutter the screen by displaying all.
-It helps him to narrow down his search by being able t specify what indices of the original sources (say by time of addition) what he like to view. This ensures more effective retrieval and
+It helps him to narrow down his search by being able to specify what indices of the original sources (say by time of addition) what he like to view. This ensures more effective retrieval and
 operations on the sources, such as following it by index dependent operations such as <code>edit</code> and <code>delete</code> for instance.</p>
 </div>
 </div>
@@ -190,10 +190,14 @@ operations on the sources, such as following it by index dependent operations su
 <h3 id="strong-code-contributed-strong"><a class="link" href="#strong-code-contributed-strong"><strong>Code contributed</strong>:</a></h3>
 <div class="paragraph">
 <p>[<a href="https://nus-cs2103-ay1819s2.github.io/cs2103-dashboard/#=undefined&amp;search=suriruhani">Reposense contribution</a>]<br>
-[<a href="https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/main/java/seedu/address/logic/commands/SearchCommand.java">search command code</a>]<br>
+Search Command:<br>
+[<a href="https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/main/java/seedu/address/model/source/SourceContainsKeywordsPredicate.java">main search command logic</a>]<br>
 [<a href="https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/test/java/seedu/address/logic/commands/SearchCommandTest.java">search command test</a>]<br>
-[<a href="https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/main/java/seedu/address/logic/commands/ListCommand.java">list command code</a>]<br>
-[<a href="https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/test/java/seedu/address/logic/commands/ListCommandTest.java">list command test</a>]<br></p>
+[<a href="https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/test/java/seedu/address/logic/parser/SearchCommandParserTest.java">search command parser test</a>]<br>
+List Command:<br>
+[<a href="https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/main/java/seedu/address/logic/commands/ListCommand.java">main search command logic</a>]<br>
+[<a href="https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/test/java/seedu/address/logic/commands/ListCommandTest.java">list command test</a>]<br>
+[<a href="https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/test/java/seedu/address/logic/parser/ListCommandParserTest.java">list command parser test</a>]<br></p>
 </div>
 </div>
 <div class="sect2">
@@ -209,7 +213,10 @@ pull requests.</p>
 <li>
 <p>Helped in refactoring Storage AP in migrating the codebase from AB4 to The Infinity Machine for our team, helped in refactoring the entire Storage package
 to be compatible with the functionalities required by our application, mostly changing identifier names and method signatures to model
-our application&#8217;s scope.</p>
+our application&#8217;s scope. Updated Storage class diagram in the Developer Guide.</p>
+</li>
+<li>
+<p>Assign PE-dry-run bug issues to relevant team members for fixing by the final milestone.</p>
 </li>
 </ul>
 </div>
@@ -248,6 +255,9 @@ relevant to our application&#8217;s scope, changing parameter and return type al
 <li>
 <p>Added to and updated the AboutUs.adoc</p>
 </li>
+<li>
+<p>Added to and updated the README.adoc</p>
+</li>
 </ul>
 </div>
 </div>
@@ -256,7 +266,10 @@ relevant to our application&#8217;s scope, changing parameter and return type al
 <div class="ulist">
 <ul>
 <li>
-<p>Reviewed and approved PRs of other team mates</p>
+<p>Reviewed and approved PRs of other team mates [40 PRs approved]</p>
+</li>
+<li>
+<p>Opening and assigning relevant issues during product ideation phase and whenever feedback was received.</p>
 </li>
 <li>
 <p>Helped in tracking issues including assigning severity, status, type, and closing it.</p>
@@ -349,6 +362,23 @@ N to M sources are listed with respect to the original source database list with
 <p>Example: <code>list 6, 9</code><br>
 Lists the 4 sources from index 6 to 9 from the entire database list, indexed from 1, 2 .. till 4 with all their details.</p>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The maximum possible index that will be processed by the system is limited to the largest positive value for a 32-bit signed binary integer.</p>
+</div>
+<div class="paragraph">
+<p>Any number larger than 2,147,483,647 will not be parsed as an integer and will be rejected.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="sidebarblock">
 <div class="content">
 <div class="ulist">
@@ -378,9 +408,9 @@ Lists the 4 sources from index 6 to 9 from the entire database list, indexed fro
 <h4 id="searching-a-source-code-search-code"><a class="link" href="#searching-a-source-code-search-code">Searching a source: <code>search</code></a></h4>
 <div class="paragraph">
 <p>Searches for entries amongst the list of sources.<br>
-Able to search by title, type, detail and tags as specified by the CLI prefixes.
+Able to search by title, type, detail and tags as specified by the CLI prefixes [author field not included].
 Able to perform substring matching. Able to implement autocorrect by searching for <em>'similar'</em> strings,
-where similarity is defined by a pre-set Levenshtein distance.</p>
+where similarity is defined by a pre-set Levenshtein distance as against the entire field value (and not substring)</p>
 </div>
 <div class="paragraph">
 <p>Finds all entries with a (case insensitive) field value that contains the value as specified by the user.<br>
@@ -403,13 +433,16 @@ Rest assured, the intended results will never be missed out.</p>
 <div class="ulist">
 <ul>
 <li>
+<p>Search by author name is not accounted for yet. Look forward in v2.0.</p>
+</li>
+<li>
 <p>The search is case insensitive. e.g <code>hans</code> will match <code>Hans</code></p>
 </li>
 <li>
 <p>The search implements substring matching. e.g. <code>algo</code> will match algorithm, algorithms, algo trading, etc.</p>
 </li>
 <li>
-<p>There can have any number of tags but minimally 1 (just <code>search</code> results in error. To enumerate all entries, check out <code>list</code> command instead)</p>
+<p>There can have any number of tags but minimally 1 (just <code>search</code> results in error. To enumerate all entries, pass an empty CLI prefix to search or check out <code>list</code> command instead)</p>
 </li>
 <li>
 <p>There can be multiple tags with same prefix and the result must satisfy all, eg. <code>search i/algo i/data</code> will result in <code>data struc. and algorithms</code>
@@ -417,11 +450,11 @@ because it is a super-string of both the entered field values.</p>
 </li>
 <li>
 <p>Closely related strings are matched even if the value is not exactly same, implemented using
-edit distance of the two strings.</p>
+edit distance of the two strings. Only checked against the entire field value and not substring.</p>
 </li>
 <li>
 <p>Search implemented as a logical AND. eg. <code>search i/algorithm y/website</code> results in all those sources
-that have title <code>algorithm</code> AND type <code>website</code></p>
+that have title <code>algorithm</code> AND type <code>website</code>.</p>
 </li>
 </ul>
 </div>
@@ -1089,4 +1122,4 @@ dominates the result.</p>
 <hr>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-15 14:33:54 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-15 14:55:58 UTC</div></div></div></body></html>

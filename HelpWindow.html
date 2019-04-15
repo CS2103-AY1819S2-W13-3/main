@@ -76,7 +76,8 @@
 <p>The knowledge in the universe is infinite and there exists many things that are still beyond our comprehension. However, that does not mean that the process of learning what we have discovered should be a difficult one.</p>
 </div>
 <div class="paragraph">
-<p>Introducing the Infinity Machine, an application for efficient storing and retrieving of textual information on research material by allowing users to apply to it custom made tags and type for easy search and retrieval. Intended for tech-savvy university students who are able to use CLI and wish to organize and tag research information or any other data that they may wish to store.</p>
+<p>Introducing the Infinity Machine, an application for efficient storing and retrieving of textual information on research material by allowing users to apply to it custom made tags and type for easy search and retrieval.
+Intended for tech-savvy university students who are able to use CLI and wish to organize and tag research information or any other data that they may wish to store.</p>
 </div>
 <div class="paragraph">
 <p>No longer will you miss out on important sources or developments in your field of interest.  No longer will you forget where you read something and struggle to find it again.</p>
@@ -204,6 +205,9 @@ Displays the source selected.</p>
 </li>
 <li>
 <p>The index <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
+</li>
+<li>
+<p>Displays all details of the source on the right hand side of the UI window.</p>
 </li>
 </ul>
 </div>
@@ -392,7 +396,7 @@ Format: <code>delete INDEX</code></p>
 Deletes the 2nd source in the database.</p>
 </li>
 <li>
-<p><code>search algorithms</code><br>
+<p><code>search i/algorithms</code><br>
 <code>delete 1</code><br>
 Deletes the 1st source in the results of the <code>search</code> command.</p>
 </li>
@@ -574,9 +578,9 @@ Edits the 5th source and clears all its existing tags.</p>
 <h4 id="searching-a-source-code-search-code"><a class="link" href="#searching-a-source-code-search-code">4.1.6. Searching a source: <code>search</code></a></h4>
 <div class="paragraph">
 <p>Searches for entries amongst the list of sources.<br>
-Able to search by title, type, detail and tags as specified by the CLI prefixes.
+Able to search by title, type, detail and tags as specified by the CLI prefixes [author field not included].
 Able to perform substring matching. Able to implement autocorrect by searching for <em>'similar'</em> strings,
-where similarity is defined by a pre-set Levenshtein distance.</p>
+where similarity is defined by a pre-set Levenshtein distance as against the entire field value (and not substring)</p>
 </div>
 <div class="paragraph">
 <p>Finds all entries with a (case insensitive) field value that contains the value as specified by the user.<br>
@@ -599,13 +603,16 @@ Rest assured, the intended results will never be missed out.</p>
 <div class="ulist">
 <ul>
 <li>
+<p>Search by author name is not accounted for yet. Look forward in v2.0.</p>
+</li>
+<li>
 <p>The search is case insensitive. e.g <code>hans</code> will match <code>Hans</code></p>
 </li>
 <li>
 <p>The search implements substring matching. e.g. <code>algo</code> will match algorithm, algorithms, algo trading, etc.</p>
 </li>
 <li>
-<p>There can have any number of tags but minimally 1 (just <code>search</code> results in error. To enumerate all entries, check out <code>list</code> command instead)</p>
+<p>There can have any number of tags but minimally 1 (just <code>search</code> results in error. To enumerate all entries, pass an empty CLI prefix to search or check out <code>list</code> command instead)</p>
 </li>
 <li>
 <p>There can be multiple tags with same prefix and the result must satisfy all, eg. <code>search i/algo i/data</code> will result in <code>data struc. and algorithms</code>
@@ -613,11 +620,11 @@ because it is a super-string of both the entered field values.</p>
 </li>
 <li>
 <p>Closely related strings are matched even if the value is not exactly same, implemented using
-edit distance of the two strings.</p>
+edit distance of the two strings. Only checked against the entire field value and not substring.</p>
 </li>
 <li>
 <p>Search implemented as a logical AND. eg. <code>search i/algorithm y/website</code> results in all those sources
-that have title <code>algorithm</code> AND type <code>website</code></p>
+that have title <code>algorithm</code> AND type <code>website</code>.</p>
 </li>
 </ul>
 </div>
@@ -706,6 +713,23 @@ N to M sources are listed with respect to the original source database list with
 <div class="paragraph">
 <p>Example: <code>list 6, 9</code><br>
 Lists the 4 sources from index 6 to 9 from the entire database list, indexed from 1, 2 .. till 4 with all their details.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The maximum possible index that will be processed by the system is limited to the largest positive value for a 32-bit signed binary integer.</p>
+</div>
+<div class="paragraph">
+<p>Any number larger than 2,147,483,647 will not be parsed as an integer and will be rejected.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="sidebarblock">
 <div class="content">
@@ -1295,7 +1319,7 @@ Format: <code>exit</code></p>
 <div class="sect3">
 <h4 id="saving-the-data"><a class="link" href="#saving-the-data">4.1.21. Saving the data</a></h4>
 <div class="paragraph">
-<p>Address book data are saved in the hard disk automatically after any command that changes the data.<br></p>
+<p>Source Manager data are saved in the hard disk automatically after any command that changes the data.<br></p>
 </div>
 <div class="paragraph">
 <p>There is no need to save manually.</p>
@@ -1717,7 +1741,8 @@ e.g. <code>edit 2 i/Photosynthesis Wikipedia t/Photosynthesis t/Biology</code></
 e.g. <code>search i/algorithm y/journal</code></p>
 </li>
 <li>
-<p><strong>List</strong> : <code>list [N]</code></p>
+<p><strong>List</strong> : <code>list [N] [M]</code> <br>
+N M non 0 and M&gt;=N if both passed.</p>
 </li>
 <li>
 <p><strong>Pin</strong> : <code>pin INDEX</code><br>
@@ -1793,4 +1818,4 @@ e.g. <code>restore 3</code></p>
 </ul>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-15 14:33:54 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-15 14:55:58 UTC</div></div></div></body></html>
