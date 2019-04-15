@@ -1925,6 +1925,28 @@ Pinned sources can be deleted with the delete command but cannot be swapped.
 </div>
 </div>
 <div class="sect3">
+<h4 id="operational-process"><a class="link" href="#operational-process">Operational Process</a></h4>
+<div class="paragraph">
+<p>When a source is unpinned and there are other pinned sources, the recently unpinned source will be pushed back to the position of the first unpinned source.</p>
+</div>
+<div class="paragraph">
+<p>An example of this could be <code>unpin 1</code> command in a database with 3 pinned sources.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/unpin1.PNG" alt="unpin1" width="400">
+</div>
+</div>
+<div class="paragraph">
+<p>The first source will be unpinned and moved to the position of the first unpinned source, in this case position 3.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/unpin2.PNG" alt="unpin2" width="400">
+</div>
+</div>
+</div>
+<div class="sect3">
 <h4 id="source-checks"><a class="link" href="#source-checks">Source Checks</a></h4>
 <div class="paragraph">
 <p>When checking to see if a source can be pinned or unpinned, the command will call on the coordination center to check if a source is already pinned or unpinned respectively. An already pinned source cannot be pinned again and an unpinned source cannot be unpinned.</p>
@@ -2048,6 +2070,11 @@ Pinned sources can be deleted with the delete command but cannot be swapped.
 <p>Step 4&#8201;&#8212;&#8201;The function then commits the database to save the recent changes.</p>
 </li>
 </ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/customOrderSequence.png" alt="customOrderSequence" width="900">
+</div>
 </div>
 </div>
 <div class="sect3">
@@ -5059,4 +5086,4 @@ If the <code>currentStatePointer</code> is at index <code>sourceManagerStateList
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-15 13:53:09 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-15 14:24:39 UTC</div></div></div></body></html>
