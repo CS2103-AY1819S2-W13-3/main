@@ -3,6 +3,8 @@
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
+image::doittomorrow.png[width="150", align="left"]
+
 == PROJECT: The Infinity Machine
 
 ---
