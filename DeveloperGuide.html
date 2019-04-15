@@ -39,9 +39,8 @@
 <li><a href="#pin-and-unpin-features">3.8. Pin and Unpin Features</a></li>
 <li><a href="#custom-order-feature">3.9. Custom Order Feature</a></li>
 <li><a href="#biblio-feature">3.10. Biblio feature</a></li>
-<li><a href="#proposed-data-encryption">3.11. [Proposed] Data Encryption</a></li>
-<li><a href="#logging">3.12. Logging</a></li>
-<li><a href="#Implementation-Configuration">3.13. Configuration</a></li>
+<li><a href="#logging">3.11. Logging</a></li>
+<li><a href="#Implementation-Configuration">3.12. Configuration</a></li>
 </ul>
 </li>
 <li><a href="#documentation">4. Documentation</a>
@@ -335,7 +334,8 @@ Having both Travis and AppVeyor ensures your App works on both Unix-based platfo
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-The <code>.pptx</code> files used to create diagrams in this document can be found in the <a href="https://github.com/se-edu/addressbook-level4/tree/master/docs/diagrams/">diagrams</a> folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose <code>Save as picture</code>.
+The <code>.pptx</code> files used to create diagrams in this document can be found in the <a href="https://github.com/se-edu/addressbook-level4/tree/master/docs/diagrams/">diagrams</a> folder.
+To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose <code>Save as picture</code>.
 </td>
 </tr>
 </table>
@@ -431,7 +431,8 @@ The following class plays an important role at the architecture level:</p>
 <p><strong>API</strong> : <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/ui/Ui.java"><code>Ui.java</code></a></p>
 </div>
 <div class="paragraph">
-<p>The UI consists of a <code>MainWindow</code> that is made up of parts e.g.<code>CommandBox</code>, <code>ResultDisplay</code>, <code>PersonListPanel</code>, <code>StatusBarFooter</code>, <code>BrowserPanel</code> etc. All these, including the <code>MainWindow</code>, inherit from the abstract <code>UiPart</code> class.</p>
+<p>The UI consists of a <code>MainWindow</code> that is made up of parts e.g.<code>CommandBox</code>, <code>ResultDisplay</code>, <code>SourceListPanel</code>, <code>StatusBarFooter</code>, <code>BrowserPanel</code> etc.
+All these, including the <code>MainWindow</code>, inherit from the abstract <code>UiPart</code> class.</p>
 </div>
 <div class="paragraph">
 <p>The <code>UI</code> component uses JavaFx UI framework. The layout of these UI parts are defined in matching <code>.fxml</code> files that are in the <code>src/main/resources/view</code> folder. For example, the layout of the <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/ui/MainWindow.java"><code>MainWindow</code></a> is specified in <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/resources/view/MainWindow.fxml"><code>MainWindow.fxml</code></a></p>
@@ -465,7 +466,7 @@ The following class plays an important role at the architecture level:</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><code>Logic</code> uses the <code>AddressBookParser</code> class to parse the user command.</p>
+<p><code>Logic</code> uses the <code>SourceManagerParser</code> class to parse the user command.</p>
 </li>
 <li>
 <p>This results in a <code>Command</code> object which is executed by the <code>LogicManager</code>.</p>
@@ -511,7 +512,7 @@ The following class plays an important role at the architecture level:</p>
 <p>stores a <code>UserPref</code> object that represents the user&#8217;s preferences.</p>
 </li>
 <li>
-<p>stores the Address Book data.</p>
+<p>stores the Source Manager data.</p>
 </li>
 <li>
 <p>exposes an unmodifiable <code>ObservableList&lt;Person&gt;</code> that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.</p>
@@ -564,7 +565,7 @@ As a more OOP model, we can store a <code>Tag</code> list in <code>Address Book<
 <div class="sect2">
 <h3 id="Design-Commons"><a class="link" href="#Design-Commons">2.6. Common classes</a></h3>
 <div class="paragraph">
-<p>Classes used by multiple components are in the <code>seedu.sourcemanager.commons</code> package.</p>
+<p>Classes used by multiple components are in the <code>seedu.address.commons</code> package.</p>
 </div>
 </div>
 </div>
@@ -2252,20 +2253,14 @@ This functionality is implemented by the <code>biblio</code> command and the <co
 </div>
 </div>
 <div class="sect2">
-<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">3.11. [Proposed] Data Encryption</a></h3>
-<div class="paragraph">
-<p><em>{Explain here how the data encryption feature will be implemented}</em></p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">3.12. Logging</a></h3>
+<h3 id="logging"><a class="link" href="#logging">3.11. Logging</a></h3>
 <div class="paragraph">
 <p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.13, &#8220;Configuration&#8221;</a>)</p>
+<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.12, &#8220;Configuration&#8221;</a>)</p>
 </li>
 <li>
 <p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level</p>
@@ -2296,7 +2291,7 @@ This functionality is implemented by the <code>biblio</code> command and the <co
 </div>
 </div>
 <div class="sect2">
-<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.13. Configuration</a></h3>
+<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.12. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g user prefs file location, logging level) through the configuration file (default: <code>config.json</code>).</p>
 </div>
@@ -2725,7 +2720,9 @@ e.g. <code>seedu.address.logic.LogicManagerTest</code></p>
 </div>
 <h4 id="code-logic-code-component" class="discrete"><code>Logic</code> component</h4>
 <div class="paragraph">
-<p><strong>Scenario:</strong> You are in charge of <code>logic</code>. During dog-fooding, your team realize that it is troublesome for the user to type the whole command in order to execute a command. Your team devise some strategies to help cut down the amount of typing necessary, and one of the suggestions was to implement aliases for the command words. Your job is to implement such aliases.</p>
+<p><strong>Scenario:</strong> You are in charge of <code>logic</code>. During dog-fooding, your team realize that it is troublesome for the user to type the whole
+command in order to execute a command. Your team devise some strategies to help cut down the amount of typing necessary, and one of the
+suggestions was to implement aliases for the command words. Your job is to implement such aliases.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -2742,7 +2739,8 @@ Do take a look at <a href="#Design-Logic">Section 2.3, &#8220;Logic component&#8
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Add a shorthand equivalent alias for each of the individual commands. For example, besides typing <code>clear</code>, the user can also type <code>c</code> to remove all persons in the list.</p>
+<p>Add a shorthand equivalent alias for each of the individual commands. For example, besides typing <code>clear</code>,
+the user can also type <code>c</code> to remove all sources in the list.</p>
 <div class="sidebarblock">
 <div class="content">
 <div class="ulist">
@@ -2752,7 +2750,9 @@ Do take a look at <a href="#Design-Logic">Section 2.3, &#8220;Logic component&#8
 <div class="ulist">
 <ul>
 <li>
-<p>Just like we store each individual command word constant <code>COMMAND_WORD</code> inside <code>*Command.java</code> (e.g.  <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/logic/commands/FindCommand.java"><code>FindCommand#COMMAND_WORD</code></a>, <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/logic/commands/DeleteCommand.java"><code>DeleteCommand#COMMAND_WORD</code></a>), you need a new constant for aliases as well (e.g. <code>FindCommand#COMMAND_ALIAS</code>).</p>
+<p>Just like we store each individual command word constant <code>COMMAND_WORD</code> inside <code>*Command.java</code>
+(e.g.  <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/logic/commands/FindCommand.java"><code>FindCommand#COMMAND_WORD</code></a>,
+<a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/logic/commands/DeleteCommand.java"><code>DeleteCommand#COMMAND_WORD</code></a>), you need a new constant for aliases as well (e.g. <code>FindCommand#COMMAND_ALIAS</code>).</p>
 </li>
 <li>
 <p><a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/logic/parser/AddressBookParser.java"><code>AddressBookParser</code></a> is responsible for analyzing command words.</p>
@@ -2788,7 +2788,10 @@ Do take a look at <a href="#Design-Logic">Section 2.3, &#8220;Logic component&#8
 </div>
 <h4 id="code-model-code-component" class="discrete"><code>Model</code> component</h4>
 <div class="paragraph">
-<p><strong>Scenario:</strong> You are in charge of <code>model</code>. One day, the <code>logic</code>-in-charge approaches you for help. He wants to implement a command such that the user is able to remove a particular tag from everyone in the address book, but the model API does not support such a functionality at the moment. Your job is to implement an API method, so that your teammate can use your API to implement his command.</p>
+<p><strong>Scenario:</strong> You are in charge of <code>model</code>. One day, the <code>logic</code>-in-charge approaches you for help.
+He wants to implement a command such that the user is able to remove a particular tag from everyone
+in the SourceManager, but the model API does not support such a functionality at the moment. Your
+job is to implement an API method, so that your teammate can use your API to implement his command.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -2805,7 +2808,7 @@ Do take a look at <a href="#Design-Model">Section 2.4, &#8220;Model component&#8
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Add a <code>removeTag(Tag)</code> method. The specified tag will be removed from everyone in the address book.</p>
+<p>Add a <code>removeTag(Tag)</code> method. The specified tag will be removed from everyone in the SourceManager.</p>
 <div class="sidebarblock">
 <div class="content">
 <div class="ulist">
@@ -2821,7 +2824,7 @@ Do take a look at <a href="#Design-Model">Section 2.4, &#8220;Model component&#8
 <p>Think about how you can use SLAP to design the method. Where should we place the main logic of deleting tags?</p>
 </li>
 <li>
-<p>Find out which of the existing API methods in  <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/AddressBook.java"><code>AddressBook</code></a> and <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/person/Person.java"><code>Person</code></a> classes can be used to implement the tag removal logic. <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/AddressBook.java"><code>AddressBook</code></a> allows you to update a person, and <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/person/Person.java"><code>Person</code></a> allows you to update the tags.</p>
+<p>Find out which of the existing API methods in  <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/SourceManager.java"><code>SourceManager</code></a> and <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/source/Source.java"><code>Source</code></a> classes can be used to implement the tag removal logic. <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/AddressBook.java"><code>AddressBook</code></a> allows you to update a person, and <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/person/Person.java"><code>Person</code></a> allows you to update the tags.</p>
 </li>
 </ul>
 </div>
@@ -2831,10 +2834,10 @@ Do take a look at <a href="#Design-Model">Section 2.4, &#8220;Model component&#8
 <div class="ulist">
 <ul>
 <li>
-<p>Implement a <code>removeTag(Tag)</code> method in <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/AddressBook.java"><code>AddressBook</code></a>. Loop through each person, and remove the <code>tag</code> from each person.</p>
+<p>Implement a <code>removeTag(Tag)</code> method in <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/SourceManager.java"><code>SourceManager</code></a>. Loop through each source, and remove the <code>tag</code> from each source.</p>
 </li>
 <li>
-<p>Add a new API method <code>deleteTag(Tag)</code> in <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/ModelManager.java"><code>ModelManager</code></a>. Your <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/ModelManager.java"><code>ModelManager</code></a> should call <code>AddressBook#removeTag(Tag)</code>.</p>
+<p>Add a new API method <code>deleteTag(Tag)</code> in <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/ModelManager.java"><code>ModelManager</code></a>. Your <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/ModelManager.java"><code>ModelManager</code></a> should call <code>SourceManager#removeTag(Tag)</code>.</p>
 </li>
 <li>
 <p>Add new tests for each of the new public methods that you have added.</p>
@@ -2854,7 +2857,11 @@ Do take a look at <a href="#Design-Model">Section 2.4, &#8220;Model component&#8
 </div>
 <h4 id="code-ui-code-component" class="discrete"><code>Ui</code> component</h4>
 <div class="paragraph">
-<p><strong>Scenario:</strong> You are in charge of <code>ui</code>. During a beta testing session, your team is observing how the users use your address book application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn&#8217;t prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last person in the list. Your job is to implement improvements to the UI to solve all these problems.</p>
+<p><strong>Scenario:</strong> You are in charge of <code>ui</code>. During a beta testing session, your team is observing how the users use your SourceManager application.
+You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually,
+and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message
+wasn&#8217;t prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last source in the list.
+Your job is to implement improvements to the UI to solve all these problems.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -2871,7 +2878,7 @@ Do take a look at <a href="#Design-Ui">Section 2.2, &#8220;UI component&#8221;</
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Use different colors for different tags inside person cards. For example, <code>friends</code> tags can be all in brown, and <code>colleagues</code> tags can be all in yellow.</p>
+<p>Use different colors for different tags inside source cards. For example, <code>CS2030</code> tags can be all in brown, and <code>CS2040</code> tags can be all in yellow.</p>
 <div class="paragraph">
 <p><strong>Before</strong></p>
 </div>
@@ -2897,7 +2904,7 @@ Do take a look at <a href="#Design-Ui">Section 2.2, &#8220;UI component&#8221;</
 <div class="ulist">
 <ul>
 <li>
-<p>The tag labels are created inside <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/ui/PersonCard.java">the <code>PersonCard</code> constructor</a> (<code>new Label(tag.tagName)</code>). <a href="https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html">JavaFX&#8217;s <code>Label</code> class</a> allows you to modify the style of each Label, such as changing its color.</p>
+<p>The tag labels are created inside <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/ui/SourceCard.java">the <code>PersonCard</code> constructor</a> (<code>new Label(tag.tagName)</code>). <a href="https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html">JavaFX&#8217;s <code>Label</code> class</a> allows you to modify the style of each Label, such as changing its color.</p>
 </li>
 <li>
 <p>Use the .css attribute <code>-fx-background-color</code> to add a color.</p>
@@ -2913,7 +2920,7 @@ Do take a look at <a href="#Design-Ui">Section 2.2, &#8220;UI component&#8221;</
 <div class="ulist">
 <ul>
 <li>
-<p>You can modify the existing test methods for <code>PersonCard</code> 's to include testing the tag&#8217;s color as well.</p>
+<p>You can modify the existing test methods for <code>SourceCard</code> 's to include testing the tag&#8217;s color as well.</p>
 </li>
 <li>
 <p>See this <a href="https://github.com/se-edu/addressbook-level4/pull/798">PR</a> for the full solution.</p>
@@ -3075,7 +3082,10 @@ Do take a look at <a href="#Design-Ui">Section 2.2, &#8220;UI component&#8221;</
 </div>
 <h4 id="code-storage-code-component" class="discrete"><code>Storage</code> component</h4>
 <div class="paragraph">
-<p><strong>Scenario:</strong> You are in charge of <code>storage</code>. For your next project milestone, your team plans to implement a new feature of saving the address book to the cloud. However, the current implementation of the application constantly saves the address book after the execution of each command, which is not ideal if the user is working on limited internet connection. Your team decided that the application should instead save the changes to a temporary local backup file first, and only upload to the cloud after the user closes the application. Your job is to implement a backup API for the address book storage.</p>
+<p><strong>Scenario:</strong> You are in charge of <code>storage</code>. For your next project milestone, your team plans to implement a new feature of saving the source manager to the cloud.
+However, the current implementation of the application constantly saves the source manager after the execution of each command, which is not ideal if the user is working on limited internet connection.
+Your team decided that the application should instead save the changes to a temporary local backup file first, and only upload to the cloud after the user closes the application.
+Your job is to implement a backup API for the source manager storage.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -3092,7 +3102,7 @@ Do take a look at <a href="#Design-Storage">Section 2.5, &#8220;Storage componen
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Add a new method <code>backupAddressBook(ReadOnlyAddressBook)</code>, so that the address book can be saved in a fixed temporary location.</p>
+<p>Add a new method <code>backupSourceManager(ReadOnlySourceManager)</code>, so that the address book can be saved in a fixed temporary location.</p>
 <div class="sidebarblock">
 <div class="content">
 <div class="ulist">
@@ -3102,10 +3112,10 @@ Do take a look at <a href="#Design-Storage">Section 2.5, &#8220;Storage componen
 <div class="ulist">
 <ul>
 <li>
-<p>Add the API method in <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/storage/AddressBookStorage.java"><code>AddressBookStorage</code></a> interface.</p>
+<p>Add the API method in <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/storage/SourceManagerStorage.java"><code>SourceManagerStorage</code></a> interface.</p>
 </li>
 <li>
-<p>Implement the logic in <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/storage/StorageManager.java"><code>StorageManager</code></a> and <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/storage/JsonAddressBookStorage.java"><code>JsonAddressBookStorage</code></a> class.</p>
+<p>Implement the logic in <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/storage/StorageManager.java"><code>StorageManager</code></a> and <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/storage/JsonSourceManagerStorage.java"><code>JsonSourceManagerStorage</code></a> class.</p>
 </li>
 </ul>
 </div>
@@ -3134,12 +3144,16 @@ Do take a look at <a href="#Design-Storage">Section 2.5, &#8220;Storage componen
 <p>By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.</p>
 </div>
 <div class="paragraph">
-<p><strong>Scenario:</strong> You are a software maintainer for <code>addressbook</code>, as the former developer team has moved on to new projects. The current users of your application have a list of new feature requests that they hope the software will eventually have. The most popular request is to allow adding additional comments/notes about a particular contact, by providing a flexible <code>remark</code> field for each contact, rather than relying on tags alone. After designing the specification for the <code>remark</code> command, you are convinced that this feature is worth implementing. Your job is to implement the <code>remark</code> command.</p>
+<p><strong>Scenario:</strong> You are a software maintainer for <code>source manager</code>, as the former developer team has moved on to new projects.
+ The current users of your application have a list of new feature requests that they hope the software will eventually have.
+ The most popular request is to allow adding additional comments/notes about a particular contact, by providing a flexible <code>remark</code> field for each contact,
+ rather than relying on tags alone. After designing the specification for the <code>remark</code> command, you are convinced that this feature is worth implementing.
+ Your job is to implement the <code>remark</code> command.</p>
 </div>
 <div class="sect3">
 <h4 id="description"><a class="link" href="#description">A.2.1. Description</a></h4>
 <div class="paragraph">
-<p>Edits the remark for a person specified in the <code>INDEX</code>.<br>
+<p>Edits the remark for a source specified in the <code>INDEX</code>.<br>
 Format: <code>remark INDEX r/[REMARK]</code></p>
 </div>
 <div class="paragraph">
@@ -3148,12 +3162,12 @@ Format: <code>remark INDEX r/[REMARK]</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>remark 1 r/Likes to drink coffee.</code><br>
-Edits the remark for the first person to <code>Likes to drink coffee.</code></p>
+<p><code>remark 1 r/Due tomorrow.</code><br>
+Edits the remark for the first source.</p>
 </li>
 <li>
 <p><code>remark 1 r/</code><br>
-Removes the remark for the first person.</p>
+Removes the remark for the first source.</p>
 </li>
 </ul>
 </div>
@@ -3174,7 +3188,7 @@ Removes the remark for the first person.</p>
 <p>Add a <code>RemarkCommand</code> that extends <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/logic/commands/Command.java"><code>Command</code></a>. Upon execution, it should just throw an <code>Exception</code>.</p>
 </li>
 <li>
-<p>Modify <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/logic/parser/AddressBookParser.java"><code>AddressBookParser</code></a> to accept a <code>RemarkCommand</code>.</p>
+<p>Modify <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/logic/parser/SourceManagerParser.java"><code>SourceManagerParser</code></a> to accept a <code>RemarkCommand</code>.</p>
 </li>
 </ol>
 </div>
@@ -3187,7 +3201,7 @@ Removes the remark for the first person.</p>
 <p>Add <code>RemarkCommandTest</code> that tests that <code>execute()</code> throws an Exception.</p>
 </li>
 <li>
-<p>Add new test method to <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java"><code>AddressBookParserTest</code></a>, which tests that typing "remark" returns an instance of <code>RemarkCommand</code>.</p>
+<p>Add new test method to <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/test/java/seedu/address/logic/parser/SourceManagerParserTest.java"><code>AddressBookParserTest</code></a>, which tests that typing "remark" returns an instance of <code>RemarkCommand</code>.</p>
 </li>
 </ol>
 </div>
@@ -3195,7 +3209,7 @@ Removes the remark for the first person.</p>
 <div class="sect4">
 <h5 id="step-2-logic-teach-the-app-to-accept-remark-arguments"><a class="link" href="#step-2-logic-teach-the-app-to-accept-remark-arguments">[Step 2] Logic: Teach the app to accept 'remark' arguments</a></h5>
 <div class="paragraph">
-<p>Let&#8217;s teach the application to parse arguments that our <code>remark</code> command will accept. E.g. <code>1 r/Likes to drink coffee.</code></p>
+<p>Let&#8217;s teach the application to parse arguments that our <code>remark</code> command will accept. E.g. <code>1 r/due tomorrow</code></p>
 </div>
 <div class="paragraph">
 <p><strong>Main:</strong></p>
@@ -3232,9 +3246,9 @@ for <code>RemarkCommandParser</code>.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="step-3-ui-add-a-placeholder-for-remark-in-code-personcard-code"><a class="link" href="#step-3-ui-add-a-placeholder-for-remark-in-code-personcard-code">[Step 3] Ui: Add a placeholder for remark in <code>PersonCard</code></a></h5>
+<h5 id="step-3-ui-add-a-placeholder-for-remark-in-code-sourcecard-code"><a class="link" href="#step-3-ui-add-a-placeholder-for-remark-in-code-sourcecard-code">[Step 3] Ui: Add a placeholder for remark in <code>SourceCard</code></a></h5>
 <div class="paragraph">
-<p>Let&#8217;s add a placeholder on all our <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/ui/PersonCard.java"><code>PersonCard</code></a> s to display a remark for each person later.</p>
+<p>Let&#8217;s add a placeholder on all our <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/ui/SourceCard.java"><code>SourceCard</code></a> s to display a remark for each source later.</p>
 </div>
 <div class="paragraph">
 <p><strong>Main:</strong></p>
@@ -3242,10 +3256,10 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Add a <code>Label</code> with any random text inside <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/resources/view/PersonListCard.fxml"><code>PersonListCard.fxml</code></a>.</p>
+<p>Add a <code>Label</code> with any random text inside <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/resources/view/SourceListCard.fxml"><code>SourceListCard.fxml</code></a>.</p>
 </li>
 <li>
-<p>Add FXML annotation in <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/ui/PersonCard.java"><code>PersonCard</code></a> to tie the variable to the actual label.</p>
+<p>Add FXML annotation in <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/ui/SourceCard.java"><code>SourceCard</code></a> to tie the variable to the actual label.</p>
 </li>
 </ol>
 </div>
@@ -3255,7 +3269,7 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Modify <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/test/java/guitests/guihandles/PersonCardHandle.java"><code>PersonCardHandle</code></a> so that future tests can read the contents of the remark label.</p>
+<p>Modify <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/test/java/guitests/guihandles/SourceCardHandle.java"><code>SourceCardHandle</code></a> so that future tests can read the contents of the remark label.</p>
 </li>
 </ol>
 </div>
@@ -3263,7 +3277,7 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="sect4">
 <h5 id="step-4-model-add-code-remark-code-class"><a class="link" href="#step-4-model-add-code-remark-code-class">[Step 4] Model: Add <code>Remark</code> class</a></h5>
 <div class="paragraph">
-<p>We have to properly encapsulate the remark in our <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/person/Person.java"><code>Person</code></a> class. Instead of just using a <code>String</code>, let&#8217;s follow the conventional class structure that the codebase already uses by adding a <code>Remark</code> class.</p>
+<p>We have to properly encapsulate the remark in our <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/Source/Source.java"><code>Source</code></a> class. Instead of just using a <code>String</code>, let&#8217;s follow the conventional class structure that the codebase already uses by adding a <code>Remark</code> class.</p>
 </div>
 <div class="paragraph">
 <p><strong>Main:</strong></p>
@@ -3271,7 +3285,7 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Add <code>Remark</code> to model component (you can copy from <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/person/Address.java"><code>Address</code></a>, remove the regex and change the names accordingly).</p>
+<p>Add <code>Remark</code> to model component (you can copy from <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/Source/Address.java"><code>Address</code></a>, remove the regex and change the names accordingly).</p>
 </li>
 <li>
 <p>Modify <code>RemarkCommand</code> to now take in a <code>Remark</code> instead of a <code>String</code>.</p>
@@ -3292,7 +3306,7 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="sect4">
 <h5 id="step-5-model-modify-code-person-code-to-support-a-code-remark-code-field"><a class="link" href="#step-5-model-modify-code-person-code-to-support-a-code-remark-code-field">[Step 5] Model: Modify <code>Person</code> to support a <code>Remark</code> field</a></h5>
 <div class="paragraph">
-<p>Now we have the <code>Remark</code> class, we need to actually use it inside <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/person/Person.java"><code>Person</code></a>.</p>
+<p>Now we have the <code>Remark</code> class, we need to actually use it inside <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/Source/Source.java"><code>Source</code></a>.</p>
 </div>
 <div class="paragraph">
 <p><strong>Main:</strong></p>
@@ -3300,13 +3314,13 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Add <code>getRemark()</code> in <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/person/Person.java"><code>Person</code></a>.</p>
+<p>Add <code>getRemark()</code> in <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/Source/Source.java"><code>Source</code></a>.</p>
 </li>
 <li>
-<p>You may assume that the user will not be able to use the <code>add</code> and <code>edit</code> commands to modify the remarks field (i.e. the person will be created without a remark).</p>
+<p>You may assume that the user will not be able to use the <code>add</code> and <code>edit</code> commands to modify the remarks field (i.e. the Source will be created without a remark).</p>
 </li>
 <li>
-<p>Modify <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/util/SampleDataUtil.java/"><code>SampleDataUtil</code></a> to add remarks for the sample data (delete your <code>data/addressbook.json</code> so that the application will load the sample data when you launch it.)</p>
+<p>Modify <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/util/SampleDataUtil.java/"><code>SampleDataUtil</code></a> to add remarks for the sample data (delete your <code>data/sourcemanager.json</code> so that the application will load the sample data when you launch it.)</p>
 </li>
 </ol>
 </div>
@@ -3314,7 +3328,7 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="sect4">
 <h5 id="step-6-storage-add-code-remark-code-field-to-code-jsonadaptedperson-code-class"><a class="link" href="#step-6-storage-add-code-remark-code-field-to-code-jsonadaptedperson-code-class">[Step 6] Storage: Add <code>Remark</code> field to <code>JsonAdaptedPerson</code> class</a></h5>
 <div class="paragraph">
-<p>We now have <code>Remark</code> s for <code>Person</code> s, but they will be gone when we exit the application. Let&#8217;s modify <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/storage/JsonAdaptedPerson.java"><code>JsonAdaptedPerson</code></a> to include a <code>Remark</code> field so that it will be saved.</p>
+<p>We now have <code>Remark</code> s for <code>Source</code> s, but they will be gone when we exit the application. Let&#8217;s modify <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/storage/JsonAdaptedSource.java"><code>JsonAdaptedSource</code></a> to include a <code>Remark</code> field so that it will be saved.</p>
 </div>
 <div class="paragraph">
 <p><strong>Main:</strong></p>
@@ -3340,7 +3354,7 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="sect4">
 <h5 id="step-6b-test-add-withremark-for-code-personbuilder-code"><a class="link" href="#step-6b-test-add-withremark-for-code-personbuilder-code">[Step 6b] Test: Add withRemark() for <code>PersonBuilder</code></a></h5>
 <div class="paragraph">
-<p>Since <code>Person</code> can now have a <code>Remark</code>, we should add a helper method to <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/test/java/seedu/address/testutil/PersonBuilder.java"><code>PersonBuilder</code></a>, so that users are able to create remarks when building a <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/person/Person.java"><code>Person</code></a>.</p>
+<p>Since <code>Source</code> can now have a <code>Remark</code>, we should add a helper method to <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/test/java/seedu/address/testutil/SourceBuilder.java"><code>SourceBuilder</code></a>, so that users are able to create remarks when building a <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/Source/Source.java"><code>Source</code></a>.</p>
 </div>
 <div class="paragraph">
 <p><strong>Tests:</strong></p>
@@ -3367,7 +3381,7 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Modify <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/ui/PersonCard.java"><code>PersonCard</code></a>'s constructor to bind the <code>Remark</code> field to the <code>Person</code> 's remark.</p>
+<p>Modify <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/ui/SourceCard.java"><code>SourceCard</code></a>'s constructor to bind the <code>Remark</code> field to the <code>Source</code> 's remark.</p>
 </li>
 </ol>
 </div>
@@ -3393,7 +3407,7 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Replace the logic in <code>RemarkCommand#execute()</code> (that currently just throws an <code>Exception</code>), with the actual logic to modify the remarks of a person.</p>
+<p>Replace the logic in <code>RemarkCommand#execute()</code> (that currently just throws an <code>Exception</code>), with the actual logic to modify the remarks of a Source.</p>
 </li>
 </ol>
 </div>
@@ -3556,9 +3570,6 @@ for <code>RemarkCommandParser</code>.</p>
 </tr>
 </tbody>
 </table>
-<div class="paragraph">
-<p><em>{More to be added}</em></p>
-</div>
 </div>
 </div>
 <div class="sect1">
@@ -3741,7 +3752,7 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>User requests to search for a source with specific keywords</p>
+<p>User requests to search for a source with specific keywords and values of CLI prefixes.</p>
 </li>
 <li>
 <p>The Infinity Machine shows a list of the sources currently in the database that match the user&#8217;s keywords</p>
@@ -3798,10 +3809,11 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>User requests to list all sources</p>
+<p>User requests to list all sources, or sources of specific indices</p>
 </li>
 <li>
-<p>The Infinity Machine shows a list of the sources currently in the database</p>
+<p>The Infinity Machine shows a list of the sources currently in the database,
+as per the index entered by the user [optionally].</p>
 <div class="paragraph">
 <p>Use case ends.</p>
 </div>
@@ -4029,53 +4041,6 @@ for <code>RemarkCommandParser</code>.</p>
 <ul class="none">
 <li>
 <p>2a. There are no previous commands.</p>
-<div class="paragraph">
-<p>Use case ends with nothing being displayed.</p>
-</div>
-</li>
-</ul>
-</div>
-<h3 id="use-case-list-the-search-history-of-database" class="discrete">Use case: List the search history of database</h3>
-<div class="paragraph">
-<p><strong>MSS</strong></p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>User requests to list all previously searched entities</p>
-</li>
-<li>
-<p>The Infinity Machine shows the search history of the application</p>
-<div class="paragraph">
-<p>Use case ends.</p>
-</div>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p><strong>Extensions</strong></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>1a. The command entered is invalid. The command was misspelled.</p>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>1a1. The Infinity Machine shows an error message together with a help text to guide the user along.</p>
-<div class="paragraph">
-<p>Use case resumes at step 0.</p>
-</div>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>2a. There are no previous search commands.</p>
 <div class="paragraph">
 <p>Use case ends with nothing being displayed.</p>
 </div>
@@ -4905,4 +4870,4 @@ Expected: error because all indices must be positive</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-15 15:07:46 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-15 15:16:15 UTC</div></div></div></body></html>
