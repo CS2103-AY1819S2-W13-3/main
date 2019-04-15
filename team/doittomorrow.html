@@ -1,0 +1,447 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="Asciidoctor 1.5.6.1"><title>Yang Yang - Project Portfolio</title><link rel="stylesheet" href="../stylesheets/gh-pages.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../stylesheets/coderay-asciidoctor.css"></head><body class="article"><div id="seedu-header"><nav class="navbar navbar-lg navbar-light bg-lighter"><div class="container"><a class="navbar-brand" href="https://se-edu.github.io/"><img src="../images/SeEduLogo.png" alt="SE-EDU"></a><ul class="navbar-nav"><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/addressbook-level1">AB-1</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/addressbook-level2">AB-2</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/addressbook-level3">AB-3</a></li><li class="nav-item"><a class="nav-link active" href="../index.html">AB-4</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/collate">Collate</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/se-book">Book</a></li><li class="nav-item"><a class="nav-link" href="https://se-edu.github.io/learningresources">Resources</a></li></ul></div></nav></div><div id="site-header"><nav class="navbar navbar-light bg-light"><div class="container"><a class="navbar-brand" href="../index.html">AddressBook-Level4</a><ul class="navbar-nav"><li class="nav-item"><a class="nav-link" href="../UserGuide.html">User Guide</a></li><li class="nav-item"><a class="nav-link" href="../DeveloperGuide.html">Developer Guide</a></li><li class="nav-item"><a class="nav-link" href="../LearningOutcomes.html">LOs</a></li><li class="nav-item"><a class="nav-link active" href="../AboutUs.html">About Us</a></li><li class="nav-item"><a class="nav-link" href="../ContactUs.html">Contact Us</a></li><li class="navitem"><a class="nav-link" href="https://github.com/se-edu/addressbook-level4"><span class="fa fa-github fa-lg" aria-hidden="true"></span>&nbsp;View on GitHub</a></li></ul></div></nav></div><div id="header"><h1>Yang Yang - Project Portfolio</h1></div><div id="content"><div class="sect1">
+<h2 id="project-the-infinity-machine"><a class="link" href="#project-the-infinity-machine">PROJECT: The Infinity Machine</a></h2>
+<div class="sectionbody">
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="overview"><a class="link" href="#overview">Overview</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The Infinity Machine is a desktop application that lets users store research materials for future use. It provides a quick and easy way for tech-savvy users, like university students or researchers, to manage and organise their research materials.</p>
+</div>
+<div class="paragraph">
+<p>The user interacts with the application using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="summary-of-contributions"><a class="link" href="#summary-of-contributions">Summary of contributions</a></h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Major Enhancement</strong>: Added bibliography related functionalites</p>
+<div class="ulist">
+<ul>
+<li>
+<p>What it does: This set of functionalities allows the sources stored in the Infinity Machine to be used for generating bibliographical entries in the APA or MLA style.</p>
+</li>
+<li>
+<p>Justification: A typical user would expect a piece of software for managing sources to also be able to generate appropriate bibliography entries.</p>
+</li>
+<li>
+<p>Implementation: This new feature required a large number of additional fields in source. A new command, biblioEdit, was added to manage these fields.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Code contributed</strong>:<br>
+[<a href="https://nus-cs2103-ay1819s2.github.io/cs2103-dashboard/#=undefined&amp;search=doittomorrow">Project Dashboard</a>]<br>
+[<a href="https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/main/java/seedu/address/logic/commands/BiblioCommand.java">biblio command code</a>]<br>
+[<a href="https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/test/java/seedu/address/logic/commands/BiblioCommandTest.java">biblio command test</a>]<br>
+[<a href="https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/main/java/seedu/address/logic/commands/BiblioEditCommand.java">biblioEdit command</a>]<br>
+[<a href="https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/test/java/seedu/address/logic/commands/BiblioEditCommandTest.java">biblioEdit command test</a>]<br>
+[<a href="https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/main/java/seedu/address/model/source/Source.java">Source</a>]<br></p>
+</li>
+<li>
+<p><strong>Other contributions</strong>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Integration of existing functions:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Changes were made to storage to allow for persistent storage of the new Source objects.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Enhancement to existing features:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Revamped utility for populating initial sources to more closely match that used in the test. Added readability, functionality, extensibility.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Test Enhancements</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Added a test for above mentioned utility.</p>
+</li>
+<li>
+<p>Added tests for biblio-related features.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="contributions-to-the-user-guide"><a class="link" href="#contributions-to-the-user-guide">Contributions to the User Guide</a></h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users.</em></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The created source comes with an empty set of biblio fields, used for storing information for creating a bibliography entry. Refer to <code>biblio</code> and <code>biblioEdit</code> for more information.
+==== Generating a bibliography entry : <code>biblio</code></p>
+</div>
+<div class="paragraph">
+<p>Generates an bibliographical entry from the source at the specified.<br>
+Format: <code>biblio INDEX FORMAT</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Generates a bibliographical entry of the appropriate style from the source at the specified <code>INDEX</code>.</p>
+</li>
+<li>
+<p>The index refers to the index number shown in the displayed source list.</p>
+</li>
+<li>
+<p>The index *must be valid (between the indexes of the first source and the last source inclusive.</p>
+</li>
+<li>
+<p>The format must be APA or MLA</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Currently, only source types of "Book", "Journal Article" and "Website" are supported.
+If any suggested fields for a given source type are not populated, they will be reflected to the user when <code>biblio</code> is used.</p>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>biblio 1 APA</code><br>
+Generates an APA style bibliography entry for the first source.</p>
+</li>
+<li>
+<p><code>biblio 2 MLA</code><br>
+Generates an MLA style bibliography entry for the second source.</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="editing-a-bibliography-related-field-bibliofield-code-biblioedit-code"><a class="link" href="#editing-a-bibliography-related-field-bibliofield-code-biblioedit-code">Editing a bibliography related field (bibliofield): <code>biblioEdit</code></a></h3>
+<div class="paragraph">
+<p>Replaces the information stored under the indicated header in the indicated source.</p>
+</div>
+<div class="paragraph">
+<p>Format: <code>biblioEdit INDEX HEADER BODY</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Replaces a bibliofield of matching <code>HEADER</code> of the source at the specified <code>INDEX</code> with <code>BODY</code>.</p>
+</li>
+<li>
+<p>The index refers to the index number shown in the displayed source list.</p>
+</li>
+<li>
+<p>The index *must be valid (between the indexes of the first source and the last source inclusive.</p>
+</li>
+<li>
+<p>The header must be one of the following:</p>
+</li>
+<li>
+<p>"City", "Journal", "Medium", "Pages", "Publisher", "URL", "Website", "Day", "Month", "Year"</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>To ensure the accuracy of the bibliography generated, please ensure the accuracy of entered <code>BODY</code>.</p>
+</div>
+<div class="paragraph">
+<p>The &lt;i&gt;&lt;/i&gt; braces indicate that the text between should be italicized.</p>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>biblioEdit 1 City London</code><br>
+Replaces the "City" bibliofield in the first source with "London".</p>
+</li>
+<li>
+<p><code>biblioEdit 2 Publisher Penguin</code><br>
+Replaces the "Publisher" bibliofield in the second source with "Penguin".</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="contributions-to-the-developer-guide"><a class="link" href="#contributions-to-the-developer-guide">Contributions to the Developer Guide</a></h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project.</em></p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect2">
+<h3 id="biblio-feature"><a class="link" href="#biblio-feature">Biblio feature</a></h3>
+<div class="sect3">
+<h4 id="overview-2"><a class="link" href="#overview-2">Overview</a></h4>
+<div class="paragraph">
+<p>Given that the <code>Infinity Machine</code> is used to manage sources, a user might reasonably expect to use the information stored to generate usable bibligraphy entries.
+This functionality is implemented by the <code>biblio</code> command and the <code>biblioEdit</code> command.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="bibliofields"><a class="link" href="#bibliofields">BiblioFields</a></h4>
+<div class="paragraph">
+<p>When a <code>Source</code> object is created, in addition to the compulsory fields of <code>Title</code>, <code>Author</code>, <code>Type</code>, and <code>Detail</code>, it is also created with a set of <code>BiblioFields</code> for storing additional information that might be needed for creating a bibliography entry.</p>
+</div>
+<div class="paragraph">
+<p><code>BiblioFields</code> is used to store information under the following headers:
+"City", "Journal", "Medium", "Pages", "Publisher", "URL", "Website", "Day", "Month", "Year"</p>
+</div>
+<div class="paragraph">
+<p><code>BiblioFields</code> is empty by default.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="biblio-command-implementation"><a class="link" href="#biblio-command-implementation">Biblio Command Implementation</a></h4>
+<div class="paragraph">
+<p>The biblio command extends <code>Infinity Machine</code> with a bibliography generating functionality.</p>
+</div>
+<div class="paragraph">
+<p>It is currently implemented with the following syntax: <code>biblio INDEX FORMAT</code></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>INDEX</code>&#8201;&#8212;&#8201;Indicates the index of the source to generate a bibliography entry for.</p>
+</li>
+<li>
+<p><code>FORMAT</code>&#8201;&#8212;&#8201;Indicates the format which the bibliography entry should follow.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Currently only APA and MLA formats are supported.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>An example would be <code>biblio 1 APA</code>.</p>
+</div>
+<div class="paragraph">
+<p>When the command is entered, the following occurs:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The associated parser, <code>BiblioCommandParser</code>, checks the validity of the entered arguments.</p>
+</li>
+<li>
+<p>The indicated source is fetched from the SourceManager.</p>
+</li>
+<li>
+<p>A check is performed on the source to ensure that it is of a supported type.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Currently only Book, Journal Article and Website sources are supported. These are chosen as they are the most likely to be used.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Based on the type of the source and the requested format, a bibliography entry is generated by accessing each of the source&#8217;s relevant fields.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>If any of the necessary fields is empty, a placeholder value is used instead.</p>
+</li>
+<li>
+<p>The empty field is noted for feedback to user later.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>The bibliography entry is returned to the user along with feedback on empty fields.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong>: Future implementations can include additional supported source types.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="biblioedit-command-implementation"><a class="link" href="#biblioedit-command-implementation">BiblioEdit Command Implementation</a></h4>
+<div class="paragraph">
+<p>The biblioEdit command is a supporting command for the Biblio feature. It is responsible for changing the information stored in the <code>BiblioFields</code> of a source.</p>
+</div>
+<div class="paragraph">
+<p>It is currently implemented with the following syntax: <code>biblioEdit INDEX HEADER BODY</code></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>INDEX</code>&#8201;&#8212;&#8201;Indicates the index of the source to generate a bibliography entry for.</p>
+</li>
+<li>
+<p><code>HEADER</code>&#8201;&#8212;&#8201;Indicates the header for the information which the user wishes to change.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>As mention in relation to <code>BiblioFields</code> above, valid headers are
+"City", "Journal", "Medium", "Pages", "Publisher", "URL", "Website", "Day", "Month", "Year"</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>BODY</code>&#8201;&#8212;&#8201;Indicates the new value that should stored under the relevant header.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/BiblioEditCommand.png" alt="BiblioEditCommand" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>An example would be <code>biblioEdit 1 City London</code></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative</strong>: The bibliofields of a source can be set at object creation with the add command. However, this makes using the add command excessively onerous. The current implementation allows the user to change each field as needed and preserves the information stored under the other headers in <code>Bibliofields</code>.</p>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong>: A future implementation may allow information under multiple headers to be edited at once. Additionally, checks can be introduced to ensure the entered field bodies are appropriate e.g. the Month bibliofield should only accept values matching the English name of months.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="example-usage-scenario"><a class="link" href="#example-usage-scenario">Example Usage Scenario</a></h4>
+<div class="paragraph">
+<p>Given below is an example usage scenario and how the BiblioEdit mechanism behaves.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Step 1&#8201;&#8212;&#8201;The user launches <code>Infinity Machine</code> for the first time.</p>
+</li>
+<li>
+<p>Step 2&#8201;&#8212;&#8201;The user clears the database of sample sources using the clear command.</p>
+</li>
+<li>
+<p>Step 3&#8201;&#8212;&#8201;The user executes an <code>add</code> command to add a source entry to the database. The source has type "Textbook".</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>BiblioFields</code> is empty</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Step 4&#8201;&#8212;&#8201;The user executes a <code>biblio</code> command with the following arguments: <code>1</code> <code>APA</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>The user is informed that "Textbook" is not a supported source type</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Step 5&#8201;&#8212;&#8201;The user executes an <code>Edit</code> command with the following arguments:
+<code>1</code> <code>y/Journal Article</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>The source type is changed to "Book"</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Step 6&#8201;&#8212;&#8201;The user executes a <code>biblio</code> command with the following arguments: <code>1</code> <code>APA</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>A bibliography entry is generated with placeholder values as the requisite biblio fields are empty.</p>
+</li>
+<li>
+<p>The user receives the bibliography entry along with a warning that some required fields are empty</p>
+</li>
+<li>
+<p>The warning is appended with a list of empty but recommened fields: "Year", "City", "Publisher"</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Step 7&#8201;&#8212;&#8201;The user executes a <code>biblioEdit</code> command with the following arguments:
+<code>1</code> <code>City</code> <code>London</code></p>
+</li>
+<li>
+<p>Step 8&#8201;&#8212;&#8201;The user executes a <code>biblioEdit</code> command with the following arguments:
+<code>1</code> <code>Publisher</code> <code>Penguin</code></p>
+</li>
+<li>
+<p>Step 9&#8201;&#8212;&#8201;The user executes a <code>biblioEdit</code> command with the following arguments:
+<code>1</code> <code>Year</code> <code>2001</code></p>
+</li>
+<li>
+<p>Step 10&#8201;&#8212;&#8201;The user executes a <code>biblio</code> command with the following arguments:
+<code>1</code> <code>APA</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>The user receives an appropriately formatted bibliography entry</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-15 15:07:46 UTC</div></div></div></body></html>
