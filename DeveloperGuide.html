@@ -86,8 +86,10 @@
 <li><a href="#instructions-for-manual-testing">Appendix H: Instructions for Manual Testing</a>
 <ul class="sectlevel2">
 <li><a href="#launch-and-shutdown">H.1. Launch and Shutdown</a></li>
-<li><a href="#deleting-a-person">H.2. Deleting a person</a></li>
-<li><a href="#saving-data">H.3. Saving data</a></li>
+<li><a href="#deleting-a-source">H.2. Deleting a source</a></li>
+<li><a href="#searching-a-source">H.3. Searching a source</a></li>
+<li><a href="#listing-sources">H.4. Listing sources</a></li>
+<li><a href="#saving-data">H.5. Saving data</a></li>
 </ul>
 </li>
 </ul>
@@ -556,7 +558,7 @@ As a more OOP model, we can store a <code>Tag</code> list in <code>Address Book<
 <p>can save <code>UserPref</code> objects in json format and read it back.</p>
 </li>
 <li>
-<p>can save the Address Book data in json format and read it back.</p>
+<p>can save the Source Manager data in json format and read it back.</p>
 </li>
 </ul>
 </div>
@@ -564,7 +566,7 @@ As a more OOP model, we can store a <code>Tag</code> list in <code>Address Book<
 <div class="sect2">
 <h3 id="Design-Commons"><a class="link" href="#Design-Commons">2.6. Common classes</a></h3>
 <div class="paragraph">
-<p>Classes used by multiple components are in the <code>seedu.addressbook.commons</code> package.</p>
+<p>Classes used by multiple components are in the <code>seedu.sourcemanager.commons</code> package.</p>
 </div>
 </div>
 </div>
@@ -1213,8 +1215,24 @@ of the sources, and making working on the database more efficient.</p>
 <div class="paragraph">
 <p>Lastly, the search is able to find string matches with minor typing errors in the spelling. This feature renders the search more
 powerful by accommodating any minor typing error user may make when keying in their search argument. This includes minor flips of two characters
-or a missing character etc. The implementation current accounts for less than 3 character swaps needed to transform between the strings
-(lower bounded by the difference in the string lengths of the two strings).</p>
+or a missing character or few extra characters etc. The implementation current accounts for less than 5 character swaps needed to transform between the strings.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Auto-correction feature only works when entire field value is entered and not for substring matching.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>i.e. misspelling a single word in the title will not be caught unless the entire title is entered, then the
+user entry will be matched against the entire title to see if there are less than 5 corrections needed to transform
+between the two strings.</p>
 </div>
 <div class="paragraph">
 <p>However, it may seem that such an additional renders the search feature a bit too general, thus making the search output space
@@ -1240,9 +1258,18 @@ one string to the other.</p>
 <div class="paragraph">
 <p>The algorithm implementation for this section of the code was inspired from <a href="https://www.baeldung.com/java-levenshtein-distance">Baeldung</a>.</p>
 </div>
-<div class="paragraph">
-<p>If any seemingly unwanted results are displayed after a search command is executed, it should not be seen as a bug and this is
-the intended behaviour because of the reasons and rationale explained above. Rest assured, the intended results will never be missed out.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If any seemingly unwanted results are displayed after a search command is executed, it should not be seen as a bug and this is
+the intended behaviour because of the reasons and rationale explained above. Rest assured, the intended results will never be missed out.
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>Additionally, it uses:</p>
@@ -1255,7 +1282,29 @@ the intended behaviour because of the reasons and rationale explained above. Res
 for those sources that satisfy all the constraints, i.e. have all the fields matching as entered by the user, where matching is checked by if the string
 contains the keywords entered by the user (case insensitive).</p>
 </li>
+<li>
+<p><code>checkAllEmpty</code>&#8201;&#8212;&#8201;method inside SourceContainsKeywordsPredicate which checks if all the entries of all the tags is empty, and returns true thus showing all sources.</p>
+</li>
+<li>
+<p><code>levenshtienDist</code>&#8201;&#8212;&#8201;returns the number of swaps needed to transform one string to the other</p>
+</li>
+<li>
+<p><code>checkLevenshtienSimilarity</code>&#8201;&#8212;&#8201;returns true if the number of swaps needed, as returned by <code>levenshtienDist</code> above is less than the
+<code>LEVENSHTIEN_DISTANCE_CONSTANT</code> below</p>
+</li>
+<li>
+<p><code>LEVENSHTIEN_DISTANCE_CONSTANT</code>&#8201;&#8212;&#8201;a positive integer which determines the number of swaps a string can have for it to pass the similarity test
+as per the <code>checkLevenshtienSimilarity</code> method. Currently set to 5, thus if less than 5 swaps are needed to convert between the user entered string and the entire string value fo the source field.</p>
+</li>
 </ul>
+</div>
+<div class="paragraph">
+<p>Given below is a sequence diagram representation of the search command of the Infinity Machine:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/SearchCommandSequenceDiagram.png" alt="SearchCommandSequenceDiagram" width="800">
+</div>
 </div>
 <div class="paragraph">
 <p>This feature improves the product significantly because a user can now search an entry with a particular title AND a particular type and so on.
@@ -1291,14 +1340,15 @@ in an indexed fashion, with all details and in order of their addition.</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-<code>search</code> alone, without any arguments, will result in error. See <code>list</code> command for enumerating all database entries.
+<code>search</code> alone, without any arguments, will result in error. However search with empty CLI tags will output all sources. Thus, a shortcut
+to display all sources is to search <code>search i/</code> and a source with <strong>any</strong> title will be displayed.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
 <p>Step 5. The user executes <code>search i/algorihtm</code> as a typing error, the command still displays all those sources that have their title as
-<code>algorithms</code> and other related words.</p>
+<code>algorithms</code> or other related words exactly [not contains].</p>
 </div>
 <div class="paragraph">
 <p>Step 6. The user executes <code>search d/training an intelligent agent t/CS2039</code>, the search displays all sources with
@@ -1495,6 +1545,14 @@ which are based on the indexes of the current displaying list will <strong>still
 For example, after displaying <code>list 3 5</code>, if a user executes <code>delete 1</code>, it is akin to deleting the 3rd source in the entire list database.</p>
 </li>
 </ol>
+</div>
+<div class="paragraph">
+<p>The sequence diagram of the working of the list command is as below:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/ListCommandSequenceDiagram.png" alt="ListCommandSequenceDiagram" width="800">
+</div>
 </div>
 <div class="paragraph">
 <p>Motivation for such an enhancement is that one may feel that such act of populating <strong>all</strong> the sources on the GUI may be cluttering the view unnecessarily.
@@ -4520,7 +4578,7 @@ These instructions only provide a starting point for testers to work on; testers
 </li>
 <li>
 <p>Double-click the jar file<br>
-Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.</p>
+Expected: Shows the GUI with a set of sample sources. The window size may not be optimum.</p>
 </li>
 </ol>
 </div>
@@ -4539,33 +4597,45 @@ Expected: The most recent window size and location is retained.</p>
 </ol>
 </div>
 </li>
-</ol>
-</div>
-<div class="paragraph">
-<p><em>{ more test cases &#8230;&#8203; }</em></p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="deleting-a-person"><a class="link" href="#deleting-a-person">H.2. Deleting a person</a></h3>
-<div class="olist arabic">
-<ol class="arabic">
 <li>
-<p>Deleting a person while all persons are listed</p>
+<p>Shutdown:</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>Prerequisites: List all persons using the <code>list</code> command. Multiple persons in the list.</p>
+<p>Execute command <code>exit</code> on the command line (or)</p>
+</li>
+<li>
+<p>Click on dropdown menu 'file' and press 'exit' button<br>
+Expected: The GUI should disappear.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="deleting-a-source"><a class="link" href="#deleting-a-source">H.2. Deleting a source</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Deleting a source while all sources are listed</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: List all sources using the <code>list</code> command. Multiple sources in the list.</p>
 </li>
 <li>
 <p>Test case: <code>delete 1</code><br>
-Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.</p>
+Expected: First source is deleted from the list. Details of the deleted source shown in the status message.
+Timestamp in the status bar is updated.</p>
 </li>
 <li>
 <p>Test case: <code>delete 0</code><br>
-Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.</p>
+Expected: No source is deleted. Error details shown in the status message. Status bar remains the same.</p>
 </li>
 <li>
-<p>Other incorrect delete commands to try: <code>delete</code>, <code>delete x</code> (where x is larger than the list size) <em>{give more}</em><br>
+<p>Other incorrect delete commands to try: <code>delete</code>, <code>delete x</code> (where x is larger than the list size)<br>
 Expected: Similar to previous.</p>
 </li>
 </ol>
@@ -4573,12 +4643,89 @@ Expected: Similar to previous.</p>
 </li>
 </ol>
 </div>
-<div class="paragraph">
-<p><em>{ more test cases &#8230;&#8203; }</em></p>
+</div>
+<div class="sect2">
+<h3 id="searching-a-source"><a class="link" href="#searching-a-source">H.3. Searching a source</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Searches through the entire database of sources</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Pass values with the appropriate CLI tags to search the sources against</p>
+</li>
+<li>
+<p>Test case: <code>search i/Algorithm</code><br>
+Expected: the source(s) with the word 'algorithm' (case insensitive and minor typo accounted for) in their entire title
+string will be showed, with all its details.</p>
+</li>
+<li>
+<p>Test case: <code>search i/AlGo i/dataa t/CS</code><br>
+Expected: the source(s) with their title containing both the words 'algo', 'data' and tags contain 'cs' will
+be displayed with all their details.</p>
+</li>
+<li>
+<p>Test case: <code>search i/</code><br>
+Expected: list all sources as title can be anything [does not throw an error].</p>
+</li>
+<li>
+<p>Test case: <code>search y/web y/</code><br>
+Expected:  the source(s) with their types containing the word 'web' will be displayed with
+all their details. Here, the empty tag implies the type can be anything, thus after conjunction, the 'web' constraint
+dominates the result.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
 </div>
 </div>
 <div class="sect2">
-<h3 id="saving-data"><a class="link" href="#saving-data">H.3. Saving data</a></h3>
+<h3 id="listing-sources"><a class="link" href="#listing-sources">H.4. Listing sources</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Lists sources based on the indices passed by the user</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Lists all sources when no argument passed, list top N sources when one positive integer passed,
+lists last N sources when one negative integer passed, lists sources from N to M (inclusive) when two positive arguments N and M are passed
+with N not greater than M.</p>
+</li>
+<li>
+<p>Test case: <code>list</code>
+Expected: lists all sources with their details</p>
+</li>
+<li>
+<p>Test case: <code>list 5</code>
+Expected: lists top 5 sources with their details</p>
+</li>
+<li>
+<p>Test case: <code>list -4</code>
+Expected: lists last 4 sources with their details</p>
+</li>
+<li>
+<p>Test case: <code>list 3 5</code>
+Expected: lists sources 3, 4 and 5 with their details</p>
+</li>
+<li>
+<p>Test case: <code>list 5 3</code>
+Expected: error because range is invalid</p>
+</li>
+<li>
+<p>Test case: <code>list 0</code>
+Expected: error because all indices must be positive</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="saving-data"><a class="link" href="#saving-data">H.5. Saving data</a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -4593,9 +4740,6 @@ Expected: Similar to previous.</p>
 </li>
 </ol>
 </div>
-<div class="paragraph">
-<p><em>{ more test cases &#8230;&#8203; }</em></p>
 </div>
 </div>
-</div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-15 10:39:07 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-04-15 10:46:03 UTC</div></div></div></body></html>
